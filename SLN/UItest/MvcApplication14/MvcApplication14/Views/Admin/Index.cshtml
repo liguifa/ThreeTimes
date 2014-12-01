@@ -1,0 +1,194 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/EasyUI/jquery.min.js"></script>
+    <script src="~/EasyUI/jquery.easyui.min.js"></script>
+    <script src="~/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <link href="~/EasyUI/themes/icon.css" rel="stylesheet" />
+    <link href="~/CSS/index.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/default/easyui.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#panel").layout({
+                fit: true
+            });
+            $("#south").panel({
+                collapsible: false
+            });
+            $("#east").panel({
+                collapsible: false
+            });
+            $("#north").panel({
+                collapsible: false,
+            });
+            $("#class").accordion({
+
+                fit: true,
+                selected: 3
+            });
+            $("#window").tabs({
+                fit: true,
+                tools: '#search',
+                toolPosition: 'right',
+                buttons: '#pp'
+
+            });
+
+        });
+        $("#company_list").ready(function () {
+            $("#company_list").click(function () {
+                openWindow("公司列表", "/Admin/PartChart");
+            });
+        })
+        $("#add_company").ready(function () {
+            $("#add_company").click(function () {
+                openWindow("添加公司")
+            });
+        });
+        $("#item_class").ready(function () {
+            $("#item_class").click(function () {
+                openWindow("题库类别管理")
+            });
+        });
+        $("#standby_data").ready(function () {
+            $("#standby_data").click(function () {
+                openWindow("备份数据")
+            });
+        });
+        $("#clear_data").ready(function () {
+            $("#clear_data").click(function () {
+                openWindow("清除数据")
+            });
+        });
+        $("#modify_pwd").ready(function () {
+            $("#modify_pwd").click(function () {
+                openWindow("修改密码")
+            });
+        });
+        $("#admin_administration").ready(function () {
+            $("#admin_administration").click(function () {
+                openWindow("管理员管理")
+            });
+        });
+
+
+        $(".panel-tool:eq(0)").ready(function () {
+            $(".panel-tool:eq(0)").prepend("<div style=\"float:right\">" + getTime() + "</div>");
+        });
+        function openWindow(title, funname) {
+            getContextHtml(funname);
+            $('#window').tabs('add', {
+                title: title,
+                closable: true,
+                id:"111"
+            });
+        }
+        function getContextHtml(funname) {
+            $.ajax({
+                type: "post",
+                url: funname,
+                data: {
+                    pageIndex: "1",
+                    pageSize: "30"
+                },
+                dataType: "html",
+                success: getData
+            });
+        }
+        function getData(data) {
+
+            $("#111").prepend(data);
+
+
+        }
+        function getTime() {
+            var time = new Date();
+            return time.getFullYear() + "年" + doubleNum((time.getMonth() + 1)) + "月" + doubleNum(time.getDate()) + "日" + +doubleNum(time.getHours()) + "：" + +doubleNum(time.getMinutes());
+        }
+        function doubleNum(str) {
+            if (str <= 9) {
+                return "0" + str;
+            }
+            else {
+                return str;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="panel" class="easyui-layout">
+        <div id="north" data-options="region:'north',title:'管理员',split:true,tools:'#time'" style="height: 100px;">
+            <div class="logo">
+                <h1>三度调查管理系统</h1>
+            </div>
+            <span class="welcome">
+                管理员，您好！&nbsp;&nbsp;<a href="#">注销</a>
+
+            </span>
+        </div>
+        <div id="time"></div>
+        <div id="south" data-options="region:'south',split:true" style="height: 0px;"></div>
+        <div id="east" data-options="region:'east',split:true" style="width: 0px;"></div>
+        <div id="west" data-options="region:'west',title:'系统功能',split:true" style="width: 220px;" onselectstart="return false">
+            <div id="class" class="easyui-accordion">
+                <div title="客户公司管理" data-options="iconCls:'icon-comp_manage'" style="overflow: auto; padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="company_list" class="list_li">公司列表</li>
+                    </ul>
+                </div>
+                <div title="添加调查公司" data-options="iconCls:'icon-comp_add'" style="padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="add_company" class="list_li">添加公司</li>
+                    </ul>
+                </div>
+                <div title="系统管理" data-options="iconCls:'icon-sys_setUp'" style="padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="item_class" class="list_li">题库类别管理</li>
+                        <li id="standby_data" class="list_li">备份数据</li>
+                        <li id="clear_data" class="list_li">清除数据</li>
+                    </ul>
+                </div>
+                <div title="用户管理" data-options="iconCls:'icon-user_manage'" style="padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="modify_pwd" class="list_li">修改密码</li>
+                        <li id="admin_administration" class="list_li">管理员管理</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-options="region:'center',title:' '" style="background: #eee;">
+
+        </div>
+
+    </div>
+
+
+
+    <script type="text/javascript">
+        function qq(value, name) {
+            alert(value + ":" + name)
+        }
+    </script>
+    <div id="search">
+        <input id="ss" class="easyui-searchbox" style="width: 300px"
+               data-options="searcher:qq,prompt:'Please Input Value',menu:'#mm'"></input>
+
+        <div id="mm" style="width: 120px">
+            <div data-options="name:'all',iconCls:'icon-ok'">按编号搜索</div>
+            <div data-options="name:'sports'">按名称搜索</div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

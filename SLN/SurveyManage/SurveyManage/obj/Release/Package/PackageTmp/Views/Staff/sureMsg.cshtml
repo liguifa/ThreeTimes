@@ -1,0 +1,90 @@
+﻿@{
+    Common.Models.staff s = ViewBag.msg as Common.Models.staff;
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/img/logo.ico" rel='icon' type=‘image/x-ico’ />
+    <link href="~/CSS/adminLogin.css" rel="stylesheet" />
+    <script src="~/EasyUI/jquery.min.js"></script>
+    <script src="~/EasyUI/jquery.easyui.min.js"></script>
+    <link href="~/EasyUI/themes/icon.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/gray/easyui.css" rel="stylesheet" />
+    <script src="~/JS/sureMsg.js"></script>
+    <link href="~/CSS/sureMsg.css" rel="stylesheet" />
+    <script>
+        $("#win").ready(function ()
+        {
+            $("#win").dialog({
+                width: 490,
+                height: 300,
+                title: "首次进入请修改密码",
+                buttons: [{
+                    iconCls: "icon-ok",
+                    text: "确定",
+                    handler: function ()
+                    {
+                        $.ajax({
+                            type: "post",
+                            url: "/Staff/ModifyPassword",
+                            data: {
+                                name: $("#name").val(),
+                                email: $("#email").val(),
+                                pwd:$("#pwd").val(),
+                            },
+                            success: function (data)
+                            {
+                                data = eval("(" + data + ")");
+                                var datas = new Array(data.count);
+                                for (var x in data.data)
+                                {
+                                    datas[x] = data.data[x].datakey;
+                                }
+                                if (datas[0] == 1)
+                                {
+                                    window.location.href = "/Staff/Index";
+                                }
+                                else
+                                {
+                                    $("#error").append(datas[1]);
+                                }
+                            }
+                        })
+                        
+                    }
+                }]
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        html {
+            background: url(data:image/gif;base64,R0lGODlhKAAoALMAAO7s7fv5+vr4+e/t7vPx8vLw8fDu7/Xz9Pj29/n3+PTy8/b09ff19vHv8AAAAAAAACH5BAAAAAAALAAAAAAoACgAAAT/sCh0ThpqAJbKTciCJESyMM1iEEPSGEvBGQVSAE1DCLlHMIXFYsCANQ5CA4XQUBhgJEPnMEAwQgrCAaFQFBsMgEBAQGgPjBKy0DAlDMUCerE7oqAVGcJQmTStRC1oA3BlCm0HhwkHAlc5VTI8eWlNL3IMAz+JBAAKbGwLVAoWIkChBw0DbBMJb1wVW181IEw8GQUGAHQdCi48rQsZQyY9XaGaiQsXNToEyocHBgJCYsFHbQ0IOhYwGdFDXaodNqqpHRco2ldCHEyZYE90NI9zOCrYDNM1WiB62UNVsnhisKVJNC8sQhxJMGqAnWxFXLzBpGRIAxmtCGTBUaBRjSoh/xCILPAjGJoLPwqQ5HBoT7ByxJQ461JG2ZFeTFLAycZFGQAXXVZwYKgL2Co3BzomVSDgQpMT0bRpQ2JFAok9zZQlIFihSRAgWToYSEHkHxoEYvgQGMuBAhFgOWoSWxSAC4NRW5yIoBNqyAoJDGKIPaCRASY2HO6KzKfFiQ6PLkPQcgIIRYcyInWMSrJWyUJMPVusCIZJUTQkTpQMwODN1YJsJACOGItE1YCkjTJVuAIDQNITezSCSCNChp4yN60wFElnD5FXNVAoCKbNiQwnhN5MYOmJNkkwQKIFtjsdiEMhYU8QYyMlRjYPAaa0DGygCzwTcDzY0HJkD8kqBHigQP8ncGgDhUo6qANOEKPgtEl6o1AQAhqpUKHEd6AY8ZqEbGQjxQZOFEGQBytUwZIUN20FxhGJHBIKQ0yNxpU2R1wXgxAFZCKAN6/h4AlJa4ExghMoacMEB1F1U4USh7yXhkYUuJAIMShMyccoO4aSIx+GWTCdC0Bw4EEKFjAWwgBCgPFGHmY0MZYMFqGyUVI08LFAJ8qwgKJhLKnwRBsD4XJbCS45o2V4XrTHBx8moAdDETswsagpDFVwQg6WDEXFAk3dEU5SQUwTzDFCMFRTGyR5EuB1oCQAgF1R3PXCIlIgmI4FfwSmg2YvdfFkNESgsGOOMYQh4RMWvgYpGKoksRiKmpI1QMZroYrj4ggwZhGgLuK9UAEBa6kiDSpA1OfDdAKMNZYLQ7hnGI2vbXGCDA4ZEgIdTUxQpg7iakOCRp1QsUc+q8mAIiEqGNxlU2OCK1UOw7hagwygoXCbnVzmhwlDRcABAJppRBcNGOI1wkdIUJLUVDP1/YSSEm22woi2aORUhgHPeRFYPxEAADs=) repeat top left fixed;
+        }
+    </style>
+    <title>信息确认</title>
+</head>
+<body>
+
+    <div id="win">
+        <div class="input">
+            <div class="log">
+                <p id="error" style="margin-top:20px;margin-bottom:-50px;margin-left:80px"></p>
+                <ul>
+                    <li><label class="lable">公司</label><span class="spanText">@s.company.company_Name</span></li>
+                    <li><label  class="lable">姓名</label><input id="name" class="text" type="text"></li>
+                    <li><label  class="lable">邮箱</label><input id="email" class="text" type="text"></li>
+                    <li><label  class="lable">密码</label><input id="pwd" class="text" type="password"></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

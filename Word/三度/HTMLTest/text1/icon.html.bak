@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Themes/Css/sureMsg.css" rel="stylesheet" />
+    <script src="~/Themes/Javascript/sureMsg.js"></script>
+    <title>信息确认</title>
+</head>
+<body>
+    <div class="bigBox">
+        <div class="sure">
+
+        </div>
+    </div>
+</body>
+</html>

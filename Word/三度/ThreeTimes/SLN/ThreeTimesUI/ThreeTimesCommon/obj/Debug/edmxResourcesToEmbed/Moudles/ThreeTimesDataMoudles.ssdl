@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ThreeTimesDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ThreeTimesDBModelStoreContainer">
+    <EntitySet Name="Aamin_T" EntityType="ThreeTimesDBModel.Store.Aamin_T" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Company_T" EntityType="ThreeTimesDBModel.Store.Company_T" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Key_T" EntityType="ThreeTimesDBModel.Store.Key_T" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Question_T" EntityType="ThreeTimesDBModel.Store.Question_T" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="QuestionClass_T" EntityType="ThreeTimesDBModel.Store.QuestionClass_T" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Questionnarire_T" EntityType="ThreeTimesDBModel.Store.Questionnarire_T" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="ThreeTimesDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User_T" EntityType="ThreeTimesDBModel.Store.User_T" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Aamin_T_Company_T" Association="ThreeTimesDBModel.Store.FK_Aamin_T_Company_T">
+      <End Role="Company_T" EntitySet="Company_T" />
+      <End Role="Aamin_T" EntitySet="Aamin_T" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Key_T_User_T" Association="ThreeTimesDBModel.Store.FK_Key_T_User_T">
+      <End Role="User_T" EntitySet="User_T" />
+      <End Role="Key_T" EntitySet="Key_T" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Question_T_QuestionClass_T" Association="ThreeTimesDBModel.Store.FK_Question_T_QuestionClass_T">
+      <End Role="QuestionClass_T" EntitySet="QuestionClass_T" />
+      <End Role="Question_T" EntitySet="Question_T" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Questionnarire_T_Company_T" Association="ThreeTimesDBModel.Store.FK_Questionnarire_T_Company_T">
+      <End Role="Company_T" EntitySet="Company_T" />
+      <End Role="Questionnarire_T" EntitySet="Questionnarire_T" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_T_Company_T" Association="ThreeTimesDBModel.Store.FK_User_T_Company_T">
+      <End Role="Company_T" EntitySet="Company_T" />
+      <End Role="User_T" EntitySet="User_T" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Aamin_T">
+    <Key>
+      <PropertyRef Name="Admin_ID" />
+    </Key>
+    <Property Name="Admin_ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Admin_Username" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Admin_Password" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Admin_TureName" Type="nchar" MaxLength="20" />
+    <Property Name="Admin_Email" Type="nchar" Nullable="false" MaxLength="30" />
+    <Property Name="Admin_PhoneNum" Type="nchar" MaxLength="20" />
+    <Property Name="Admin_OwerCompanyId" Type="bigint" Nullable="false" />
+    <Property Name="Admin_IsAdmin" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Company_T">
+    <Key>
+      <PropertyRef Name="Company_Id" />
+    </Key>
+    <Property Name="Company_Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Company_Name" Type="varchar" MaxLength="50" />
+    <Property Name="Company_Level" Type="int" Nullable="false" />
+    <Property Name="Company_Industry" Type="varchar" MaxLength="30" />
+    <Property Name="Company_Province" Type="varchar" MaxLength="10" />
+    <Property Name="Company_OwerId" Type="bigint" Nullable="false" />
+    <Property Name="Company_State" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Key_T">
+    <Key>
+      <PropertyRef Name="Key_Id" />
+    </Key>
+    <Property Name="Key_Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Key_UserId" Type="bigint" Nullable="false" />
+    <Property Name="Key_QuestionId" Type="bigint" Nullable="false" />
+    <Property Name="Key_Key" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Question_T">
+    <Key>
+      <PropertyRef Name="Question_Id" />
+    </Key>
+    <Property Name="Question_Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Question_Title" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Question_Class" Type="int" Nullable="false" />
+    <Property Name="Question_Option1" Type="varchar" MaxLength="20" />
+    <Property Name="Question_Option2" Type="varchar" MaxLength="20" />
+    <Property Name="Question_Option3" Type="varchar" MaxLength="20" />
+    <Property Name="Question_Option4" Type="varchar" MaxLength="20" />
+    <Property Name="Question_Option5" Type="varchar" MaxLength="20" />
+    <Property Name="Question_Option6" Type="varchar" MaxLength="20" />
+    <Property Name="Question_Option7" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="QuestionClass_T">
+    <Key>
+      <PropertyRef Name="QuestionClass_Id" />
+    </Key>
+    <Property Name="QuestionClass_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="QusetionClass_ClassName" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Questionnarire_T">
+    <Key>
+      <PropertyRef Name="Questionnaire_Id" />
+    </Key>
+    <Property Name="Questionnaire_Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Questionnaire_Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Qusetionnaire_OwerCompany" Type="bigint" Nullable="false" />
+    <Property Name="Questionnaire_Questions" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Questionnaire_BirthTime" Type="datetime" Nullable="false" />
+    <Property Name="Questionnaire_EndTime" Type="datetime" Nullable="false" />
+    <Property Name="Questionnarire_StartTime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User_T">
+    <Key>
+      <PropertyRef Name="User_Id" />
+    </Key>
+    <Property Name="User_Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="User_TrueName" Type="nchar" Nullable="false" MaxLength="30" />
+    <Property Name="User_OwerCompanyId" Type="bigint" Nullable="false" />
+    <Property Name="User_Department" Type="varchar" Nullable="false" MaxLength="30" />
+    <Property Name="User_Email" Type="varchar" Nullable="false" MaxLength="30" />
+    <Property Name="User_Username" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="User_Password" Type="varchar" Nullable="false" MaxLength="30" />
+    <Property Name="User_State" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Aamin_T_Company_T">
+    <End Role="Company_T" Type="ThreeTimesDBModel.Store.Company_T" Multiplicity="1" />
+    <End Role="Aamin_T" Type="ThreeTimesDBModel.Store.Aamin_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_T">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Aamin_T">
+        <PropertyRef Name="Admin_OwerCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Key_T_User_T">
+    <End Role="User_T" Type="ThreeTimesDBModel.Store.User_T" Multiplicity="1" />
+    <End Role="Key_T" Type="ThreeTimesDBModel.Store.Key_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_T">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Key_T">
+        <PropertyRef Name="Key_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Question_T_QuestionClass_T">
+    <End Role="QuestionClass_T" Type="ThreeTimesDBModel.Store.QuestionClass_T" Multiplicity="1" />
+    <End Role="Question_T" Type="ThreeTimesDBModel.Store.Question_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionClass_T">
+        <PropertyRef Name="QuestionClass_Id" />
+      </Principal>
+      <Dependent Role="Question_T">
+        <PropertyRef Name="Question_Class" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Questionnarire_T_Company_T">
+    <End Role="Company_T" Type="ThreeTimesDBModel.Store.Company_T" Multiplicity="1" />
+    <End Role="Questionnarire_T" Type="ThreeTimesDBModel.Store.Questionnarire_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_T">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Questionnarire_T">
+        <PropertyRef Name="Qusetionnaire_OwerCompany" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_T_Company_T">
+    <End Role="Company_T" Type="ThreeTimesDBModel.Store.Company_T" Multiplicity="1" />
+    <End Role="User_T" Type="ThreeTimesDBModel.Store.User_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_T">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="User_T">
+        <PropertyRef Name="User_OwerCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+</Schema>

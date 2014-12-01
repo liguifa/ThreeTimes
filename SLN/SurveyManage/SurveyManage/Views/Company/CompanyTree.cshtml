@@ -1,0 +1,508 @@
+﻿<script>
+    var id = "#" + "@ViewBag.tableId";
+    var data = ("@ViewBag.province").replace(/&quot;/g, "\"");
+    var province = eval("(" + data + ")");
+    var time;
+    var success = false;
+    $(id).ready(function ()
+    {
+        var id = "#" + "@ViewBag.tableId";
+        var editId = "@ViewBag.tableId" + "_edit";
+        var addId = "@ViewBag.tableId" + "_add";
+        var removeId = "@ViewBag.tableId" + "_remove";
+        var saveId = "@ViewBag.tableId" + "_save";
+        var inputId = "@ViewBag.tableId" + "_input";
+        var inputCompanyId = "@ViewBag.tableId" + "_inputCompany";
+        var editid = "#" + editId;
+        var addid = "#" + addId;
+        var removeid = "#" + removeId;
+        var saveid = "#" + saveId;
+        var inputid = "#" + inputId;
+        var inputCompanyid = "#" + inputCompanyId;
+        var isadd = false;
+        var isedit = false;
+        var index = -1;
+        var indexid = 0;
+        var editRow = new Array();
+        var input = "#" + "@ViewBag.input";
+        $(id).treegrid({
+            url: '/Company/GetTreeGridJson/' + companyId,
+            fit: true,
+            method: 'get',
+            rownumbers: true,
+            idField: 'id',
+            treeField: 'text',
+            fitColumns: true,
+            animate: true,
+            toolbar: [{
+                id: editId,
+                iconCls: 'icon-edit',
+                text: '编辑',
+                disabled: true,
+                handler: function ()
+                {
+                    var rows = $(id).treegrid("getSelected");
+                    if (rows.length == 0)
+                    {
+                        $.messager.alert("提示", "你未选择任何一行！");
+                        return;
+                    }
+
+                    for (var i in rows)
+                    {
+                        $(id).treegrid('beginEdit', rows.id);
+                        index = rows.id;
+                        editRow[0] = rows.text;
+                        editRow[1] = rows.province;
+                        editRow[2] = rows.trade;
+                    }
+                    
+                    $(addid).linkbutton('disable');
+                    $(editid).linkbutton('disable');
+                    $(removeid).linkbutton('disable');
+                    $(saveid).linkbutton('enable')
+                    $(inputid).linkbutton('disable');
+                    isadd = false;
+                    isedit = true;
+                }
+            }, '-', {
+                id: addId,
+                iconCls: 'icon-add',
+                text: '添加',
+                disabled: true,
+                handler: function ()
+                {
+
+                    var node = $(id).treegrid('getSelected');
+                    $(id).treegrid('append', {
+                        parent: node.id,  // the node has a 'id' value that defined through 'idField' property
+                        data: [{
+                            id: '0',
+                            departmentnumber: "0",
+                            staffnumber: "0",
+                            iconCls: "icon-company_company"
+                        }]
+                    });
+                    indexid = node.id;
+                    index = "0";
+                    $(id).treegrid('beginEdit', "0");
+
+                    $(addid).linkbutton('disable');
+                    $(editid).linkbutton('disable');
+                    $(removeid).linkbutton('disable');
+                    $(saveid).linkbutton('enable')
+                    $(inputid).linkbutton('disable');
+                    isadd = true;
+                    isedit = false;
+                }
+            }, '-', {
+                id: removeId,
+                iconCls: 'icon-remove',
+                text: '删除',
+                disabled: true,
+                handler: function ()
+                {
+                    if (companyStatus == "1")
+                    {
+                        $.messager.alert("提示", "公司正在调查中，不能删除！", "info");
+                        return null;
+                    }
+                    if (index == companyId)
+                    {
+                        $.messager.alert("提示", "不能删除总公司要删除总公司请到公司管理界面删除......");
+                        return;
+                    }
+                    $.messager.confirm("提示", "你确定要删除该公司？删除该公司则其子公司也将被删除.....", function (r)
+                    {
+                        if (r)
+                        {
+                            $.ajax({
+                                type: "post",
+                                url: "/Company/RemoveCompany/" + companyId,
+                                data: {
+                                    comId: index,
+                                    mark: "remove"
+                                },
+                                success: function (data)
+                                {
+                                    data = eval("(" + data + ")");
+                                    var datas = new Array(data.count);
+                                    for (var x in data.data)
+                                    {
+                                        datas[x] = data.data[x].datakey;
+                                    }
+                                    $.messager.alert("提示", datas[1]);
+                                    $(id).treegrid("remove", index);
+                                    $("#tt").tree("reload", null);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            alert(r);
+                        }
+                    })
+                }
+            }, '-', {
+                id: saveId,
+                iconCls: 'icon-save',
+                text: '保存',
+                disabled: true,
+                handler: function ()
+                {
+                    $(id).treegrid('endEdit', index);
+                    $(editid).linkbutton('enable');
+                    $(addid).linkbutton('enable');
+                    $(removeid).linkbutton('enable');
+                    $(inputid).linkbutton('enable');
+                    $(saveid).linkbutton('disable');
+                    isadd = false;
+                    isedit = false;
+                }
+            }, '-', {
+                id: inputId,
+                iconCls: 'icon-input',
+                text: '导入员工',
+                handler: function ()
+                {
+                    var form = "#" + "@ViewBag.form";
+                    $(input).val("");
+                    $(form).attr("action", "/Company/ImportStaff/" + companyId);
+                    $(input).trigger("click");
+                }
+            }, '-', {
+                id: inputCompanyId,
+                iconCls: 'icon-inductCompany',
+                text: '导入全部公司',
+                handler: function ()
+                {
+                    var form = "#" + "@ViewBag.form";
+                    $(input).val("");
+                    $(form).attr("action", "/Company/ImportCompany/" + companyId);
+                    $(input).trigger("click");
+                }
+            }],
+            onSelect: function (rowIndex, rowData)
+            {
+                if (!(isadd || isedit))
+                {
+                    $(editid).linkbutton('enable');
+                    $(addid).linkbutton('enable');
+                    if (rowIndex.id == companyId)
+                    {
+                        $(removeid).linkbutton('disable');
+                    }
+                    else
+                    {
+                        $(removeid).linkbutton('enable');
+                    }
+                    index = rowIndex.id;
+                }
+                else
+                {
+                    $.messager.confirm("提示", "还有编辑的行未保存，要放弃吗?", function (r)
+                    {
+                        if (r)
+                        {
+                            if (isadd)
+                            {
+                                $(id).treegrid("remove", "0");
+                            }
+                            else
+                            {
+                                $(id).treegrid("cancelEdit", index);
+                            }
+                            isadd = false;
+                            isedit = false;
+                            $(editid).linkbutton('enable');
+                            $(addid).linkbutton('enable');
+                            
+
+                            if (rowIndex.id == companyId)
+                            {
+
+                                $(removeid).linkbutton('disable');
+                            }
+                            else
+                            {
+
+                                $(removeid).linkbutton('enable');
+                            }
+                            index = rowIndex.id;
+                            isadd = false;
+                            isedit = false;
+                        }
+                        else
+                        {
+                            $(saveid).linkbutton("enable");
+                        }
+
+                    });
+                }
+            },
+            onUnselectAll: function ()
+            {
+                $(editid).linkbutton('disable');
+                $(addid).linkbutton('disable');
+                $(removeid).linkbutton('disable');
+                $(saveid).linkbutton('disable');
+            },
+            onAfterEdit: function (row, changes)
+            {
+                if (isadd)
+                {
+
+                    if ((!(changes.text + "" == "" && changes.province + "" == "" && changes.trade + "" == "")) && ((changes.text + "").length <= 32) && ((changes.provice + "").length <= 12) && ((changes.trade + "").length <= 12))
+                    {
+                        $.messager.prompt('提示信息', '请输入公司编号：', function (r)
+                        {
+                            if (r)
+                            {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/Company/AddCompany/" + companyId,
+                                    data: {
+                                        comId: r,
+                                        parentid: indexid,
+                                        name: changes.text,
+                                        province: changes.province,
+                                        trade: changes.trade
+                                    },
+                                    success: function (data)
+                                    {
+                                        data = eval("(" + data + ")");
+                                        var datas = new Array(data.count);
+                                        for (var x in data.data)
+                                        {
+                                            datas[x] = data.data[x].datakey;
+                                        }
+                                        $.messager.alert("提示", datas[1])
+                                        if (datas[0] == "1")
+                                        {
+
+                                            $(id).treegrid('reload');
+                                        }
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                $(id).treegrid('beginEdit', "0");
+
+                                $(addid).linkbutton('disable');
+                                $(editid).linkbutton('disable');
+                                $(removeid).linkbutton('disable');
+                                $(saveid).linkbutton('enable')
+                                $(inputid).linkbutton('disable');
+                                isadd = true;
+                                isedit = false;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $.messager.confirm("提示", "数据不合法!是否放弃?", function (r)
+                        {
+                            if (r)
+                            {
+                                $(id).treegrid("remove", "0");
+                                isadd = false;
+                                isedit = false;
+                            }
+                            else
+                            {
+                                $(id).treegrid('beginEdit', index);
+
+                                $(addid).linkbutton('disable');
+                                $(editid).linkbutton('disable');
+                                $(removeid).linkbutton('disable');
+                                $(saveid).linkbutton('enable')
+                                $(inputid).linkbutton('disable');
+                                isadd = true;
+                                isedit = false;
+                            }
+                        });
+
+                    }
+
+                }
+                else if (isedit)
+                {
+
+                    if (!(changes.text + "" == "undefined" && changes.province + "" == "undefined" && changes.trade + "" == "undefined"))
+                    {
+                        var Id = (changes.companyid + "" == "undefined") ? row.companyid : changes.companyid;
+                        var name = (changes.text + "" == "undefined") ? row.text : changes.text;
+                        var province = (changes.province + "" == "undefined") ? row.province : changes.province;
+                        var trade = (changes.trade + "" == "undefined") ? row.trade : changes.trade;
+
+                        if (name.length <= 32 && province.length <= 12 && trade.length <= 12)
+                        {
+                            $.ajax({
+                                type: "post",
+                                url: "/Company/ModifyCompany/" + companyId,
+                                data: {
+                                    comId: row.id,
+                                    name: name,
+                                    province: province,
+                                    trade: trade
+                                },
+                                success: function (data)
+                                {
+                                    data = eval("(" + data + ")");
+                                    var datas = new Array(data.count);
+                                    for (var x in data.data)
+                                    {
+                                        datas[x] = data.data[x].datakey;
+                                    }
+                                    $.messager.alert("提示", datas[1]);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $.messager.confirm("提示", "数据不合法!是否放弃?", function (r)
+                            {
+                                if (r)
+                                {
+                                    
+                                    $(id).treegrid('update', {
+                                        id: index,
+                                        row: {
+                                            text: editRow[0],
+                                            province: editRow[1],
+                                            trade: editRow[2]
+                                        }
+                                    });
+                                    isadd = false;
+                                    isedit = false;
+                                }
+                                else
+                                {
+                                    $(id).treegrid('beginEdit', index);
+
+                                    $(addid).linkbutton('disable');
+                                    $(editid).linkbutton('disable');
+                                    $(removeid).linkbutton('disable');
+                                    $(saveid).linkbutton('enable')
+                                    $(inputid).linkbutton('disable');
+                                    isadd = false;
+                                    isedit = true;
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+
+        $(input).change(function ()
+        {
+            var input = "#" + "@ViewBag.input";
+            var filename = $(input).val();
+            var fileSuffix = filename.slice(-4, -1) + filename.charAt(filename.length-1);
+            if (fileSuffix=="xlsx"||fileSuffix==".xlt")
+            {
+                var submit = "#" + "@ViewBag.submit";
+                $.messager.progress({
+                    title: '正在执行导入...',
+                    msg: '正在导入，这可能需要几分钟......',
+                    text: '请等待......',
+                    draggable: false
+
+                });
+                time = setInterval("ImportCall()", 500);
+                success = false;
+                $(submit).trigger("click");
+            }
+            else
+            {
+                $.messager.alert("错误", "文件格式不正确！", "error");
+            }
+        });
+    }); 
+    function ImportCall()
+    {
+        var data = $(window.frames["@ViewBag.iframe"].document).find("body").text();
+        if (data != "")
+        {
+            clearInterval(time);
+            $.messager.progress("close");
+            data = eval("(" + data + ")");
+            var datas = new Array(data.count);
+            for (var x in data.data)
+            {
+                datas[x] = data.data[x].datakey;
+            }
+            if (datas[0] != 10&&datas[0]!=11)
+            {
+                $.messager.alert("提示", datas[1],"error");
+            }
+            else if (datas[0] == 11)
+            {
+                $.messager.alert("提示", datas[1], "info");
+            }
+            else
+            {
+                $.messager.confirm("提示", datas[1] + "是否查看失败名单?", function (r)
+                {
+                    if (r)
+                    {
+                        if (datas[2] == "sf")
+                        {
+                            var str = "";
+                            for (var i = 3; i < datas.length; i = i + 5)
+                            {
+                                str += "<tr><td>" + datas[i] + "</td><td>" + datas[i + 1] + "</td><td>" + datas[i + 2] + "</td><td>" + datas[i + 3] + "</td><td>" + datas[i + 4] + "</td></tr>";
+                            }
+                            $('#window').tabs('add', {
+                                title: "失败名单",
+                                fit: true,
+                                closable: true,
+                                content: '<table class="easyui-datagrid" data-options="fit:true,rownumbers:true,fitColumns:true,striped:true"><thead>   <tr>   <th data-options="field:\'name\',width:20">姓名</th>   <th data-options="field:\'email\',width:30">邮箱</th>   <th data-options="field:\'dep\',width:15">部门</th>  <th data-options="field:\'id\',width:20">所属公司编号</th> <th data-options="field:\'error\',width:15">错误</th>  </tr>   </thead>   <tbody>' + str + '</tbody>   </table>  ',
+
+                            });
+                        }
+                        else
+                        {
+                            var str = "";
+                            for (var i = 3; i < datas.length; i = i + 6)
+                            {
+                                str += "<tr><td>" + datas[i] + "</td><td>" + datas[i + 1] + "</td><td>" + datas[i + 2] + "</td><td>" + datas[i + 3] + "</td><td>" + datas[i + 4] + "</td><td>" + datas[i + 5] + "</td></tr>";
+                            }
+                            $('#window').tabs('add', {
+                                title: "失败名单",
+                                fit: true,
+                                closable: true,
+                                content: '<table class="easyui-datagrid" data-options="fit:true,rownumbers:true,fitColumns:true,striped:true"><thead>   <tr>   <th data-options="field:\'id\',width:20">编号</th>   <th data-options="field:\'name\',width:20">名称</th>   <th data-options="field:\'dep\',width:15">行业</th>  <th data-options="field:\'pr\',width:15">省份</th> <th data-options="field:\'ocid\',width:15">所属公司编号</th>  </tr><th data-options="field:\'error\',width:30">错误</th>  </tr>   </thead>   <tbody>' + str + '</tbody>   </table>  ',
+
+                            });
+                        }
+                    }
+                })
+            }
+            var data = $(window.frames["@ViewBag.iframe"].document).find("body").text("");
+        }
+        
+    }
+</script>
+
+
+<table id="@ViewBag.tableId" class="easyui-treegrid table">
+    <thead>
+        <tr>
+            <th data-options="field:'companyid'" width="20">编号</th>
+            <th data-options="field:'text',editor:'validatebox'" width="40" align="left">名称</th>
+            <th data-options="field:'province', editor: {type: 'combobox',options:{ data:province.data,valuefield:'value', textfield:'text' }}" width="20">所属省份</th>
+            <th data-options="field:'trade',editor:'validatebox'" width="30">所属行业</th>
+            <th data-options="field:'departmentnumber'" width="30">部门数</th>
+            <th data-options="field:'staffnumber'" width="30">员工数</th>
+        </tr>
+    </thead>
+</table>
+<form target="@ViewBag.iframe" id="@ViewBag.form" action="/Company/ImportCompany" enctype="multipart/form-data" method="post">
+    <input type="file" id="@ViewBag.input" name="table" style="display:none" accept="text/xlsx" />
+    <input type="submit" id="@ViewBag.submit" style="display:none" />
+</form>
+<iframe name='@ViewBag.iframe' id="@ViewBag.iframe" style="display:none"></iframe>
+

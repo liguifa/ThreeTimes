@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ThreeTimesDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ThreeTimesData" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Aamin_T" EntityType="ThreeTimesDBModel.Admin_T" />
+    <EntitySet Name="Company_T" EntityType="ThreeTimesDBModel.Company_T" />
+    <EntitySet Name="Key_T" EntityType="ThreeTimesDBModel.Key_T" />
+    <EntitySet Name="Question_T" EntityType="ThreeTimesDBModel.Question_T" />
+    <EntitySet Name="QuestionClass_T" EntityType="ThreeTimesDBModel.QuestionClass_T" />
+    <EntitySet Name="Questionnarire_T" EntityType="ThreeTimesDBModel.Questionnarire_T" />
+    <EntitySet Name="sysdiagrams" EntityType="ThreeTimesDBModel.sysdiagrams" />
+    <EntitySet Name="User_T" EntityType="ThreeTimesDBModel.User_T" />
+    <AssociationSet Name="FK_Aamin_T_Company_T" Association="ThreeTimesDBModel.FK_Aamin_T_Company_T">
+      <End Role="Company_T" EntitySet="Company_T" />
+      <End Role="Aamin_T" EntitySet="Aamin_T" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Questionnarire_T_Company_T" Association="ThreeTimesDBModel.FK_Questionnarire_T_Company_T">
+      <End Role="Company_T" EntitySet="Company_T" />
+      <End Role="Questionnarire_T" EntitySet="Questionnarire_T" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_T_Company_T" Association="ThreeTimesDBModel.FK_User_T_Company_T">
+      <End Role="Company_T" EntitySet="Company_T" />
+      <End Role="User_T" EntitySet="User_T" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Key_T_User_T" Association="ThreeTimesDBModel.FK_Key_T_User_T">
+      <End Role="User_T" EntitySet="User_T" />
+      <End Role="Key_T" EntitySet="Key_T" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Question_T_QuestionClass_T" Association="ThreeTimesDBModel.FK_Question_T_QuestionClass_T">
+      <End Role="QuestionClass_T" EntitySet="QuestionClass_T" />
+      <End Role="Question_T" EntitySet="Question_T" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ThreeTimesDBModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ThreeTimesDBModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <EntityType Name="Admin_T">
+    <Key>
+      <PropertyRef Name="Admin_ID" />
+    </Key>
+    <Property Name="Admin_ID" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Admin_Username" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Admin_Password" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Admin_TureName" Type="String" MaxLength="20" Unicode="true" FixedLength="true" />
+    <Property Name="Admin_Email" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="true" />
+    <Property Name="Admin_PhoneNum" Type="String" MaxLength="20" Unicode="true" FixedLength="true" />
+    <Property Name="Admin_OwerCompanyId" Type="Int64" Nullable="false" />
+    <Property Name="Admin_IsAdmin" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Company_T" Relationship="ThreeTimesDBModel.FK_Aamin_T_Company_T" FromRole="Aamin_T" ToRole="Company_T" />
+  </EntityType>
+  <EntityType Name="Company_T">
+    <Key>
+      <PropertyRef Name="Company_Id" />
+    </Key>
+    <Property Name="Company_Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Company_Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Company_Level" Type="Int32" Nullable="false" />
+    <Property Name="Company_Industry" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Company_Province" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="Company_OwerId" Type="Int64" Nullable="false" />
+    <Property Name="Company_State" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Aamin_T" Relationship="ThreeTimesDBModel.FK_Aamin_T_Company_T" FromRole="Company_T" ToRole="Aamin_T" />
+    <NavigationProperty Name="Questionnarire_T" Relationship="ThreeTimesDBModel.FK_Questionnarire_T_Company_T" FromRole="Company_T" ToRole="Questionnarire_T" />
+    <NavigationProperty Name="User_T" Relationship="ThreeTimesDBModel.FK_User_T_Company_T" FromRole="Company_T" ToRole="User_T" />
+  </EntityType>
+  <EntityType Name="Key_T">
+    <Key>
+      <PropertyRef Name="Key_Id" />
+    </Key>
+    <Property Name="Key_Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Key_UserId" Type="Int64" Nullable="false" />
+    <Property Name="Key_QuestionId" Type="Int64" Nullable="false" />
+    <Property Name="Key_Key" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="User_T" Relationship="ThreeTimesDBModel.FK_Key_T_User_T" FromRole="Key_T" ToRole="User_T" />
+  </EntityType>
+  <EntityType Name="Question_T">
+    <Key>
+      <PropertyRef Name="Question_Id" />
+    </Key>
+    <Property Name="Question_Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Question_Title" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Question_Class" Type="Int32" Nullable="false" />
+    <Property Name="Question_Option1" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Question_Option2" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Question_Option3" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Question_Option4" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Question_Option5" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Question_Option6" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Question_Option7" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="QuestionClass_T" Relationship="ThreeTimesDBModel.FK_Question_T_QuestionClass_T" FromRole="Question_T" ToRole="QuestionClass_T" />
+  </EntityType>
+  <EntityType Name="QuestionClass_T">
+    <Key>
+      <PropertyRef Name="QuestionClass_Id" />
+    </Key>
+    <Property Name="QuestionClass_Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="QusetionClass_ClassName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Question_T" Relationship="ThreeTimesDBModel.FK_Question_T_QuestionClass_T" FromRole="QuestionClass_T" ToRole="Question_T" />
+  </EntityType>
+  <EntityType Name="Questionnarire_T">
+    <Key>
+      <PropertyRef Name="Questionnaire_Id" />
+    </Key>
+    <Property Name="Questionnaire_Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Questionnaire_Name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Qusetionnaire_OwerCompany" Type="Int64" Nullable="false" />
+    <Property Name="Questionnaire_Questions" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Questionnaire_BirthTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Questionnaire_EndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Questionnarire_StartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Company_T" Relationship="ThreeTimesDBModel.FK_Questionnarire_T_Company_T" FromRole="Questionnarire_T" ToRole="Company_T" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User_T">
+    <Key>
+      <PropertyRef Name="User_Id" />
+    </Key>
+    <Property Name="User_Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="User_TrueName" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="true" />
+    <Property Name="User_OwerCompanyId" Type="Int64" Nullable="false" />
+    <Property Name="User_Department" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="User_Email" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="User_Username" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="User_Password" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="User_State" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Company_T" Relationship="ThreeTimesDBModel.FK_User_T_Company_T" FromRole="User_T" ToRole="Company_T" />
+    <NavigationProperty Name="Key_T" Relationship="ThreeTimesDBModel.FK_Key_T_User_T" FromRole="User_T" ToRole="Key_T" />
+  </EntityType>
+  <Association Name="FK_Aamin_T_Company_T">
+    <End Role="Company_T" Type="ThreeTimesDBModel.Company_T" Multiplicity="1" />
+    <End Role="Aamin_T" Type="ThreeTimesDBModel.Admin_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_T">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Aamin_T">
+        <PropertyRef Name="Admin_OwerCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Questionnarire_T_Company_T">
+    <End Role="Company_T" Type="ThreeTimesDBModel.Company_T" Multiplicity="1" />
+    <End Role="Questionnarire_T" Type="ThreeTimesDBModel.Questionnarire_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_T">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Questionnarire_T">
+        <PropertyRef Name="Qusetionnaire_OwerCompany" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_T_Company_T">
+    <End Role="Company_T" Type="ThreeTimesDBModel.Company_T" Multiplicity="1" />
+    <End Role="User_T" Type="ThreeTimesDBModel.User_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_T">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="User_T">
+        <PropertyRef Name="User_OwerCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Key_T_User_T">
+    <End Role="User_T" Type="ThreeTimesDBModel.User_T" Multiplicity="1" />
+    <End Role="Key_T" Type="ThreeTimesDBModel.Key_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_T">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Key_T">
+        <PropertyRef Name="Key_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Question_T_QuestionClass_T">
+    <End Role="QuestionClass_T" Type="ThreeTimesDBModel.QuestionClass_T" Multiplicity="1" />
+    <End Role="Question_T" Type="ThreeTimesDBModel.Question_T" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionClass_T">
+        <PropertyRef Name="QuestionClass_Id" />
+      </Principal>
+      <Dependent Role="Question_T">
+        <PropertyRef Name="Question_Class" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

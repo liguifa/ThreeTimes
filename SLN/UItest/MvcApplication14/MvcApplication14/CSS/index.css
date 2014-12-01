@@ -1,0 +1,42 @@
+﻿body {
+}
+
+.list_ul {
+    list-style: none;
+    width: 80%;
+    margin-top: 0px;
+    border: 0px;
+    margin-left: -50px;
+}
+
+.list_li {
+    font-size: 14px;
+    width: 100%;
+    margin: auto;
+    margin-top: 0px;
+    cursor: pointer;
+    padding-left: 55px;
+    border-radius: 5px;
+    -moz-border-radius: 5px; /* Old Firefox */
+    padding-bottom: 10px;
+    padding-top: 6px;
+}
+
+    .list_li:hover {
+        background: #0094ff;
+    }
+
+    .list_li:active {
+        background: #1b0ba1;
+    }
+.welcome {
+    
+    float:right;
+    font-size:larger;
+    margin-right:20px;
+    margin-top:20px;
+}
+.logo {
+    float:left;
+    margin-left:10px;
+}

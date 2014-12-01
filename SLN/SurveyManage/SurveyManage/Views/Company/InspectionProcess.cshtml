@@ -1,0 +1,72 @@
+﻿@using Common.Models;
+<script type="text/javascript">
+    var id = "#" + "@ViewBag.tableid";
+    $(id).ready(function ()
+    {
+        var id = "#" + "@ViewBag.tableid";
+        var isHaveTest = "@ViewBag.isHaveTest";
+        $(id).treegrid({
+            fit: true,
+            rownumbers: true,
+            fitColumns: true,
+            idField: 'Id',
+            treeField: 'name',
+            showFooter: true,
+            url: "/Company/InspectionProcessTree/" + companyId,
+            toolbar: [{
+                iconCls: 'icon-time',
+                text: "调查时间",
+                handler: function ()
+                {
+                    getContextHtml("/Company/SurveyManage/" + companyId, "@ViewBag.id", new Array(0));
+                }
+            }, '-', {
+                iconCls: 'icon-reSend',
+                text: "发送邮件",
+                handler: function ()
+                {
+                    getContextHtml("/Company/SendEmail/" + companyId, "@ViewBag.id", new Array(0));
+                }
+            }, '-', {
+                iconCls: 'icon-speed',
+                text: "调查进度监控",
+                handler: function ()
+                {
+                    getContextHtml("/Company/InspectionProcess/" + companyId, "@ViewBag.id", new Array(0));
+                }
+            }],
+            columns: [[
+                { field: 'id', title: '公司编号', width: 15 },
+                { field: 'name', title: '名称', width: 40 },
+                { field: 'dep', title: '部门', width: 20 },
+                { field: 'staffnumber', title: '总人数', width: 30 },
+                { field: 'startnumber', title: '已完成人数', width: 30 },
+                { field: 'progress', width: 120, formatter: formatProgress, title: "进度", width: 20 }
+            ]]
+        });
+        function formatProgress(value)
+        {
+            if (value)
+            {
+                var s = '<div style="width:100%;border:1px solid #ccc">' +
+                        '<div style="width:' + value + '%;background:#cc0000;color:#fff">' + value + '%' + '</div>'
+                '</div>';
+                return s;
+            } else
+            {
+                return '';
+            }
+        }
+        if (isHaveTest == "False")
+        {
+            $(timeid).linkbutton('disable');
+            $(emailid).linkbutton('disable');
+            $(progressid).linkbutton('disable');
+            $(startid).linkbutton('disable');
+            $(stopid).linkbutton('disable');
+            $.messager.alert("提示", "还未创建问卷无法设置时间！请先创建问卷....");
+        }
+    });
+</script>
+<table id="@ViewBag.tableid"></table>
+

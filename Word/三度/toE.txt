@@ -1,0 +1,32 @@
+  private void InputExcel(string pPath)  
+    {  
+         string conn = "Provider = Microsoft.Jet.OLEDB.4.0 ; Data Source =" + pPath + ";Extended Properties='Excel 8.0;HDR=False;IMEX=1'";  
+        OleDbConnection oleCon = new OleDbConnection(conn);  
+        oleCon.Open();  
+        string Sql = "select * from [Sheet1$]";  
+        OleDbDataAdapter mycommand = new OleDbDataAdapter(Sql, oleCon);  
+        DataSet ds = new DataSet();  
+        mycommand.Fill(ds, "[Sheet1$]");  
+        oleCon.Close();  
+        int count = ds.Tables["[Sheet1$]"].Rows.Count;  
+        for (int i = 0; i < count; i++)  
+        {  
+            string tRealName, tSex, tInClass, tQuestion, tAnswer;  
+            tRealName = ds.Tables["[Sheet1$]"].Rows[i]["姓名"].ToString().Trim();  
+            tSex = ds.Tables["[Sheet1$]"].Rows[i]["性别"].ToString().Trim();  
+            tInClass = ds.Tables["[Sheet1$]"].Rows[i]["班级"].ToString().Trim();  
+            tQuestion = ds.Tables["[Sheet1$]"].Rows[i]["学号"].ToString().Trim();  
+            tAnswer = ds.Tables["[Sheet1$]"].Rows[i]["初始密码"].ToString().Trim();  
+            string excelsql = "insert into tb_Users(RealName, Sex, InClass,Question,Answer) values ('" + tRealName + "','" + tSex + "','" + tInClass + "','" + tQuestion + "','" + tAnswer + "')";  
+            try  
+            {  
+                //导入到SQL Server中  
+                DM dm = new DM();  
+                dm.execsql(excelsql);  
+                Response.Write("<script language='javascript'>Alert('数据导入成功!');window.location='Default.aspx'</script>");  
+            }  
+            catch(Exception)  
+            {  
+                Response.Write("<script language='javascript'>Alert('数据导入失败!');window.location='Default.aspx'</script>");  
+            }  
+        }  

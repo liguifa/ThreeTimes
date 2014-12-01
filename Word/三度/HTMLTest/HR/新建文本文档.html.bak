@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+	<meta charset="utf-8"/>
+    <link href="~/Themes/Css/sureMsg.css" rel="stylesheet" />
+   
+    <script src="EasyUI/jquery.min.js"></script>
+    <script src="EasyUI/jquery.easyui.min.js"></script>
+     <link href="EasyUI/themes/icon.css" rel="stylesheet" />
+    <link href="EasyUI/themes/gray/easyui.css" rel="stylesheet" />
+     <script src="sureMsg.js"></script>
+   
+    <title>三度调查管理系统</title>
+</head>
+<body>
+    
+    <div id="win" >   
+        <ul>
+            <li>ÐÕÃû£º<span class="liText">ÁõºÆ</span></li>
+            <li>¹«Ë¾£º<span class="liText">´óÁ¬¹ú¼ÊÃ³Ò×½»Ò×ÓÐÏÞ¹«Ë¾</li>
+            <li>ÓÊÏä£º<span class="liText">liuhao2050@qq.com</li>
+             <li>µç»°£º<span class="liText">123456</span></li>
+        </ul>  
+</div>  
+</body>
+</html>

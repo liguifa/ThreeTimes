@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ThreeTimesDBModelStoreContainer" CdmEntityContainer="ThreeTimesDBEntities">
+    <EntitySetMapping Name="Aamin_T">
+      <EntityTypeMapping TypeName="ThreeTimesDBModel.Aamin_T">
+        <MappingFragment StoreEntitySet="Aamin_T">
+          <ScalarProperty Name="Admin_ID" ColumnName="Admin_ID" />
+          <ScalarProperty Name="Admin_Username" ColumnName="Admin_Username" />
+          <ScalarProperty Name="Admin_Password" ColumnName="Admin_Password" />
+          <ScalarProperty Name="Admin_TureName" ColumnName="Admin_TureName" />
+          <ScalarProperty Name="Admin_Email" ColumnName="Admin_Email" />
+          <ScalarProperty Name="Admin_PhoneNum" ColumnName="Admin_PhoneNum" />
+          <ScalarProperty Name="Admin_OwerCompanyId" ColumnName="Admin_OwerCompanyId" />
+          <ScalarProperty Name="Admin_IsAdmin" ColumnName="Admin_IsAdmin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Company_T">
+      <EntityTypeMapping TypeName="ThreeTimesDBModel.Company_T">
+        <MappingFragment StoreEntitySet="Company_T">
+          <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+          <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+          <ScalarProperty Name="Company_Level" ColumnName="Company_Level" />
+          <ScalarProperty Name="Company_Industry" ColumnName="Company_Industry" />
+          <ScalarProperty Name="Company_Province" ColumnName="Company_Province" />
+          <ScalarProperty Name="Company_OwerId" ColumnName="Company_OwerId" />
+          <ScalarProperty Name="Company_State" ColumnName="Company_State" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Key_T">
+      <EntityTypeMapping TypeName="ThreeTimesDBModel.Key_T">
+        <MappingFragment StoreEntitySet="Key_T">
+          <ScalarProperty Name="Key_Id" ColumnName="Key_Id" />
+          <ScalarProperty Name="Key_UserId" ColumnName="Key_UserId" />
+          <ScalarProperty Name="Key_QuestionId" ColumnName="Key_QuestionId" />
+          <ScalarProperty Name="Key_Key" ColumnName="Key_Key" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Question_T">
+      <EntityTypeMapping TypeName="ThreeTimesDBModel.Question_T">
+        <MappingFragment StoreEntitySet="Question_T">
+          <ScalarProperty Name="Question_Id" ColumnName="Question_Id" />
+          <ScalarProperty Name="Question_Title" ColumnName="Question_Title" />
+          <ScalarProperty Name="Question_Class" ColumnName="Question_Class" />
+          <ScalarProperty Name="Question_Option1" ColumnName="Question_Option1" />
+          <ScalarProperty Name="Question_Option2" ColumnName="Question_Option2" />
+          <ScalarProperty Name="Question_Option3" ColumnName="Question_Option3" />
+          <ScalarProperty Name="Question_Option4" ColumnName="Question_Option4" />
+          <ScalarProperty Name="Question_Option5" ColumnName="Question_Option5" />
+          <ScalarProperty Name="Question_Option6" ColumnName="Question_Option6" />
+          <ScalarProperty Name="Question_Option7" ColumnName="Question_Option7" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuestionClass_T">
+      <EntityTypeMapping TypeName="ThreeTimesDBModel.QuestionClass_T">
+        <MappingFragment StoreEntitySet="QuestionClass_T">
+          <ScalarProperty Name="QuestionClass_Id" ColumnName="QuestionClass_Id" />
+          <ScalarProperty Name="QusetionClass_ClassName" ColumnName="QusetionClass_ClassName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Questionnarire_T">
+      <EntityTypeMapping TypeName="ThreeTimesDBModel.Questionnarire_T">
+        <MappingFragment StoreEntitySet="Questionnarire_T">
+          <ScalarProperty Name="Questionnaire_Id" ColumnName="Questionnaire_Id" />
+          <ScalarProperty Name="Questionnaire_Name" ColumnName="Questionnaire_Name" />
+          <ScalarProperty Name="Qusetionnaire_OwerCompany" ColumnName="Qusetionnaire_OwerCompany" />
+          <ScalarProperty Name="Questionnaire_Questions" ColumnName="Questionnaire_Questions" />
+          <ScalarProperty Name="Questionnaire_BirthTime" ColumnName="Questionnaire_BirthTime" />
+          <ScalarProperty Name="Questionnaire_EndTime" ColumnName="Questionnaire_EndTime" />
+          <ScalarProperty Name="Questionnarire_StartTime" ColumnName="Questionnarire_StartTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="ThreeTimesDBModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_T">
+      <EntityTypeMapping TypeName="ThreeTimesDBModel.User_T">
+        <MappingFragment StoreEntitySet="User_T">
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="User_TrueName" ColumnName="User_TrueName" />
+          <ScalarProperty Name="User_OwerCompanyId" ColumnName="User_OwerCompanyId" />
+          <ScalarProperty Name="User_Department" ColumnName="User_Department" />
+          <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+          <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+          <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+          <ScalarProperty Name="User_State" ColumnName="User_State" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ThreeTimesDBModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ThreeTimesDBModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ThreeTimesDBModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ThreeTimesDBModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ThreeTimesDBModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ThreeTimesDBModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ThreeTimesDBModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ThreeTimesDBModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ThreeTimesDBModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

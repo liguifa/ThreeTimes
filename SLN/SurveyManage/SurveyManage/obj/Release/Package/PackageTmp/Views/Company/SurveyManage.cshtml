@@ -1,0 +1,180 @@
+﻿@using Common.Models;
+<script type="text/javascript">
+
+    var id = "#" + "@ViewBag.tableid";
+    $(id).ready(function ()
+    {
+        var isHaveTest = "@ViewBag.isHaveTest";
+        var id = "#" + "@ViewBag.tableid";
+        var time = "@ViewBag.tableid" + "_time";
+        var email = "@ViewBag.tableid" + "_email";
+        var progress = "@ViewBag.tableid" + "_progress";
+        var start = "@ViewBag.tableid" + "_start";
+        var stop = "@ViewBag.tableid" + "_stop";
+        var timeid = "#" + time;
+        var emailid = "#" + email;
+        var progressid = "#" + progress;
+        var startid = "#" + start;
+        var stopid = "#" + stop;
+        $(id).datagrid({
+            fit: true,
+            rownumbers: true,
+            fitColumns: true,
+            toolbar: [{
+                id: time,
+                iconCls: 'icon-time',
+                text: "调查时间",
+                handler: function ()
+                {
+                    getContextHtml("/Company/SurveyManage/" + companyId, "@ViewBag.id", new Array(0));
+                }
+            }, '-', {
+                id: email,
+                iconCls: 'icon-reSend',
+                text: "发送邮件",
+                handler: function ()
+                {
+                    getContextHtml("/Company/SendEmail/" + companyId, "@ViewBag.id", new Array(0));
+                }
+            }, '-', {
+                id: progress,
+                iconCls: 'icon-speed',
+                text: "调查进度监控",
+                handler: function ()
+                {
+                    getContextHtml("/Company/InspectionProcess/" + companyId, "@ViewBag.id", new Array(0));
+                }
+            }, '-', {
+                id: start,
+                iconCls: 'icon-start',
+                text: "开始调查",
+                handler: function ()
+                {
+                    $.ajax({
+                        type: "post",
+                        url: "/Company/SetSurveyStatus/" + companyId,
+                        data: {
+                            status:"1"
+                        },
+                        success: function (data)
+                        {
+                            data = eval("(" + data + ")");
+                            var datas = new Array(data.count);
+                            for (var x in data.data)
+                            {
+                                datas[x] = data.data[x].datakey;
+                            }
+                            $.messager.alert("提示", datas[1]);
+                            $(startid).linkbutton('disable'); $(stopid).linkbutton('enable');
+                        }  
+                    });
+                }
+            }, '-', {
+                id: stop,
+                iconCls: 'icon-stop',
+                text: "结束调查",
+                handler: function (data)
+                {
+                    $.ajax({
+                        type: "post",
+                        url: "/Company/SetSurveyStatus/" + companyId,
+                        data: {
+                            status: "2"
+                        },
+                        success: function (data)
+                        {
+                            data = eval("(" + data + ")");
+                            var datas = new Array(data.count);
+                            for (var x in data.data)
+                            {
+                                datas[x] = data.data[x].datakey;
+                            }
+                            $.messager.alert("提示", datas[1]);
+                            $(startid).linkbutton('enable'); $(stopid).linkbutton('disable'); 
+                        }
+                    });
+                }
+            }],
+            columns: [[
+                { field: 'start', title: '开始时间', width: 100, editor: "datebox" },
+                { field: 'end', title: '结束时间', width: 100, editor: "datebox" },
+                { field: 'set', title: '操作', width: 100, align: 'center' }
+            ]],
+            onAfterEdit: function (rowIndex, rowData, changes)
+            {
+                $.ajax({
+                    type: "post",
+                    url: "/Company/SetTime/" + companyId,
+                    data: {
+                        start: changes.start == "undefined" ? rowData.start : changes.start,
+                        end: changes.start == "undefined" ? rowData.end : changes.end
+                    },
+                    success: function (data)
+                    {
+                        data = eval("(" + data + ")");
+                        var datas = new Array(data.count);
+                        for (var x in data.data)
+                        {
+                            datas[x] = data.data[x].datakey;
+                        }
+                        $.messager.alert("提示", datas[1]);
+                    }
+                });
+            }
+
+        });
+        setDate();
+        function setDate()
+        {
+            var mark = true;
+            var setid = "#" + "@ViewBag.setid";
+            $(setid).linkbutton({
+                iconCls: 'icon-set',
+                onClick: function ()
+                {
+                    if (mark)
+                    {
+                        $(id).datagrid("beginEdit", 0);
+                        $(setid).find("span.l-btn-text").text("保存");
+                        mark = false;
+                    }
+                    else
+                    {
+                        $(id).datagrid("endEdit", 0);
+                        mark = true;
+                        setDate();
+                    }
+                }
+            });
+        }
+        switch ("@ViewBag.status")
+        {
+            case "-1": $(startid).linkbutton('disable'); $(stopid).linkbutton('disable'); break;
+            case "0": $(startid).linkbutton('enable'); $(stopid).linkbutton('disable'); break;
+            case "1": $(startid).linkbutton('disable'); $(stopid).linkbutton('enable'); break;
+            case "2": $(startid).linkbutton('enable'); $(stopid).linkbutton('disable'); break;
+        }
+        //if (isHaveTest == "False")
+        //{
+        //    $(timeid).linkbutton('disable');
+        //    $(emailid).linkbutton('disable');
+        //    $(progressid).linkbutton('disable');
+        //    $(startid).linkbutton('disable');
+        //    $(stopid).linkbutton('disable');
+        //    $.messager.alert("提示", "还未创建问卷无法设置时间！请先创建问卷....");
+        //}
+
+
+    });
+</script>
+<table id="@ViewBag.tableid">
+    @foreach (testInfo ti in ViewBag.testInfo)
+    {
+        <tr>
+            <td>@ti.testInfo_StartTime</td>
+            <td>@ti.testInfo_Deadline</td>
+            <td><a id="@ViewBag.setid" href="#">设置</a></td>
+        </tr>
+    }
+</table>
+

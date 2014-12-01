@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SurveyManageDBModelStoreContainer" CdmEntityContainer="SurveyManageDBEntities">
+    <EntitySetMapping Name="admins">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.admin">
+        <MappingFragment StoreEntitySet="admins">
+          <ScalarProperty Name="admin_Id" ColumnName="admin_Id" />
+          <ScalarProperty Name="admin_Username" ColumnName="admin_Username" />
+          <ScalarProperty Name="admin_Password" ColumnName="admin_Password" />
+          <ScalarProperty Name="admin_Email" ColumnName="admin_Email" />
+          <ScalarProperty Name="admin_PhoneNum" ColumnName="admin_PhoneNum" />
+          <ScalarProperty Name="admin_TrueName" ColumnName="admin_TrueName" />
+          <ScalarProperty Name="admin_CompanyID" ColumnName="admin_CompanyID" />
+          <ScalarProperty Name="admin_Power" ColumnName="admin_Power" />
+          <ScalarProperty Name="admin_Spare" ColumnName="admin_Spare" />
+          <ScalarProperty Name="admin_IsDel" ColumnName="admin_IsDel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="classes">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.class">
+        <MappingFragment StoreEntitySet="classes">
+          <ScalarProperty Name="class_Id" ColumnName="class_Id" />
+          <ScalarProperty Name="class_Class" ColumnName="class_Class" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="companys">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.company">
+        <MappingFragment StoreEntitySet="companys">
+          <ScalarProperty Name="company_Id" ColumnName="company_Id" />
+          <ScalarProperty Name="company_Name" ColumnName="company_Name" />
+          <ScalarProperty Name="company_Level" ColumnName="company_Level" />
+          <ScalarProperty Name="company_Trade" ColumnName="company_Trade" />
+          <ScalarProperty Name="company_Province" ColumnName="company_Province" />
+          <ScalarProperty Name="company_OwnerCompany" ColumnName="company_OwnerCompany" />
+          <ScalarProperty Name="company_IsSonIn" ColumnName="company_IsSonIn" />
+          <ScalarProperty Name="company_Status" ColumnName="company_Status" />
+          <ScalarProperty Name="company_Spare" ColumnName="company_Spare" />
+          <ScalarProperty Name="company_IsDel" ColumnName="company_IsDel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="keys">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.key">
+        <MappingFragment StoreEntitySet="keys">
+          <ScalarProperty Name="key_Id" ColumnName="key_Id" />
+          <ScalarProperty Name="key_StaffId" ColumnName="key_StaffId" />
+          <ScalarProperty Name="key_TestInfoId" ColumnName="key_TestInfoId" />
+          <ScalarProperty Name="key_key1" ColumnName="key_key1" />
+          <ScalarProperty Name="key_key2" ColumnName="key_key2" />
+          <ScalarProperty Name="key_key3" ColumnName="key_key3" />
+          <ScalarProperty Name="key_key4" ColumnName="key_key4" />
+          <ScalarProperty Name="key_key5" ColumnName="key_key5" />
+          <ScalarProperty Name="key_key6" ColumnName="key_key6" />
+          <ScalarProperty Name="key_key7" ColumnName="key_key7" />
+          <ScalarProperty Name="key_key8" ColumnName="key_key8" />
+          <ScalarProperty Name="key_key9" ColumnName="key_key9" />
+          <ScalarProperty Name="key_key10" ColumnName="key_key10" />
+          <ScalarProperty Name="key_key11" ColumnName="key_key11" />
+          <ScalarProperty Name="key_key12" ColumnName="key_key12" />
+          <ScalarProperty Name="key_key13" ColumnName="key_key13" />
+          <ScalarProperty Name="key_key14" ColumnName="key_key14" />
+          <ScalarProperty Name="key_key15" ColumnName="key_key15" />
+          <ScalarProperty Name="key_key16" ColumnName="key_key16" />
+          <ScalarProperty Name="key_key17" ColumnName="key_key17" />
+          <ScalarProperty Name="key_key18" ColumnName="key_key18" />
+          <ScalarProperty Name="key_key19" ColumnName="key_key19" />
+          <ScalarProperty Name="key_key20" ColumnName="key_key20" />
+          <ScalarProperty Name="key_key21" ColumnName="key_key21" />
+          <ScalarProperty Name="key_key22" ColumnName="key_key22" />
+          <ScalarProperty Name="key_key23" ColumnName="key_key23" />
+          <ScalarProperty Name="key_key24" ColumnName="key_key24" />
+          <ScalarProperty Name="key_key25" ColumnName="key_key25" />
+          <ScalarProperty Name="key_key26" ColumnName="key_key26" />
+          <ScalarProperty Name="key_key27" ColumnName="key_key27" />
+          <ScalarProperty Name="key_key28" ColumnName="key_key28" />
+          <ScalarProperty Name="key_key29" ColumnName="key_key29" />
+          <ScalarProperty Name="key_key30" ColumnName="key_key30" />
+          <ScalarProperty Name="key_key31" ColumnName="key_key31" />
+          <ScalarProperty Name="key_key32" ColumnName="key_key32" />
+          <ScalarProperty Name="key_key33" ColumnName="key_key33" />
+          <ScalarProperty Name="key_key34" ColumnName="key_key34" />
+          <ScalarProperty Name="key_key35" ColumnName="key_key35" />
+          <ScalarProperty Name="key_key36" ColumnName="key_key36" />
+          <ScalarProperty Name="key_key37" ColumnName="key_key37" />
+          <ScalarProperty Name="key_key38" ColumnName="key_key38" />
+          <ScalarProperty Name="key_key39" ColumnName="key_key39" />
+          <ScalarProperty Name="key_key40" ColumnName="key_key40" />
+          <ScalarProperty Name="key_key41" ColumnName="key_key41" />
+          <ScalarProperty Name="key_key42" ColumnName="key_key42" />
+          <ScalarProperty Name="key_key43" ColumnName="key_key43" />
+          <ScalarProperty Name="key_key44" ColumnName="key_key44" />
+          <ScalarProperty Name="key_key45" ColumnName="key_key45" />
+          <ScalarProperty Name="key_key46" ColumnName="key_key46" />
+          <ScalarProperty Name="key_key47" ColumnName="key_key47" />
+          <ScalarProperty Name="key_key48" ColumnName="key_key48" />
+          <ScalarProperty Name="key_key49" ColumnName="key_key49" />
+          <ScalarProperty Name="key_key50" ColumnName="key_key50" />
+          <ScalarProperty Name="key_key51" ColumnName="key_key51" />
+          <ScalarProperty Name="key_key52" ColumnName="key_key52" />
+          <ScalarProperty Name="key_key53" ColumnName="key_key53" />
+          <ScalarProperty Name="key_key54" ColumnName="key_key54" />
+          <ScalarProperty Name="key_key55" ColumnName="key_key55" />
+          <ScalarProperty Name="key_key56" ColumnName="key_key56" />
+          <ScalarProperty Name="key_key57" ColumnName="key_key57" />
+          <ScalarProperty Name="key_key58" ColumnName="key_key58" />
+          <ScalarProperty Name="key_key59" ColumnName="key_key59" />
+          <ScalarProperty Name="key_key60" ColumnName="key_key60" />
+          <ScalarProperty Name="key_key61" ColumnName="key_key61" />
+          <ScalarProperty Name="key_key62" ColumnName="key_key62" />
+          <ScalarProperty Name="key_key63" ColumnName="key_key63" />
+          <ScalarProperty Name="key_key64" ColumnName="key_key64" />
+          <ScalarProperty Name="key_key65" ColumnName="key_key65" />
+          <ScalarProperty Name="key_key66" ColumnName="key_key66" />
+          <ScalarProperty Name="key_key67" ColumnName="key_key67" />
+          <ScalarProperty Name="key_key68" ColumnName="key_key68" />
+          <ScalarProperty Name="key_key69" ColumnName="key_key69" />
+          <ScalarProperty Name="key_key70" ColumnName="key_key70" />
+          <ScalarProperty Name="key_key71" ColumnName="key_key71" />
+          <ScalarProperty Name="key_key72" ColumnName="key_key72" />
+          <ScalarProperty Name="key_key73" ColumnName="key_key73" />
+          <ScalarProperty Name="key_key74" ColumnName="key_key74" />
+          <ScalarProperty Name="key_key75" ColumnName="key_key75" />
+          <ScalarProperty Name="key_key76" ColumnName="key_key76" />
+          <ScalarProperty Name="key_key77" ColumnName="key_key77" />
+          <ScalarProperty Name="key_key78" ColumnName="key_key78" />
+          <ScalarProperty Name="key_key79" ColumnName="key_key79" />
+          <ScalarProperty Name="key_key80" ColumnName="key_key80" />
+          <ScalarProperty Name="key_key81" ColumnName="key_key81" />
+          <ScalarProperty Name="key_key82" ColumnName="key_key82" />
+          <ScalarProperty Name="key_key83" ColumnName="key_key83" />
+          <ScalarProperty Name="key_key84" ColumnName="key_key84" />
+          <ScalarProperty Name="key_key85" ColumnName="key_key85" />
+          <ScalarProperty Name="key_key86" ColumnName="key_key86" />
+          <ScalarProperty Name="key_key87" ColumnName="key_key87" />
+          <ScalarProperty Name="key_key88" ColumnName="key_key88" />
+          <ScalarProperty Name="key_key89" ColumnName="key_key89" />
+          <ScalarProperty Name="key_key90" ColumnName="key_key90" />
+          <ScalarProperty Name="key_key91" ColumnName="key_key91" />
+          <ScalarProperty Name="key_key92" ColumnName="key_key92" />
+          <ScalarProperty Name="key_key93" ColumnName="key_key93" />
+          <ScalarProperty Name="key_key94" ColumnName="key_key94" />
+          <ScalarProperty Name="key_key95" ColumnName="key_key95" />
+          <ScalarProperty Name="key_key96" ColumnName="key_key96" />
+          <ScalarProperty Name="key_key97" ColumnName="key_key97" />
+          <ScalarProperty Name="key_key98" ColumnName="key_key98" />
+          <ScalarProperty Name="key_key99" ColumnName="key_key99" />
+          <ScalarProperty Name="key_key100" ColumnName="key_key100" />
+          <ScalarProperty Name="key_IsDel" ColumnName="key_IsDel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="questions">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.question">
+        <MappingFragment StoreEntitySet="questions">
+          <ScalarProperty Name="question_Id" ColumnName="question_Id" />
+          <ScalarProperty Name="qusetion_Stem" ColumnName="qusetion_Stem" />
+          <ScalarProperty Name="question_Option1" ColumnName="question_Option1" />
+          <ScalarProperty Name="question_Option2" ColumnName="question_Option2" />
+          <ScalarProperty Name="question_Option3" ColumnName="question_Option3" />
+          <ScalarProperty Name="question_Option4" ColumnName="question_Option4" />
+          <ScalarProperty Name="question_Option5" ColumnName="question_Option5" />
+          <ScalarProperty Name="question_Option6" ColumnName="question_Option6" />
+          <ScalarProperty Name="question_Option7" ColumnName="question_Option7" />
+          <ScalarProperty Name="question_ClassId" ColumnName="question_ClassId" />
+          <ScalarProperty Name="question_Spare" ColumnName="question_Spare" />
+          <ScalarProperty Name="question_IsDel" ColumnName="question_IsDel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="staffs">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.staff">
+        <MappingFragment StoreEntitySet="staffs">
+          <ScalarProperty Name="staff_Id" ColumnName="staff_Id" />
+          <ScalarProperty Name="staff_Username" ColumnName="staff_Username" />
+          <ScalarProperty Name="staff_Password" ColumnName="staff_Password" />
+          <ScalarProperty Name="staff_OwnCompanyId" ColumnName="staff_OwnCompanyId" />
+          <ScalarProperty Name="staff_Email" ColumnName="staff_Email" />
+          <ScalarProperty Name="staff_TrueName" ColumnName="staff_TrueName" />
+          <ScalarProperty Name="staff_Department" ColumnName="staff_Department" />
+          <ScalarProperty Name="staff_IsWrite" ColumnName="staff_IsWrite" />
+          <ScalarProperty Name="staff_Spare" ColumnName="staff_Spare" />
+          <ScalarProperty Name="staff_IsDel" ColumnName="staff_IsDel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="testInfos">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.testInfo">
+        <MappingFragment StoreEntitySet="testInfos">
+          <ScalarProperty Name="testInfo_Id" ColumnName="testInfo_Id" />
+          <ScalarProperty Name="testInfo_Name" ColumnName="testInfo_Name" />
+          <ScalarProperty Name="testInfo_OwnComPanyId" ColumnName="testInfo_OwnComPanyId" />
+          <ScalarProperty Name="testInfo_GenerateTime" ColumnName="testInfo_GenerateTime" />
+          <ScalarProperty Name="testInfo_StartTime" ColumnName="testInfo_StartTime" />
+          <ScalarProperty Name="testInfo_Deadline" ColumnName="testInfo_Deadline" />
+          <ScalarProperty Name="testInfo_Spare" ColumnName="testInfo_Spare" />
+          <ScalarProperty Name="testInfo_IsDel" ColumnName="testInfo_IsDel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tests">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.test">
+        <MappingFragment StoreEntitySet="tests">
+          <ScalarProperty Name="test_Id" ColumnName="test_Id" />
+          <ScalarProperty Name="test_QuestionId" ColumnName="test_QuestionId" />
+          <ScalarProperty Name="test_TestInfoId" ColumnName="test_TestInfoId" />
+          <ScalarProperty Name="test_Spare" ColumnName="test_Spare" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="provinces">
+      <EntityTypeMapping TypeName="SurveyManageDBModel.province">
+        <MappingFragment StoreEntitySet="provinces">
+          <ScalarProperty Name="province_Id" ColumnName="province_Id" />
+          <ScalarProperty Name="province_Name" ColumnName="province_Name" />
+          <ScalarProperty Name="province_Spare" ColumnName="province_Spare" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SurveyManageDBModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SurveyManageDBModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SurveyManageDBModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SurveyManageDBModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SurveyManageDBModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SurveyManageDBModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SurveyManageDBModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SurveyManageDBModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SurveyManageDBModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

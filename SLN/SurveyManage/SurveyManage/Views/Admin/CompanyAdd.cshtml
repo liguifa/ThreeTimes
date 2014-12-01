@@ -1,0 +1,241 @@
+﻿
+
+<div class="addCompany">
+
+    <form action="Admin/CompanyAddPostBack" method="post">
+        <table class="inputTab">
+
+            <thead></thead>
+
+            <tbody>
+                <tr>
+                    <td class="label">公司编号：</td>
+                    <td><input type="text" class="comInput" id='@ViewData["id1"]' /> <br /></td>
+                </tr>
+                <tr>
+                    <td class="label">公司名称：</td>
+                    <td><input type="text" class="comInput" id='@ViewData["id2"]' /></td>
+                </tr>
+                <tr>
+                    <td class="label">所属行业：</td>
+                    <td><input type="text" class="comInput" id='@ViewData["id3"]' /> </td>
+                </tr>
+                <tr>
+                    <td class="label">所属省份：</td>
+                    <td>
+                        <select class="easyui-combobox" id='@ViewData["id4"]'>
+                            @foreach (Common.Models.province p in ViewBag.province)
+                            {
+                                <option value="@p.province_Name">@p.province_Name</option>
+                            }
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">联系人姓名：</td>
+                    <td><input type="text" class="comInput" id='@ViewData["id5"]' /> </td>
+                </tr>
+                <tr>
+                    <td class="label">联系人邮箱：</td>
+                    <td><input type="text" class="comInput" id='@ViewData["id6"]' /> </td>
+                </tr>
+                <tr>
+                    <td class="label">联系人电话：</td>
+                    <td><input type="text" class="comInput" id='@ViewData["id7"]' /> </td>
+                </tr>
+                <tr>
+                    <td class="label">同时发送邮件：</td>
+                    <td>
+                        <select class="easyui-combobox" id='@ViewData["id9"]'>
+
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="button" class="submit sure" id="@ViewData["id8"]">确定</button></td>
+                </tr>
+                
+            </tbody>
+
+        </table>
+
+    </form>
+</div>
+
+<script>
+    $("@ViewData["id"]").ready(function () {
+        var i1 = "#" + '@ViewData["id1"]';
+        var i2 = "#" + '@ViewData["id2"]';
+        var i3 = "#" + '@ViewData["id3"]';
+        var i4 = "#" + '@ViewData["id4"]';
+        var i5 = "#" + '@ViewData["id5"]';
+        var i6 = "#" + '@ViewData["id6"]';
+        var i7 = "#" + '@ViewData["id7"]';
+        var i8 = "#" + '@ViewData["id9"]';
+        $(i4).combobox({
+            width: 205
+        });
+        $(i1).blur(function () {
+
+            $(i1).validatebox({
+                required: true,
+                validType: "Companyid"
+            });
+
+        });
+        $(i2).blur(function () {
+            $(i2).validatebox({
+                required: true,
+                validType: "Companyname"
+            })
+        });
+        $(i3).blur(function () {
+            $(i3).validatebox({
+                required: true,
+            })
+        });
+        $(i4).blur(function () {
+            $(i4).validatebox({
+                required: true,
+            })
+        });
+        $(i5).blur(function () {
+            $(i5).validatebox({
+                required: true,
+            })
+        });
+        $(i6).blur(function () {
+            $(i6).validatebox({
+                required: true,
+                validType: 'email'
+            })
+        });
+        $(i7).blur(function () {
+            $(i7).validatebox({
+                required: true,
+                validType: "Companyphone"
+            })
+        });
+        var submitid = "#" + "@ViewData["id8"]";
+        $(submitid).click(function () {
+            $(i1).validatebox({
+                required: true,
+                validType: "Companyid"
+            });
+            $(i2).validatebox({
+                required: true,
+                validType: "Companyname"
+            });
+            $(i3).validatebox({
+                required: true,
+
+            });
+            $(i4).validatebox({
+                required: true,
+
+            });
+            $(i5).validatebox({
+                required: true,
+
+            });
+            $(i6).validatebox({
+                required: true,
+
+            });
+            $(i7).validatebox({
+                required: true,
+                validType: "Companyphone"
+            });
+            var ok = $(i1).validatebox("isValid") && $(i2).validatebox("isValid") && $(i3).validatebox("isValid") && $(i4).validatebox("isValid") && $(i5).validatebox("isValid") && $(i6).validatebox("isValid") && $(i7).validatebox("isValid");
+            if (ok) {
+                var parameters = new Array();
+                parameters[0] = $(i1).val();
+                parameters[1] = $(i2).val();
+                parameters[2] = $(i3).val();
+                parameters[3] = $(i4).combobox("getText");
+                parameters[4] = $(i5).val();
+                parameters[5] = $(i6).val();
+                parameters[6] = $(i7).val();
+                parameters[7] = $(i8).val();
+                $.ajax({
+                    type: "post",
+                    url: "/Admin/CompanyAddPostBack",
+                    data: {
+                        dataId: '@ViewData["id"]',
+                        parameter0: parameters[0],
+                        parameter1: parameters[1],
+                        parameter2: parameters[2],
+                        parameter3: parameters[3],
+                        parameter4: parameters[4],
+                        parameter5: parameters[5],
+                        parameter6: parameters[6],
+
+                    },
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+
+                        var datas = new Array(data.count);
+                        for (var x in data.data) {
+                            datas[x] = data.data[x].datakey;
+                        }
+                        if (datas[0] == "1")
+                        {
+                            if (parameters[7] == "1")
+                            {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/Admin/SendEmail",
+                                    data: {
+                                        mark: "send",
+                                        id: parameters[0]
+                                    },
+                                    success: function (data)
+                                    {
+                                        data = eval("(" + data + ")");
+                                        var datas = new Array(data.count);
+                                        for (var x in data.data)
+                                        {
+                                            datas[x] = data.data[x].datakey;
+                                        }
+                                        getContextHtml("/Admin/CompanyAdd", "@ViewData["id"]", new Array(0));
+                                        $.messager.confirm("提示", "公司添加成功！是否现在跳转公司管理界面....", function (r)
+                                        {
+                                            if (r)
+                                            {
+                                                window.open("/Company/Index/" + parameters[0]);
+                                            }
+                                        });
+                                        $.messager.alert("提示", datas[1]);
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                getContextHtml("/Admin/CompanyAdd", "@ViewData["id"]", new Array(0));
+                                $.messager.confirm("提示", "公司添加成功！是否现在跳转公司管理界面....", function (r)
+                                {
+                                    if (r)
+                                    {
+                                        window.open("/Company/Index/" + parameters[0]);
+                                    }
+                                });
+
+                            }
+                        }
+                        else {
+                            $.messager.alert("错误", datas[1]);
+                        }
+
+                    }
+                });
+            }
+
+        });
+
+
+    })
+</script>

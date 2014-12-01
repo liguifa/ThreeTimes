@@ -1,0 +1,270 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/img/logo.ico" rel='icon' type=‘image/x-ico’ />
+    <script src="~/EasyUI/jquery.min.js"></script>
+    <script src="~/EasyUI/jquery.easyui.min.js"></script>
+    <script src="~/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <link href="~/EasyUI/themes/icon.css" rel="stylesheet" />
+    <link href="~/CSS/index.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/sunny/easyui.css" rel="stylesheet" />
+    <script src="~/JS/validatebox.js"></script>
+    <script src="~/JS/index.js"></script>
+    <style>
+        #north {
+            background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#FEF8E4));
+        }
+        
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+            perspective: 100px;
+            transform-type: preserve-3d;
+            animation: loader 6s cubic-bezier(0,0,1,1) infinite;
+        }
+
+
+        @@keyframes loader {
+            0% {
+                transform: rotateX(30deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(30deg) rotateZ(-360deg);
+            }
+        }
+
+        /* The dot */
+        .dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 10;
+            width: 20px;
+            height: 20px;
+            margin-top: -90px;
+            margin-left: -10px;
+            border-radius: 10px;
+            background-color: #1e3f57;
+            transform-type: preserve-3d;
+            transform-origin: 50% 90px;
+            transform: rotateZ(30deg);
+            animation: dot1 1.5s cubic-bezier(.6,0,.4,1) infinite;
+        }
+
+            .dot:nth-child(2) {
+                transform: rotateZ(15deg);
+                animation-name: dot2;
+                animation-delay: 150ms;
+                background-color: #2d556d;
+            }
+
+            .dot:nth-child(3) {
+                transform: rotateZ(0deg);
+                animation-name: dot3;
+                animation-delay: 300ms;
+                background-color: #447891;
+            }
+
+            .dot:nth-child(4) {
+                transform: rotateZ(-15deg);
+                animation-name: dot4;
+                animation-delay: 450ms;
+                background-color: #5998b2;
+            }
+
+            .dot:nth-child(5) {
+                transform: rotateZ(-30deg);
+                animation-name: dot5;
+                animation-delay: 600ms;
+                background-color: #6bb2cd;
+            }
+
+        /* Dot animations */
+        @@keyframes dot1 {
+            0% {
+                transform: rotateZ(30deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(390deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot2 {
+            0% {
+                transform: rotateZ(15deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(375deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot3 {
+            0% {
+                transform: rotateZ(0deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(360deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot4 {
+            0% {
+                transform: rotateZ(-15deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(345deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot5 {
+            0% {
+                transform: rotateZ(-30deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(330deg) rotateX(10deg);
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="panel" class="easyui-layout">
+        <div id="north" data-options="region:'north',title:'管理员',split:true,tools:'#time'" style="height: 100px;">
+            <div class="logo">
+                <h1>三度调查管理系统</h1>
+            </div>
+            <span class="welcome">
+                管理员，您好！&nbsp;&nbsp;<a href="/Admin/LogOut">注销</a>
+
+            </span>
+        </div>
+        <div id="time"></div>
+        <div id="south" data-options="region:'south',split:true" style="height: 0px;"></div>
+        <div id="east" data-options="region:'east',split:true" style="width: 0px;"></div>
+        <div id="west" data-options="region:'west',title:'系统功能',split:true" style="width: 220px;" onselectstart="return false">
+            <div id="class" class="easyui-accordion">
+                <div title="客户公司管理" data-options="iconCls:'icon-comp_add'" style="overflow: auto; padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="company_list" class="list_li">
+                            <img src="~/img/list_information.png" /> 公司列表
+                        </li>
+                        <li id="add_company" class="list_li">
+                            <img src="~/img/list_add.png" />添加公司
+                        </li>
+                    </ul>
+                </div>
+                <div title="题库管理" data-options="iconCls:'icon-libm'" style="padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="questionM" class="list_li">
+
+                            <img src="~/img/lib.png" /> 试题管理
+                        </li>
+                        <li id="item_class" class="list_li"><img src="~/img/lists.png" />题库类别管理</li>
+
+
+                    </ul>
+                </div>
+                <div title="系统管理" data-options="iconCls:'icon-sys_setUp'" style="padding: 10px;">
+                    <ul class="list_ul">
+                       
+                        
+                        <li id="clear_data" class="list_li">
+                            <img src="~/img/edit_clear.png" />清除数据
+                        </li>
+                    </ul>
+                </div>
+                <div title="用户管理" data-options="iconCls:'icon-user_manage'" style="padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="modify_pwd" class="list_li"><img src="~/img/gnome_mime_application_pgp_keys.png" />修改密码</li>
+                       @if (ViewBag.isSuperAdmmin)
+                       { 
+                         <li id="admin_administration" class="list_li">
+                            <img src="~/img/personal.png" />管理员管理
+                        </li>
+                       }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-options="region:'center',title:' '" style="background: #eee;">
+            <div id="window" class="easyui-tabs" style="width:500px;height:250px;">
+                <div title="说明" style="padding:20px;display:block;">
+                    
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="search">
+        <input id="ss" class="easyui-searchbox" style="width: 300px"
+               data-options="searcher:qq,prompt:'Please Input Value',menu:'#mm'" />
+
+        <div id="mm" style="width: 120px">
+            <div id="Numbering" data-options="name:'id',iconCls:'icon-ok'">按编号搜索</div>
+            <div id="name" data-options="name:'name'">按名称搜索</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function qq(value, name) {
+            var data = new Array();
+            data[0] = 1;
+            data[1] = 30;
+            data[2] = value;
+            data[4] = name;
+            data[3] = "all";
+            openWindow(value + "的搜索结果", "/Admin/SearchCompany", data);
+        };
+
+        $("#Numbering").click(function () {
+            $('#mm').menu('setIcon', {
+                target: $('#Numbering'),
+                iconCls: 'icon-ok'
+            });
+            $('#mm').menu('setIcon', {
+                target: $('#name'),
+                iconCls: ''
+            });
+
+        });
+        $("#name").click(function () {
+            $('#mm').menu('setIcon', {
+                target: $('#name'),
+                iconCls: 'icon-ok'
+            });
+            $('#mm').menu('setIcon', {
+                target: $('#Numbering'),
+                iconCls: ''
+            });
+        });
+    </script>
+    
+
+    <script src="~/JS/prefixfree.min.js"></script>
+
+</body>
+
+</html>

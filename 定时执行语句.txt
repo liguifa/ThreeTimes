@@ -1,0 +1,17 @@
+declare @totalcount int
+declare @rownum int
+select @totalcount = count(1) from testInfos ;
+set @rownum = 1
+while @rownum <= @totalcount
+    begin
+       update companys set company_Status=1 where company_IsDel=0 and company_Id=(select testInfo_OwnComPanyId from (select testInfo_StartTime,testInfo_OwnComPanyId from (select rank() over (order by testInfo_Id) as id,testInfo_StartTime,testInfo_OwnComPanyId from testInfos where testInfo_IsDel=0) as t where id=@rownum) as t2 where datediff(d,testInfo_StartTime,GETDATE())>=0);
+	   set @rownum=@rownum+1;
+    end;
+
+select @totalcount = count(1) from testInfos ;
+set @rownum = 1
+while @rownum <= @totalcount
+    begin
+       update companys set company_Status=2 where company_IsDel=0 and company_Id=(select testInfo_OwnComPanyId from (select testInfo_StartTime,testInfo_OwnComPanyId from (select rank() over (order by testInfo_Id) as id,testInfo_StartTime,testInfo_OwnComPanyId from testInfos where testInfo_IsDel=0) as t where id=@rownum) as t2 where datediff(d,testInfo_StartTime,GETDATE())<0);
+	   set @rownum=@rownum+1;
+    end;

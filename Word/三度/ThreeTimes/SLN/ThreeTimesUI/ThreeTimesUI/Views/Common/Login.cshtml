@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script src="~/EasyUI/jquery.min.js"></script>
+    <script src="~/EasyUI/jquery.easyui.min.js"></script>
+    <link href="~/EasyUI/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/icon.css" rel="stylesheet" />
+    <script src="~/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Themes/Javascript/Login.js"></script>
+    <link href="~/Themes/Css/Login.css" rel="stylesheet" />
+    
+</head>
+
+<body>
+
+    <div>
+        <div class="loginForm" id="logform">
+            <div class="theme">
+                <h2><strong>三度调查用户登录</strong> </h2>
+            </div>
+            <form autocomplete="off">
+                <ul id="LoginList">
+                    <li><strong>账&nbsp;&nbsp;号&nbsp;&nbsp;</strong><input id="username" class="text" name="username" type="text" placeholder="email"><br /></li>
+                    <li><strong>密&nbsp;&nbsp;码&nbsp;&nbsp;</strong><input class="text" type="password" id="password" name="password" /><br /></li>
+                    <li><strong>验证码</strong><input id="yzmText" type="text" class="yzm" name="yzm" /><img id="yzm" class="yzm" src="#" /></li>
+                </ul>
+                <button type="button" id="sub" class="sub"><strong>登录</strong></button>
+            </form>
+        </div>
+        <div class="foot">
+        </div>
+    </div>
+</body>
+</html>

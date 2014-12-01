@@ -1,0 +1,240 @@
+﻿@using Common.Models;
+<table id="@ViewBag.tableId1" class="easyui-datagrid">
+    @foreach (test t in @ViewBag.tests)
+    {
+        <tr>
+            <td>@t.test_Id</td>
+            <td>@t.question.qusetion_Stem</td>
+            <td>@t.test_Spare</td>
+            <td>@t.question.question_Option1</td>
+            <td>@t.question.question_Option2</td>
+            <td>@t.question.question_Option3</td>
+            <td>@t.question.question_Option4</td>
+            <td>@t.question.question_Option5</td>
+            <td>@t.question.question_Option6</td>
+            <td>@t.question.question_Option7</td>
+        </tr>
+    }
+</table>
+<script>
+    var id = "@ViewBag.id";
+
+    $(document).ready(function () {
+        var Id = "#" + '@ViewBag.tableId1';
+        var testToolbar01 = id + "01";
+        var testToolbar02 = id + "02";
+        var table1 = id + "table1";
+        var allSelect = id + "allSelect";
+        var saveId = id + "saveId";
+        var isAdd = false;
+        var addingRow = null;
+        $(table1).datagrid({
+            fit: true,
+            striped: true,
+            resizeHandle: true,
+            rownumbers: true,
+            fitColumns: true,
+            toolbar: [{
+                id: testToolbar01,
+                iconCls: 'icon-add',
+                text: '添加问题',
+
+                handler: function () {
+                    $(table1).datagrid("clearSelections");
+
+
+                    $(table1).datagrid('insertRow', {
+                        index: 0,
+                        row: {
+                            test_Id: "none",
+                            qusetion_Stem: "",
+                            class_Class: "",
+                            question_Option1: "",
+                            question_Option1: "",
+                            question_Option1: "",
+                            question_Option1: "",
+                            question_Option1: "",
+                            question_Option1: "",
+                            question_Option1: ""
+                        }
+                    });
+
+
+                    $(table1).datagrid('beginEdit', 0);
+                    $(table1).datagrid('selectRow', 0);
+                    addingRow = $(table1).datagrid("getSelected");
+                    isAdd = true;
+                    $(saveId).linkbutton("enable");
+                }
+            }, '-',
+            {
+                id: testToolbar02,
+                iconCls: 'icon-remove',
+                text: '删除问题',
+
+                handler: function ()
+                {
+                    if (companyStatus == "1")
+                    {
+                        $.messager.alert("提示", "公司正在调查中，不能删除！", "info");
+                        return null;
+                    }
+                    var rows = $(Id).datagrid("getSelections");
+                    var length = 0;
+                    var data = "";
+                    for (i in rows) {
+                        data = data + rows[i].test_Id + ",";
+                        length++;
+                    }
+                    if (length < 1) {
+                        $.messager.alert("提示", "请选择删除行！");
+                    }
+                    else {
+                        data = data.substring(0, data.length - 1);
+                        $.ajax({
+                            type: "post",
+                            url: "/Company/DelTests/"+'@ViewBag.topCompanyId',
+                            data: { datas: data },
+                            success: function (data) {
+                                data = eval("(" + data + ")");
+                                if (data.back == "ok") {
+                                    for (var i in rows) {
+
+                                        var index = $(table1).datagrid('getRowIndex', rows[i]);
+                                        $(table1).datagrid('deleteRow', index);
+
+                                    }
+                                    $.messager.alert("提示", "删除完成！");
+                                }
+                                else {
+                                    $.messager.alert("提示", "删除错误" + data.back);
+                                }
+                            }
+                        });
+                    }
+                }
+            }, '-', {
+                id: saveId,
+                iconCls: 'icon-save',
+                text: '保存',
+
+                handler: function () {
+                    if (isAdd == false) {
+                        $.messager.alert("提示", "您还没有在编辑状态！");
+                    }
+                    else {
+                        isAdd = false;
+                        $(table1).datagrid("endEdit", 0);
+
+                        var ok = (addingRow.qusetion_Stem != "") && (addingRow.class_Class != "");
+
+                        var data = addingRow.qusetion_Stem + "#" + addingRow.class_Class + "#" + addingRow.question_Option1 + "#" + addingRow.question_Option2 + "#" + addingRow.question_Option3 + "#" + addingRow.question_Option4 + "#" + addingRow.question_Option5 + "#" + addingRow.question_Option6 + "#" + addingRow.question_Option7;
+                        if (ok) {
+                            $.ajax({
+                                type: "post",
+                                url: "/Company/AddQuestion/" + '@ViewBag.testInfoId',
+                                data: {
+                                    datas: data
+                                },
+                                success: function (data) {
+                                    data = eval("(" + data + ")");
+
+                                    if (data.back == "ok") {
+                                        $.messager.alert("提示", "保存成功");
+                                    }
+                                    else {
+                                        alert("提示", data.back);
+                                        $(table1).datagrid("deleteRow", 0);
+                                    }
+                                }
+
+                            });
+                        }
+                        else {
+                            $.messager.alert("提示", " 问题和类别不可为空！");
+                            $(table1).datagrid("deleteRow", 0);
+                        }
+                    }
+                }
+            }, '-', {
+                id: allSelect,
+                iconCls: 'icon-selectAll',
+                text: '全选',
+                disabled: false,
+                handler: function () {
+                    $(Id).datagrid("selectAll");
+                }
+            }, '-', {
+                id: allSelect,
+                iconCls: 'icon-cancelAll',
+                text: '取消选择',
+                disabled: false,
+                handler: function () {
+
+                    $(Id).datagrid("unselectAll");
+                }
+            }
+            ],
+            columns: [[
+                { field: 'test_Id', title: 'id', hidden: true, width: 100 },
+                { field: 'qusetion_Stem', title: '问题', width: 100, editor: "validatebox" },
+                { field: 'class_Class', title: '类别', width: 100, editor: "validatebox" },
+                { field: 'question_Option1', title: '选项1', width: 20, editor: "validatebox" },
+                { field: 'question_Option2', title: '选项2', width: 20, editor: "validatebox" },
+                { field: 'question_Option3', title: '选项3', width: 20, editor: "validatebox" },
+                { field: 'question_Option4', title: '选项4', width: 20, editor: "validatebox" },
+                { field: 'question_Option5', title: '选项5', width: 20, editor: "validatebox" },
+                { field: 'question_Option6', title: '选项6', width: 20, editor: "validatebox" },
+                { field: 'question_Option7', title: '选项7', width: 20, editor: "validatebox" },
+            ]]
+        });
+        $(table1).datagrid({
+            onSelect: function () {
+                if (isAdd) {
+                    $.messager.confirm("提示", "您还有正在编辑的行，是否保存？", function (r) {
+
+                        if (r) {
+                            isAdd = false;
+                            $(table1).datagrid("endEdit", 0);
+
+                            var ok = (addingRow.qusetion_Stem != "") && (addingRow.class_Class != "");
+
+                            var data = addingRow.qusetion_Stem + "#" + addingRow.class_Class + "#" + addingRow.question_Option1 + "#" + addingRow.question_Option2 + "#" + addingRow.question_Option3 + "#" + addingRow.question_Option4 + "#" + addingRow.question_Option5 + "#" + addingRow.question_Option6 + "#" + addingRow.question_Option7;
+                            if (ok) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/Company/AddQuestion/" + '@ViewBag.testInfoId',
+                                    data: {
+                                        datas: data
+                                    },
+                                    success: function (data) {
+                                        data = eval("(" + data + ")");
+
+                                        if (data.back == "ok") {
+                                            $.messager.alert("提示", "保存成功");
+                                        }
+                                        else {
+                                            $.messager.alert("提示", data.back);
+                                            $(table1).datagrid("deleteRow", 0);
+                                        }
+                                    }
+
+                                });
+                            }
+                            else {
+                                $.messager.alert("提示", " 问题和类别不可为空！");
+                                $(table1).datagrid("deleteRow", 0);
+                            }
+                        }
+                        else {
+                            isAdd = false;
+                            $(table1).datagrid("cancelEdit", 0);
+                            $(table1).datagrid("deleteRow", 0);
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+</script>

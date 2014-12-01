@@ -1,0 +1,202 @@
+﻿@using Common.Models;
+<script type="text/javascript">
+
+    var id = "#" + "@ViewBag.tableid";
+    $(id).ready(function ()
+    {
+        var isHaveTest = "@ViewBag.isHaveTest";
+        var id = "#" + "@ViewBag.tableid";
+        var allSelect = "@ViewBag.tableid" + "_all";
+        var onSelect = "@ViewBag.tableid" + "_on";
+        var reSend = "@ViewBag.tableid" + "_re";
+        var all = "#" + allSelect;
+        var on = "#" + onSelect;
+        var re = "#" + reSend;
+        CreateTable();
+        function CreateTable()
+        {
+
+            $(id).treegrid({
+                fit: true,
+                rownumbers: true,
+                fitColumns: true,
+                idField:"id",
+                toolbar: [{
+                    iconCls: 'icon-time',
+                    text: "调查时间",
+                    handler: function ()
+                    {
+                        getContextHtml("/Company/SurveyManage/" + companyId, "@ViewBag.id", new Array(0));
+                    }
+                }, '-', {
+                    iconCls: 'icon-reSend',
+                    text: "发送邮件",
+                    handler: function ()
+                    {
+                        getContextHtml("/Company/SendEmail/" + companyId, "@ViewBag.id", new Array(0));
+                    }
+                }, '-', {
+                    iconCls: 'icon-speed',
+                    text: "调查进度监控",
+                    handler: function ()
+                    {
+                        getContextHtml("/Company/InspectionProcess/" + companyId, "@ViewBag.id", new Array(0));
+                    }
+                }, '-', {
+                    id: allSelect,
+                    iconCls: 'icon-selectAll',
+                    text: '全选',
+                    disabled: false,
+                    handler: function ()
+                    {
+
+                        $(id).datagrid("selectAll");
+                        $(on).linkbutton('enable');
+                        $(all).linkbutton("disable");
+                        $(re).linkbutton("enable");
+
+
+                    }
+                }, '-', {
+                    id: onSelect,
+                    iconCls: 'icon-cancelAll',
+                    text: '取消选择',
+                    disabled: true,
+                    handler: function ()
+                    {
+
+                        $(id).datagrid("unselectAll");
+                        $(on).linkbutton('disable');
+                        $(all).linkbutton('enable');
+                        $(re).linkbutton("disable");
+                    }
+
+                }, '-', {
+                    id: reSend,
+                    iconCls: 'icon-reSend',
+                    text: "重发邮件",
+                    disabled:true,
+                    handler: function ()
+                    {
+                        if ($(id).datagrid("getSelections").length == 0)
+                        {
+                            $(id).messager.alert("错误", "没有选择一行！", "error");
+                            return;
+                        }
+                        else
+                        {
+                            var rows = $(id).datagrid("getSelections");
+                            var data = "";
+                            for (var i in rows)
+                            {
+                                data = data + rows[i].id + ",";
+                            }
+                            data = data.substring(0, data.length - 1);
+                            $.messager.progress({
+                                title: "正在发送",
+                                text: "这可能需要一些时间"
+                            });
+                            $.ajax({
+                                type: "post",
+                                url: "/Company/ResendEmail/" + companyId,
+                                data: {
+
+                                    datas: data
+                                },
+                                success: function (data)
+                                {
+                                    $.messager.progress('close');
+                                    data = eval("(" + data + ")");
+                                    if (data.state == "ok")
+                                    {
+                                        $.messager.alert("提示", "发送完成！");
+                                    }
+                                    else
+                                    {
+                                        $.messager.alert("警告", data.state + "发送失败！");
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }],
+                columns: [[
+                    { field: 'id', title: '姓名', width: 100,hidden:true },
+                    { field: 'name', title: '姓名', width: 100 },
+                    { field: 'company', title: '公司', width: 100 },
+                    { field: 'dep', title: '部门', width: 100 },
+                    { field: 'email', title: '邮箱', width: 100 }
+                ]],
+                onSelect: function ()
+                {
+                    $(re).linkbutton("enable");
+                },
+                onUnselect: function ()
+                {
+                    if ($(id).datagrid("getSelections").length == 0)
+                    {
+                        $(re).linkbutton("disable");
+                    }
+                }
+            });
+        }
+        if (isHaveTest == "False")
+        {
+            $.messager.alert("提示", "还未创建问卷无法设置时间！请先创建问卷....");
+        }
+        else
+        {
+            $.messager.confirm("提示", "发送邮件可能需要几分钟！", function (r)
+            {
+                if (r)
+                {
+                    $.ajax({
+                        type: "post",
+                        url: "/Company/SendEmailing/" + companyId,
+                        data: {
+                            data: "send",
+                        },
+                        success: function (data)
+                        {
+                            $.messager.progress('close');
+                            data = eval("(" + data + ")");
+                            var datas = new Array();
+                            for (x in data.data)
+                            {
+                                datas[x] = data.data[x].datakey;
+                            }
+                            if (datas[0] == "1")
+                            {
+                                $.messager.alert("提示", datas[1]);
+                            }
+                            else
+                            {
+                                $.messager.alert("提示", datas[1]);
+                                var str = "<tbody>";
+                                for (var i = 2; i < datas.length - 2; i += 5)
+                                {
+                                    str += "<tr><td>" + datas[i] + "</td><td>" + datas[i + 1] + "</td><td>" + datas[i + 2] + "</td><td>" + datas[i + 3] + "</td><td>" + datas[i + 4] + "</td></tr>";
+                                }
+                                str += "</tbody>";
+                                $(id).append(str);
+                                CreateTable();
+                            }
+                        }
+                    });
+                    $.messager.progress({ title: "请等待....", msg: "正在发送邮件！这可能需要几分钟.....", text: "请等待...", interval: 1000 });
+                }
+            });
+        }
+        if (isHaveTest == "False")
+        {
+            $(timeid).linkbutton('disable');
+            $(emailid).linkbutton('disable');
+            $(progressid).linkbutton('disable');
+            $(startid).linkbutton('disable');
+            $(stopid).linkbutton('disable');
+            $.messager.alert("提示", "还未创建问卷无法设置时间！请先创建问卷....");
+        }
+    });
+</script>
+<table id="@ViewBag.tableid"></table>
+

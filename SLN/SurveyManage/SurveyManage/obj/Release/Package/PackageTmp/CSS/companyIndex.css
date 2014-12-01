@@ -1,0 +1,75 @@
+﻿body {
+   
+}
+.com-welcome{
+    float:left;
+    width:220px;
+    height:66px;
+    margin-top:10px;
+    font-family:KaiTi;
+}
+.icons{
+    width:1000px;
+    height:66px;
+    margin-left:170px;
+      -moz-user-select: none; /*火狐*/
+   -webkit-user-select: none;  /*webkit浏览器*/
+   -ms-user-select: none;   /*IE10*/
+   -khtml-user-select: none; /*早期浏览器*/
+   user-select: none;
+}
+.myButton {
+    width: 66px;
+    height: 55px;
+    float:left;
+    margin-left:50px;
+    
+}
+.btnImgDiv{
+   
+    width:50px;
+    height:50px;
+     margin:auto;
+     background: #CC0066 center;
+    border: none;
+    margin-top:5px;
+   
+    border-radius:8px;
+}
+.btnImg {
+     
+   border-radius: 8px;
+    -moz-border-radius: 8px; /* Old Firefox */
+    margin:auto;
+    cursor:pointer;
+}
+
+
+
+.btnImgDiv:active {
+    background-color: #993399;
+    border-radius:8px;
+}
+.btn-text{
+    margin-top:10px;
+    font-family:STSong;
+    font-size:12px;
+    text-align:center;
+    
+}
+.submit {
+    background: #A11E23;
+    color: #fff;
+    border: none;
+    width: 183px;
+    height: 35px;
+    font-family: myFirstFont;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    margin-left: 95px;
+    margin-top: 20px;
+}
+
+
+

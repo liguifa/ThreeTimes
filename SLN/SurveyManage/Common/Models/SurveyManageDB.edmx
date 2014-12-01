@@ -1,0 +1,1107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SurveyManageDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admins">
+          <Key>
+            <PropertyRef Name="admin_Id" />
+          </Key>
+          <Property Name="admin_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="admin_Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="admin_Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="admin_Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="admin_PhoneNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="admin_TrueName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="admin_CompanyID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="admin_Power" Type="int" Nullable="false" />
+          <Property Name="admin_Spare" Type="varchar" MaxLength="50" />
+          <Property Name="admin_IsDel" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="classes">
+          <Key>
+            <PropertyRef Name="class_Id" />
+          </Key>
+          <Property Name="class_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="class_Class" Type="varchar" MaxLength="24" Nullable="false" />
+        </EntityType>
+        <EntityType Name="companys">
+          <Key>
+            <PropertyRef Name="company_Id" />
+          </Key>
+          <Property Name="company_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="company_Name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="company_Level" Type="int" Nullable="false" />
+          <Property Name="company_Trade" Type="varchar" MaxLength="24" />
+          <Property Name="company_Province" Type="varchar" MaxLength="24" />
+          <Property Name="company_OwnerCompany" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="company_IsSonIn" Type="bit" Nullable="false" />
+          <Property Name="company_Status" Type="int" Nullable="false" />
+          <Property Name="company_Spare" Type="varchar" MaxLength="50" />
+          <Property Name="company_IsDel" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="keys">
+          <Key>
+            <PropertyRef Name="key_Id" />
+          </Key>
+          <Property Name="key_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="key_StaffId" Type="bigint" Nullable="false" />
+          <Property Name="key_TestInfoId" Type="bigint" Nullable="false" />
+          <Property Name="key_key1" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key2" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key3" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key4" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key5" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key6" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key7" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key8" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key9" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key10" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key11" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key12" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key13" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key14" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key15" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key16" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key17" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key18" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key19" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key20" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key21" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key22" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key23" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key24" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key25" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key26" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key27" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key28" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key29" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key30" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key31" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key32" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key33" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key34" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key35" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key36" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key37" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key38" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key39" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key40" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key41" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key42" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key43" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key44" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key45" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key46" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key47" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key48" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key49" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key50" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key51" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key52" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key53" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key54" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key55" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key56" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key57" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key58" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key59" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key60" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key61" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key62" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key63" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key64" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key65" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key66" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key67" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key68" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key69" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key70" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key71" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key72" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key73" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key74" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key75" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key76" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key77" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key78" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key79" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key80" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key81" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key82" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key83" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key84" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key85" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key86" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key87" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key88" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key89" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key90" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key91" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key92" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key93" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key94" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key95" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key96" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key97" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key98" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key99" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_key100" Type="nvarchar" MaxLength="20" />
+          <Property Name="key_IsDel" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“SurveyManageDB.dbo.provinces”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="provinces">
+          <Key>
+            <PropertyRef Name="province_Id" />
+            <PropertyRef Name="province_Name" />
+          </Key>
+          <Property Name="province_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="province_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="province_Spare" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="questions">
+          <Key>
+            <PropertyRef Name="question_Id" />
+          </Key>
+          <Property Name="question_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="qusetion_Stem" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="question_Option1" Type="varchar" MaxLength="48" Nullable="false" />
+          <Property Name="question_Option2" Type="varchar" MaxLength="48" Nullable="false" />
+          <Property Name="question_Option3" Type="varchar" MaxLength="48" Nullable="false" />
+          <Property Name="question_Option4" Type="varchar" MaxLength="48" Nullable="false" />
+          <Property Name="question_Option5" Type="varchar" MaxLength="48" Nullable="false" />
+          <Property Name="question_Option6" Type="varchar" MaxLength="48" Nullable="false" />
+          <Property Name="question_Option7" Type="varchar" MaxLength="48" Nullable="false" />
+          <Property Name="question_ClassId" Type="int" Nullable="false" />
+          <Property Name="question_Spare" Type="varchar" MaxLength="50" />
+          <Property Name="question_IsDel" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="staffs">
+          <Key>
+            <PropertyRef Name="staff_Id" />
+          </Key>
+          <Property Name="staff_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="staff_Username" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="staff_Password" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="staff_OwnCompanyId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="staff_Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="staff_TrueName" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="staff_Department" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="staff_IsWrite" Type="bit" Nullable="false" />
+          <Property Name="staff_Spare" Type="varchar(max)" />
+          <Property Name="staff_IsDel" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="testInfos">
+          <Key>
+            <PropertyRef Name="testInfo_Id" />
+          </Key>
+          <Property Name="testInfo_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="testInfo_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="testInfo_OwnComPanyId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="testInfo_GenerateTime" Type="datetime" Nullable="false" />
+          <Property Name="testInfo_StartTime" Type="datetime" Nullable="false" />
+          <Property Name="testInfo_Deadline" Type="datetime" Nullable="false" />
+          <Property Name="testInfo_Spare" Type="varchar" MaxLength="50" />
+          <Property Name="testInfo_IsDel" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tests">
+          <Key>
+            <PropertyRef Name="test_Id" />
+          </Key>
+          <Property Name="test_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="test_QuestionId" Type="bigint" Nullable="false" />
+          <Property Name="test_TestInfoId" Type="bigint" Nullable="false" />
+          <Property Name="test_Spare" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_admins_companys">
+          <End Role="companys" Type="Self.companys" Multiplicity="1" />
+          <End Role="admins" Type="Self.admins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companys">
+              <PropertyRef Name="company_Id" />
+            </Principal>
+            <Dependent Role="admins">
+              <PropertyRef Name="admin_CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_keys_staffs">
+          <End Role="staffs" Type="Self.staffs" Multiplicity="1" />
+          <End Role="keys" Type="Self.keys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staffs">
+              <PropertyRef Name="staff_Id" />
+            </Principal>
+            <Dependent Role="keys">
+              <PropertyRef Name="key_StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_keys_testInfos">
+          <End Role="testInfos" Type="Self.testInfos" Multiplicity="1" />
+          <End Role="keys" Type="Self.keys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="testInfos">
+              <PropertyRef Name="testInfo_Id" />
+            </Principal>
+            <Dependent Role="keys">
+              <PropertyRef Name="key_TestInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_questions_classes">
+          <End Role="classes" Type="Self.classes" Multiplicity="1" />
+          <End Role="questions" Type="Self.questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="classes">
+              <PropertyRef Name="class_Id" />
+            </Principal>
+            <Dependent Role="questions">
+              <PropertyRef Name="question_ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_staffs_companys">
+          <End Role="companys" Type="Self.companys" Multiplicity="1" />
+          <End Role="staffs" Type="Self.staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companys">
+              <PropertyRef Name="company_Id" />
+            </Principal>
+            <Dependent Role="staffs">
+              <PropertyRef Name="staff_OwnCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_testInfos_companys">
+          <End Role="companys" Type="Self.companys" Multiplicity="1" />
+          <End Role="testInfos" Type="Self.testInfos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companys">
+              <PropertyRef Name="company_Id" />
+            </Principal>
+            <Dependent Role="testInfos">
+              <PropertyRef Name="testInfo_OwnComPanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tests_questions">
+          <End Role="questions" Type="Self.questions" Multiplicity="1" />
+          <End Role="tests" Type="Self.tests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="questions">
+              <PropertyRef Name="question_Id" />
+            </Principal>
+            <Dependent Role="tests">
+              <PropertyRef Name="test_QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tests_testInfos">
+          <End Role="testInfos" Type="Self.testInfos" Multiplicity="1" />
+          <End Role="tests" Type="Self.tests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="testInfos">
+              <PropertyRef Name="testInfo_Id" />
+            </Principal>
+            <Dependent Role="tests">
+              <PropertyRef Name="test_TestInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="SurveyManageDBModelStoreContainer">
+          <EntitySet Name="admins" EntityType="Self.admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="classes" EntityType="Self.classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="companys" EntityType="Self.companys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="keys" EntityType="Self.keys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="questions" EntityType="Self.questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="staffs" EntityType="Self.staffs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="testInfos" EntityType="Self.testInfos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tests" EntityType="Self.tests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="provinces" EntityType="Self.provinces" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[provinces].[province_Id] AS [province_Id], 
+[provinces].[province_Name] AS [province_Name], 
+[provinces].[province_Spare] AS [province_Spare]
+FROM [dbo].[provinces] AS [provinces]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_admins_companys" Association="Self.FK_admins_companys">
+            <End Role="companys" EntitySet="companys" />
+            <End Role="admins" EntitySet="admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_keys_staffs" Association="Self.FK_keys_staffs">
+            <End Role="staffs" EntitySet="staffs" />
+            <End Role="keys" EntitySet="keys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_keys_testInfos" Association="Self.FK_keys_testInfos">
+            <End Role="testInfos" EntitySet="testInfos" />
+            <End Role="keys" EntitySet="keys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_questions_classes" Association="Self.FK_questions_classes">
+            <End Role="classes" EntitySet="classes" />
+            <End Role="questions" EntitySet="questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_staffs_companys" Association="Self.FK_staffs_companys">
+            <End Role="companys" EntitySet="companys" />
+            <End Role="staffs" EntitySet="staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_testInfos_companys" Association="Self.FK_testInfos_companys">
+            <End Role="companys" EntitySet="companys" />
+            <End Role="testInfos" EntitySet="testInfos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tests_questions" Association="Self.FK_tests_questions">
+            <End Role="questions" EntitySet="questions" />
+            <End Role="tests" EntitySet="tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tests_testInfos" Association="Self.FK_tests_testInfos">
+            <End Role="testInfos" EntitySet="testInfos" />
+            <End Role="tests" EntitySet="tests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SurveyManageDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="admin_Id" />
+          </Key>
+          <Property Name="admin_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="admin_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admin_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admin_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admin_PhoneNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admin_TrueName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admin_CompanyID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admin_Power" Type="Int32" Nullable="false" />
+          <Property Name="admin_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="admin_IsDel" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="company" Relationship="Self.FK_admins_companys" FromRole="admins" ToRole="companys" />
+        </EntityType>
+        <EntityType Name="class">
+          <Key>
+            <PropertyRef Name="class_Id" />
+          </Key>
+          <Property Name="class_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="class_Class" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="questions" Relationship="Self.FK_questions_classes" FromRole="classes" ToRole="questions" />
+        </EntityType>
+        <EntityType Name="company">
+          <Key>
+            <PropertyRef Name="company_Id" />
+          </Key>
+          <Property Name="company_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="company_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="company_Level" Type="Int32" Nullable="false" />
+          <Property Name="company_Trade" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="company_Province" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="company_OwnerCompany" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="company_IsSonIn" Type="Boolean" Nullable="false" />
+          <Property Name="company_Status" Type="Int32" Nullable="false" />
+          <Property Name="company_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="company_IsDel" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="admins" Relationship="Self.FK_admins_companys" FromRole="companys" ToRole="admins" />
+          <NavigationProperty Name="staffs" Relationship="Self.FK_staffs_companys" FromRole="companys" ToRole="staffs" />
+          <NavigationProperty Name="testInfos" Relationship="Self.FK_testInfos_companys" FromRole="companys" ToRole="testInfos" />
+        </EntityType>
+        <EntityType Name="key">
+          <Key>
+            <PropertyRef Name="key_Id" />
+          </Key>
+          <Property Name="key_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="key_StaffId" Type="Int64" Nullable="false" />
+          <Property Name="key_TestInfoId" Type="Int64" Nullable="false" />
+          <Property Name="key_key1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key3" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key4" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key5" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key6" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key7" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key8" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key9" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key10" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key11" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key12" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key13" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key14" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key15" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key16" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key17" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key18" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key19" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key20" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key21" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key22" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key23" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key24" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key25" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key26" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key27" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key28" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key29" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key30" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key31" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key32" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key33" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key34" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key35" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key36" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key37" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key38" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key39" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key40" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key41" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key42" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key43" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key44" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key45" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key46" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key47" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key48" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key49" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key50" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key51" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key52" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key53" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key54" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key55" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key56" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key57" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key58" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key59" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key60" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key61" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key62" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key63" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key64" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key65" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key66" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key67" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key68" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key69" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key70" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key71" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key72" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key73" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key74" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key75" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key76" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key77" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key78" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key79" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key80" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key81" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key82" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key83" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key84" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key85" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key86" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key87" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key88" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key89" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key90" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key91" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key92" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key93" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key94" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key95" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key96" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key97" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key98" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key99" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_key100" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="key_IsDel" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="staff" Relationship="Self.FK_keys_staffs" FromRole="keys" ToRole="staffs" />
+          <NavigationProperty Name="testInfo" Relationship="Self.FK_keys_testInfos" FromRole="keys" ToRole="testInfos" />
+        </EntityType>
+        <EntityType Name="question">
+          <Key>
+            <PropertyRef Name="question_Id" />
+          </Key>
+          <Property Name="question_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="qusetion_Stem" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_Option1" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_Option2" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_Option3" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_Option4" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_Option5" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_Option6" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_Option7" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_ClassId" Type="Int32" Nullable="false" />
+          <Property Name="question_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="question_IsDel" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="class" Relationship="Self.FK_questions_classes" FromRole="questions" ToRole="classes" />
+          <NavigationProperty Name="tests" Relationship="Self.FK_tests_questions" FromRole="questions" ToRole="tests" />
+        </EntityType>
+        <EntityType Name="staff">
+          <Key>
+            <PropertyRef Name="staff_Id" />
+          </Key>
+          <Property Name="staff_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="staff_Username" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="staff_Password" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="staff_OwnCompanyId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="staff_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="staff_TrueName" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="staff_Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="staff_IsWrite" Type="Boolean" Nullable="false" />
+          <Property Name="staff_Spare" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="staff_IsDel" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="company" Relationship="Self.FK_staffs_companys" FromRole="staffs" ToRole="companys" />
+          <NavigationProperty Name="keys" Relationship="Self.FK_keys_staffs" FromRole="staffs" ToRole="keys" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="testInfo">
+          <Key>
+            <PropertyRef Name="testInfo_Id" />
+          </Key>
+          <Property Name="testInfo_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="testInfo_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="testInfo_OwnComPanyId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="testInfo_GenerateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="testInfo_StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="testInfo_Deadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="testInfo_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="testInfo_IsDel" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="company" Relationship="Self.FK_testInfos_companys" FromRole="testInfos" ToRole="companys" />
+          <NavigationProperty Name="keys" Relationship="Self.FK_keys_testInfos" FromRole="testInfos" ToRole="keys" />
+          <NavigationProperty Name="tests" Relationship="Self.FK_tests_testInfos" FromRole="testInfos" ToRole="tests" />
+        </EntityType>
+        <EntityType Name="test">
+          <Key>
+            <PropertyRef Name="test_Id" />
+          </Key>
+          <Property Name="test_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="test_QuestionId" Type="Int64" Nullable="false" />
+          <Property Name="test_TestInfoId" Type="Int64" Nullable="false" />
+          <Property Name="test_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="question" Relationship="Self.FK_tests_questions" FromRole="tests" ToRole="questions" />
+          <NavigationProperty Name="testInfo" Relationship="Self.FK_tests_testInfos" FromRole="tests" ToRole="testInfos" />
+        </EntityType>
+        <EntityType Name="province">
+          <Key>
+            <PropertyRef Name="province_Id" />
+            <PropertyRef Name="province_Name" />
+          </Key>
+          <Property Name="province_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="province_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="province_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_admins_companys">
+          <End Role="companys" Type="Self.company" Multiplicity="1" />
+          <End Role="admins" Type="Self.admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companys">
+              <PropertyRef Name="company_Id" />
+            </Principal>
+            <Dependent Role="admins">
+              <PropertyRef Name="admin_CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_questions_classes">
+          <End Role="classes" Type="Self.class" Multiplicity="1" />
+          <End Role="questions" Type="Self.question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="classes">
+              <PropertyRef Name="class_Id" />
+            </Principal>
+            <Dependent Role="questions">
+              <PropertyRef Name="question_ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_staffs_companys">
+          <End Role="companys" Type="Self.company" Multiplicity="1" />
+          <End Role="staffs" Type="Self.staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companys">
+              <PropertyRef Name="company_Id" />
+            </Principal>
+            <Dependent Role="staffs">
+              <PropertyRef Name="staff_OwnCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_testInfos_companys">
+          <End Role="companys" Type="Self.company" Multiplicity="1" />
+          <End Role="testInfos" Type="Self.testInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companys">
+              <PropertyRef Name="company_Id" />
+            </Principal>
+            <Dependent Role="testInfos">
+              <PropertyRef Name="testInfo_OwnComPanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_keys_staffs">
+          <End Role="staffs" Type="Self.staff" Multiplicity="1" />
+          <End Role="keys" Type="Self.key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staffs">
+              <PropertyRef Name="staff_Id" />
+            </Principal>
+            <Dependent Role="keys">
+              <PropertyRef Name="key_StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_keys_testInfos">
+          <End Role="testInfos" Type="Self.testInfo" Multiplicity="1" />
+          <End Role="keys" Type="Self.key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="testInfos">
+              <PropertyRef Name="testInfo_Id" />
+            </Principal>
+            <Dependent Role="keys">
+              <PropertyRef Name="key_TestInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tests_questions">
+          <End Role="questions" Type="Self.question" Multiplicity="1" />
+          <End Role="tests" Type="Self.test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="questions">
+              <PropertyRef Name="question_Id" />
+            </Principal>
+            <Dependent Role="tests">
+              <PropertyRef Name="test_QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tests_testInfos">
+          <End Role="testInfos" Type="Self.testInfo" Multiplicity="1" />
+          <End Role="tests" Type="Self.test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="testInfos">
+              <PropertyRef Name="testInfo_Id" />
+            </Principal>
+            <Dependent Role="tests">
+              <PropertyRef Name="test_TestInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SurveyManageDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admins" EntityType="Self.admin" />
+          <EntitySet Name="classes" EntityType="Self.class" />
+          <EntitySet Name="companys" EntityType="Self.company" />
+          <EntitySet Name="keys" EntityType="Self.key" />
+          <EntitySet Name="questions" EntityType="Self.question" />
+          <EntitySet Name="staffs" EntityType="Self.staff" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="testInfos" EntityType="Self.testInfo" />
+          <EntitySet Name="tests" EntityType="Self.test" />
+          <EntitySet Name="provinces" EntityType="Self.province" />
+          <AssociationSet Name="FK_admins_companys" Association="Self.FK_admins_companys">
+            <End Role="companys" EntitySet="companys" />
+            <End Role="admins" EntitySet="admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_questions_classes" Association="Self.FK_questions_classes">
+            <End Role="classes" EntitySet="classes" />
+            <End Role="questions" EntitySet="questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_staffs_companys" Association="Self.FK_staffs_companys">
+            <End Role="companys" EntitySet="companys" />
+            <End Role="staffs" EntitySet="staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_testInfos_companys" Association="Self.FK_testInfos_companys">
+            <End Role="companys" EntitySet="companys" />
+            <End Role="testInfos" EntitySet="testInfos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_keys_staffs" Association="Self.FK_keys_staffs">
+            <End Role="staffs" EntitySet="staffs" />
+            <End Role="keys" EntitySet="keys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_keys_testInfos" Association="Self.FK_keys_testInfos">
+            <End Role="testInfos" EntitySet="testInfos" />
+            <End Role="keys" EntitySet="keys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tests_questions" Association="Self.FK_tests_questions">
+            <End Role="questions" EntitySet="questions" />
+            <End Role="tests" EntitySet="tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tests_testInfos" Association="Self.FK_tests_testInfos">
+            <End Role="testInfos" EntitySet="testInfos" />
+            <End Role="tests" EntitySet="tests" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SurveyManageDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SurveyManageDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SurveyManageDBModelStoreContainer" CdmEntityContainer="SurveyManageDBEntities">
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.admin">
+              <MappingFragment StoreEntitySet="admins">
+                <ScalarProperty Name="admin_Id" ColumnName="admin_Id" />
+                <ScalarProperty Name="admin_Username" ColumnName="admin_Username" />
+                <ScalarProperty Name="admin_Password" ColumnName="admin_Password" />
+                <ScalarProperty Name="admin_Email" ColumnName="admin_Email" />
+                <ScalarProperty Name="admin_PhoneNum" ColumnName="admin_PhoneNum" />
+                <ScalarProperty Name="admin_TrueName" ColumnName="admin_TrueName" />
+                <ScalarProperty Name="admin_CompanyID" ColumnName="admin_CompanyID" />
+                <ScalarProperty Name="admin_Power" ColumnName="admin_Power" />
+                <ScalarProperty Name="admin_Spare" ColumnName="admin_Spare" />
+                <ScalarProperty Name="admin_IsDel" ColumnName="admin_IsDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="classes">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.class">
+              <MappingFragment StoreEntitySet="classes">
+                <ScalarProperty Name="class_Id" ColumnName="class_Id" />
+                <ScalarProperty Name="class_Class" ColumnName="class_Class" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="companys">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.company">
+              <MappingFragment StoreEntitySet="companys">
+                <ScalarProperty Name="company_Id" ColumnName="company_Id" />
+                <ScalarProperty Name="company_Name" ColumnName="company_Name" />
+                <ScalarProperty Name="company_Level" ColumnName="company_Level" />
+                <ScalarProperty Name="company_Trade" ColumnName="company_Trade" />
+                <ScalarProperty Name="company_Province" ColumnName="company_Province" />
+                <ScalarProperty Name="company_OwnerCompany" ColumnName="company_OwnerCompany" />
+                <ScalarProperty Name="company_IsSonIn" ColumnName="company_IsSonIn" />
+                <ScalarProperty Name="company_Status" ColumnName="company_Status" />
+                <ScalarProperty Name="company_Spare" ColumnName="company_Spare" />
+                <ScalarProperty Name="company_IsDel" ColumnName="company_IsDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="keys">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.key">
+              <MappingFragment StoreEntitySet="keys">
+                <ScalarProperty Name="key_Id" ColumnName="key_Id" />
+                <ScalarProperty Name="key_StaffId" ColumnName="key_StaffId" />
+                <ScalarProperty Name="key_TestInfoId" ColumnName="key_TestInfoId" />
+                <ScalarProperty Name="key_key1" ColumnName="key_key1" />
+                <ScalarProperty Name="key_key2" ColumnName="key_key2" />
+                <ScalarProperty Name="key_key3" ColumnName="key_key3" />
+                <ScalarProperty Name="key_key4" ColumnName="key_key4" />
+                <ScalarProperty Name="key_key5" ColumnName="key_key5" />
+                <ScalarProperty Name="key_key6" ColumnName="key_key6" />
+                <ScalarProperty Name="key_key7" ColumnName="key_key7" />
+                <ScalarProperty Name="key_key8" ColumnName="key_key8" />
+                <ScalarProperty Name="key_key9" ColumnName="key_key9" />
+                <ScalarProperty Name="key_key10" ColumnName="key_key10" />
+                <ScalarProperty Name="key_key11" ColumnName="key_key11" />
+                <ScalarProperty Name="key_key12" ColumnName="key_key12" />
+                <ScalarProperty Name="key_key13" ColumnName="key_key13" />
+                <ScalarProperty Name="key_key14" ColumnName="key_key14" />
+                <ScalarProperty Name="key_key15" ColumnName="key_key15" />
+                <ScalarProperty Name="key_key16" ColumnName="key_key16" />
+                <ScalarProperty Name="key_key17" ColumnName="key_key17" />
+                <ScalarProperty Name="key_key18" ColumnName="key_key18" />
+                <ScalarProperty Name="key_key19" ColumnName="key_key19" />
+                <ScalarProperty Name="key_key20" ColumnName="key_key20" />
+                <ScalarProperty Name="key_key21" ColumnName="key_key21" />
+                <ScalarProperty Name="key_key22" ColumnName="key_key22" />
+                <ScalarProperty Name="key_key23" ColumnName="key_key23" />
+                <ScalarProperty Name="key_key24" ColumnName="key_key24" />
+                <ScalarProperty Name="key_key25" ColumnName="key_key25" />
+                <ScalarProperty Name="key_key26" ColumnName="key_key26" />
+                <ScalarProperty Name="key_key27" ColumnName="key_key27" />
+                <ScalarProperty Name="key_key28" ColumnName="key_key28" />
+                <ScalarProperty Name="key_key29" ColumnName="key_key29" />
+                <ScalarProperty Name="key_key30" ColumnName="key_key30" />
+                <ScalarProperty Name="key_key31" ColumnName="key_key31" />
+                <ScalarProperty Name="key_key32" ColumnName="key_key32" />
+                <ScalarProperty Name="key_key33" ColumnName="key_key33" />
+                <ScalarProperty Name="key_key34" ColumnName="key_key34" />
+                <ScalarProperty Name="key_key35" ColumnName="key_key35" />
+                <ScalarProperty Name="key_key36" ColumnName="key_key36" />
+                <ScalarProperty Name="key_key37" ColumnName="key_key37" />
+                <ScalarProperty Name="key_key38" ColumnName="key_key38" />
+                <ScalarProperty Name="key_key39" ColumnName="key_key39" />
+                <ScalarProperty Name="key_key40" ColumnName="key_key40" />
+                <ScalarProperty Name="key_key41" ColumnName="key_key41" />
+                <ScalarProperty Name="key_key42" ColumnName="key_key42" />
+                <ScalarProperty Name="key_key43" ColumnName="key_key43" />
+                <ScalarProperty Name="key_key44" ColumnName="key_key44" />
+                <ScalarProperty Name="key_key45" ColumnName="key_key45" />
+                <ScalarProperty Name="key_key46" ColumnName="key_key46" />
+                <ScalarProperty Name="key_key47" ColumnName="key_key47" />
+                <ScalarProperty Name="key_key48" ColumnName="key_key48" />
+                <ScalarProperty Name="key_key49" ColumnName="key_key49" />
+                <ScalarProperty Name="key_key50" ColumnName="key_key50" />
+                <ScalarProperty Name="key_key51" ColumnName="key_key51" />
+                <ScalarProperty Name="key_key52" ColumnName="key_key52" />
+                <ScalarProperty Name="key_key53" ColumnName="key_key53" />
+                <ScalarProperty Name="key_key54" ColumnName="key_key54" />
+                <ScalarProperty Name="key_key55" ColumnName="key_key55" />
+                <ScalarProperty Name="key_key56" ColumnName="key_key56" />
+                <ScalarProperty Name="key_key57" ColumnName="key_key57" />
+                <ScalarProperty Name="key_key58" ColumnName="key_key58" />
+                <ScalarProperty Name="key_key59" ColumnName="key_key59" />
+                <ScalarProperty Name="key_key60" ColumnName="key_key60" />
+                <ScalarProperty Name="key_key61" ColumnName="key_key61" />
+                <ScalarProperty Name="key_key62" ColumnName="key_key62" />
+                <ScalarProperty Name="key_key63" ColumnName="key_key63" />
+                <ScalarProperty Name="key_key64" ColumnName="key_key64" />
+                <ScalarProperty Name="key_key65" ColumnName="key_key65" />
+                <ScalarProperty Name="key_key66" ColumnName="key_key66" />
+                <ScalarProperty Name="key_key67" ColumnName="key_key67" />
+                <ScalarProperty Name="key_key68" ColumnName="key_key68" />
+                <ScalarProperty Name="key_key69" ColumnName="key_key69" />
+                <ScalarProperty Name="key_key70" ColumnName="key_key70" />
+                <ScalarProperty Name="key_key71" ColumnName="key_key71" />
+                <ScalarProperty Name="key_key72" ColumnName="key_key72" />
+                <ScalarProperty Name="key_key73" ColumnName="key_key73" />
+                <ScalarProperty Name="key_key74" ColumnName="key_key74" />
+                <ScalarProperty Name="key_key75" ColumnName="key_key75" />
+                <ScalarProperty Name="key_key76" ColumnName="key_key76" />
+                <ScalarProperty Name="key_key77" ColumnName="key_key77" />
+                <ScalarProperty Name="key_key78" ColumnName="key_key78" />
+                <ScalarProperty Name="key_key79" ColumnName="key_key79" />
+                <ScalarProperty Name="key_key80" ColumnName="key_key80" />
+                <ScalarProperty Name="key_key81" ColumnName="key_key81" />
+                <ScalarProperty Name="key_key82" ColumnName="key_key82" />
+                <ScalarProperty Name="key_key83" ColumnName="key_key83" />
+                <ScalarProperty Name="key_key84" ColumnName="key_key84" />
+                <ScalarProperty Name="key_key85" ColumnName="key_key85" />
+                <ScalarProperty Name="key_key86" ColumnName="key_key86" />
+                <ScalarProperty Name="key_key87" ColumnName="key_key87" />
+                <ScalarProperty Name="key_key88" ColumnName="key_key88" />
+                <ScalarProperty Name="key_key89" ColumnName="key_key89" />
+                <ScalarProperty Name="key_key90" ColumnName="key_key90" />
+                <ScalarProperty Name="key_key91" ColumnName="key_key91" />
+                <ScalarProperty Name="key_key92" ColumnName="key_key92" />
+                <ScalarProperty Name="key_key93" ColumnName="key_key93" />
+                <ScalarProperty Name="key_key94" ColumnName="key_key94" />
+                <ScalarProperty Name="key_key95" ColumnName="key_key95" />
+                <ScalarProperty Name="key_key96" ColumnName="key_key96" />
+                <ScalarProperty Name="key_key97" ColumnName="key_key97" />
+                <ScalarProperty Name="key_key98" ColumnName="key_key98" />
+                <ScalarProperty Name="key_key99" ColumnName="key_key99" />
+                <ScalarProperty Name="key_key100" ColumnName="key_key100" />
+                <ScalarProperty Name="key_IsDel" ColumnName="key_IsDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="questions">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.question">
+              <MappingFragment StoreEntitySet="questions">
+                <ScalarProperty Name="question_Id" ColumnName="question_Id" />
+                <ScalarProperty Name="qusetion_Stem" ColumnName="qusetion_Stem" />
+                <ScalarProperty Name="question_Option1" ColumnName="question_Option1" />
+                <ScalarProperty Name="question_Option2" ColumnName="question_Option2" />
+                <ScalarProperty Name="question_Option3" ColumnName="question_Option3" />
+                <ScalarProperty Name="question_Option4" ColumnName="question_Option4" />
+                <ScalarProperty Name="question_Option5" ColumnName="question_Option5" />
+                <ScalarProperty Name="question_Option6" ColumnName="question_Option6" />
+                <ScalarProperty Name="question_Option7" ColumnName="question_Option7" />
+                <ScalarProperty Name="question_ClassId" ColumnName="question_ClassId" />
+                <ScalarProperty Name="question_Spare" ColumnName="question_Spare" />
+                <ScalarProperty Name="question_IsDel" ColumnName="question_IsDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="staffs">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.staff">
+              <MappingFragment StoreEntitySet="staffs">
+                <ScalarProperty Name="staff_Id" ColumnName="staff_Id" />
+                <ScalarProperty Name="staff_Username" ColumnName="staff_Username" />
+                <ScalarProperty Name="staff_Password" ColumnName="staff_Password" />
+                <ScalarProperty Name="staff_OwnCompanyId" ColumnName="staff_OwnCompanyId" />
+                <ScalarProperty Name="staff_Email" ColumnName="staff_Email" />
+                <ScalarProperty Name="staff_TrueName" ColumnName="staff_TrueName" />
+                <ScalarProperty Name="staff_Department" ColumnName="staff_Department" />
+                <ScalarProperty Name="staff_IsWrite" ColumnName="staff_IsWrite" />
+                <ScalarProperty Name="staff_Spare" ColumnName="staff_Spare" />
+                <ScalarProperty Name="staff_IsDel" ColumnName="staff_IsDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="testInfos">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.testInfo">
+              <MappingFragment StoreEntitySet="testInfos">
+                <ScalarProperty Name="testInfo_Id" ColumnName="testInfo_Id" />
+                <ScalarProperty Name="testInfo_Name" ColumnName="testInfo_Name" />
+                <ScalarProperty Name="testInfo_OwnComPanyId" ColumnName="testInfo_OwnComPanyId" />
+                <ScalarProperty Name="testInfo_GenerateTime" ColumnName="testInfo_GenerateTime" />
+                <ScalarProperty Name="testInfo_StartTime" ColumnName="testInfo_StartTime" />
+                <ScalarProperty Name="testInfo_Deadline" ColumnName="testInfo_Deadline" />
+                <ScalarProperty Name="testInfo_Spare" ColumnName="testInfo_Spare" />
+                <ScalarProperty Name="testInfo_IsDel" ColumnName="testInfo_IsDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tests">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.test">
+              <MappingFragment StoreEntitySet="tests">
+                <ScalarProperty Name="test_Id" ColumnName="test_Id" />
+                <ScalarProperty Name="test_QuestionId" ColumnName="test_QuestionId" />
+                <ScalarProperty Name="test_TestInfoId" ColumnName="test_TestInfoId" />
+                <ScalarProperty Name="test_Spare" ColumnName="test_Spare" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="provinces">
+            <EntityTypeMapping TypeName="SurveyManageDBModel.province">
+              <MappingFragment StoreEntitySet="provinces">
+                <ScalarProperty Name="province_Id" ColumnName="province_Id" />
+                <ScalarProperty Name="province_Name" ColumnName="province_Name" />
+                <ScalarProperty Name="province_Spare" ColumnName="province_Spare" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SurveyManageDBModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SurveyManageDBModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SurveyManageDBModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SurveyManageDBModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SurveyManageDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SurveyManageDBModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SurveyManageDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SurveyManageDBModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SurveyManageDBModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

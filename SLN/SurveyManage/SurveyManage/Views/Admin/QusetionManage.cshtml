@@ -1,0 +1,271 @@
+﻿<table class="datagrid" id="@ViewBag.table01"></table>
+<script>
+    var id='@ViewBag.id';
+    $(document).ready(function () {
+        var select = "#" + "@ViewBag.select";
+        var table01 = id + "table01";
+        var qToolbar01 = id + "qToolbar01";
+        var qToolbar02 = id + "qToolbar02";
+        var qToolbar03 = id + "qToolbar03";
+        var qToolbar04 = id + "qToolbar04";
+        var isAdding = false;
+        var isEdit = false;
+        var editRow = null;
+        $(table01).datagrid({
+            nowrap: true,
+            fit: true,
+            fitColumns: true,
+            autoRowHeight: false,
+            striped: true,
+            checkOnSelect: true,
+            rownumbers: true,
+            pagination: true,
+            pageNumber: 1,
+            pageSize: 40,//若后台禁用pageList,此只用于显示
+            pageList: [20,40, 60, 80, 1000],
+            loadMsg: '玩命加载中....',
+            url: "/Company/QusetionsJson/1",
+            queryParams: {
+                qClass: "allClass",
+            },
+            toolbar: [{
+                id: qToolbar01,
+                iconCls: 'icon-add',
+                text: '增加',
+
+                handler: function () {
+                    $(table01).datagrid("clearSelections");
+                    $(table01).datagrid('insertRow', {
+                        index: 0,
+                        row: {
+                            ck: "none",
+                            id: "",
+                            q: "",
+                            qclass:"",
+                            o1: "",
+                            o2: "",
+                            o3: "",
+                            o4: "",
+                            o5: "",
+                            o6: "",
+                            o7: "",
+                        }
+                    });
+                    $(table01).datagrid('beginEdit', 0);
+                    isAdding = true;
+                }
+            }, {
+                id: qToolbar02,
+                iconCls: 'icon-remove',
+                text: '删除',
+
+                handler: function () {
+                    $.messager.confirm("警告", "如果修改此题目将会影响该题的全部公司，您确定要修改么？", function (r) {
+                        if (r) {
+                            var rows = $(table01).datagrid("getSelections");
+                            if (rows.length <= 0) {
+                                $.messager.alert("请选择要删除的项！");
+                                return;
+                            }
+                            var data = "";
+                            for (i in rows) {
+                                data = data + rows[i].id + "#";
+                            }
+                            data = data.substring(0, data.length - 1);
+                            $.ajax({
+                                type: "post",
+                                url: "/Questions/DelQuestions",
+                                data: {
+                                    datas: data
+                                },
+                                success: function (data) {
+                                    data = eval("(" + data + ")");
+                                    if (data.back == "ok") {
+                                      
+
+                                        for (var i in rows) {
+
+                                            var index = $(table01).datagrid('getRowIndex', rows[i]);
+                                            $(table01).datagrid('deleteRow', index);
+
+                                        }
+                                        $.messager.alert("提示", "删除完成！");
+                                    }
+                                    else {
+                                        $(table01).datagrid('beginEdit', 0);
+                                        isAdding = true;
+                                    }
+
+                                }
+                            });
+                        }
+                    })
+                  
+                }
+            }, {
+                id: qToolbar03,
+                iconCls: 'icon-edit',
+                text: '修改',
+
+                handler: function () {
+                   var rows= $(table01).datagrid("getSelections");
+                   if(rows.length>1){
+                       $.messager.alert("提示","每次只能修改一行.");
+                       return ;
+                   }
+                   else if(rows.length<=0){
+                       $.messager.alert("提示","请选择要编辑的行。");
+                       return;
+                   }
+                   $.messager.confirm("警告", "如果修改此题目将会影响该题的全部公司，您确定要修改么？", function (r) {
+                       if (r) {
+                           editRow = $(table01).datagrid("getSelected");
+                           var index = $(table01).datagrid("getRowIndex",editRow);
+                           $(table01).datagrid("beginEdit", index);
+                           isEdit = true;
+                       }
+                   });
+
+                }
+            }, {
+                id: qToolbar04,
+                iconCls: 'icon-save',
+                text: '保存',
+
+                handler: function () {
+                    if (isAdding) {
+                        //ADD
+                        $(table01).datagrid("endEdit", 0);
+                        isAdding = false;
+                        $(table01).datagrid("clearSelections");
+                        $(table01).datagrid("selectRow",0);
+                        var row = $(table01).datagrid("getSelected");
+                        
+                        var str = row.q + "#" + row.qclass + "#" + row.o1 + "#" + row.o2 + "#" + row.o3 + "#" + row.o4 + "#" + row.o5 + "#" + row.o6 + "#" + row.o7;
+                     
+                        if ("" +row.q =="") {
+                            $.messager.alert("提示", "问题不可为空");
+                            return;
+                        }
+                        if (("" + row.qclass) == "") {
+                            $.messager.alert("提示", "问题类别不可为空!");
+                            return;
+                        }
+                        $.ajax({
+                            type: "post",
+                            url: "/Questions/AddQuestion",
+                            data: { datas: str },
+                            success:function(data){
+                                data = eval("(" + data + ")");
+                                if (data.back == "ok") {
+                                    $.messager.alert("提示","添加成功！");
+
+                                }
+                                else {
+                                    $.messager.alert("提示", data.back);
+                                    $(table01).datagrid("endEdit", 0);
+                                    $(table01).datagrid("deleteRow", 0);
+                                }
+                            }                           
+                        });
+                    
+
+                    }
+                    else if (isEdit) {
+                      
+                       
+                        var index = $(table01).datagrid("getRowIndex",editRow);
+                        $(table01).datagrid("endEdit", index);
+                        isEdit = false;
+                        var str = editRow.id + "#" + editRow.q + "#" + editRow.qclass + "#" + editRow.o1 + "#" + editRow.o2 + "#" + editRow.o3 + "#" + editRow.o4 + "#" + editRow.o5 + "#" + editRow.o6 + "#" + editRow.o7;
+                        if ("" + editRow.q == "") {
+                            $.messager.alert("提示", "问题不可为空");
+                            return;
+                        }
+                        if (("" + editRow.qclass) == "") {
+                            $.messager.alert("提示", "问题类别不可为空!");
+                            return;
+                        }
+                        $.ajax({
+                            type: "post",
+                            url: "/Questions/Modify",
+                            data: { datas: str },
+                            success: function (data) {
+                                data = eval("(" + data + ")");
+                                if (data.back == "ok") {
+                                    $(table01).datagrid("reload");
+                                    $.messager.alert("提示", "修改成功！");
+                                   
+                                }
+                                else {
+                                    $.messager.alert("提示", data.back);
+                                    $(table01).datagrid("deleteRow", index);
+                                }
+                            }
+
+
+                        });
+                        editRow = null;
+                        
+                    }
+
+                }
+            },
+            ]
+                       ,
+            columns: [[
+                { field: 'ck', checkbox: true, width: 10 },
+                 { field: 'id', title: "id", hidden: true },
+                { field: 'q', title: '问题', width: 30, editor: "validatebox" },
+                { field: 'qclass', title: '类别', width: 6, editor: "validatebox" },
+                { field: 'o1', title: '选项1', width: 10, align: 'center',editor: "validatebox"  },
+                { field: 'o2', title: '选项2', width: 10, align: 'center', editor: "validatebox" },
+                { field: 'o3', title: '选项3', width: 10, align: 'center', editor: "validatebox" },
+                { field: 'o4', title: '选项4', width: 10, align: 'center', editor: "validatebox" },
+                { field: 'o5', title: '选项5', width: 10, align: 'center' ,editor: "validatebox" },
+                { field: 'o6', title: '选项6', width: 10, align: 'center', editor: "validatebox" },
+                { field: 'o7', title: '选项7', width: 10, align: 'center' ,editor: "validatebox" }
+            ]]
+        });
+        $(table01).ready(function ()
+    {
+        var s = ('@ViewBag.options').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"");
+        $(".pagination-info:last").before(s);
+
+        $(select).change(function ()
+        {
+            var value=$(select).val();
+            $(table01).datagrid({
+                queryParams: {
+                    qClass: value,
+                }
+            });
+            $(table01).datagrid("reload")
+            var s = ('@ViewBag.options').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"");
+            $(".pagination-info:last").before(s);
+            $(select).val(value);
+            fun();
+        });
+
+    });
+
+    });
+    
+    function fun() {
+        var select = "#" + "@ViewBag.select";
+        var table01 = id + "table01";
+        $(select).change(function () {
+            var value = $(select).val();
+            $(table01).datagrid({
+                queryParams: {
+                    qClass: $(select).val(),
+                }
+            });
+            $(table01).datagrid("reload")
+            var s = ('@ViewBag.options').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"");
+            $(".pagination-info:last").before(s);
+            $(select).val(value);
+            fun();
+        });
+    }
+</script>

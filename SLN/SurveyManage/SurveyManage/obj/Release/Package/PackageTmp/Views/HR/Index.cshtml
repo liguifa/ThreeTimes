@@ -1,0 +1,240 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="~/img/logo.ico" rel='icon' type=‘image/x-ico’ />
+    <link href="~/EasyUI/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/sunny/easyui.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/icon.css" rel="stylesheet" />
+    <script src="~/EasyUI/jquery.min.js"></script>
+    <link href="~/CSS/companyIndex.css" rel="stylesheet" />
+    <script src="~/EasyUI/jquery.easyui.min.js"></script>
+    <script src="~/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/JS/index.js"></script>
+    <title>@ViewBag.company_Name</title>
+    <style>
+        #north {
+            background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#FEF8E4));
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+            perspective: 100px;
+            transform-type: preserve-3d;
+            animation: loader 6s cubic-bezier(0,0,1,1) infinite;
+        }
+
+
+        @@keyframes loader {
+            0% {
+                transform: rotateX(30deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(30deg) rotateZ(-360deg);
+            }
+        }
+
+        /* The dot */
+        .dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 10;
+            width: 20px;
+            height: 20px;
+            margin-top: -90px;
+            margin-left: -10px;
+            border-radius: 10px;
+            background-color: #1e3f57;
+            transform-type: preserve-3d;
+            transform-origin: 50% 90px;
+            transform: rotateZ(30deg);
+            animation: dot1 1.5s cubic-bezier(.6,0,.4,1) infinite;
+        }
+
+            .dot:nth-child(2) {
+                transform: rotateZ(15deg);
+                animation-name: dot2;
+                animation-delay: 150ms;
+                background-color: #2d556d;
+            }
+
+            .dot:nth-child(3) {
+                transform: rotateZ(0deg);
+                animation-name: dot3;
+                animation-delay: 300ms;
+                background-color: #447891;
+            }
+
+            .dot:nth-child(4) {
+                transform: rotateZ(-15deg);
+                animation-name: dot4;
+                animation-delay: 450ms;
+                background-color: #5998b2;
+            }
+
+            .dot:nth-child(5) {
+                transform: rotateZ(-30deg);
+                animation-name: dot5;
+                animation-delay: 600ms;
+                background-color: #6bb2cd;
+            }
+
+        /* Dot animations */
+        @@keyframes dot1 {
+            0% {
+                transform: rotateZ(30deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(390deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot2 {
+            0% {
+                transform: rotateZ(15deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(375deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot3 {
+            0% {
+                transform: rotateZ(0deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(360deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot4 {
+            0% {
+                transform: rotateZ(-15deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(345deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot5 {
+            0% {
+                transform: rotateZ(-30deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(330deg) rotateX(10deg);
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        var companyId = "@ViewBag.id";
+        $("#tt").ready(function ()
+        {
+            $('#tt').tree({
+                url: '/HR/GetTreeGridJson',
+                method: 'get',
+                animate: true,
+            });
+        });
+        $("#tg").ready(function ()
+        {
+            $("#tg").treegrid({
+                url: '/HR/GetTreeGridJson',
+                fit: true,
+                method: 'get',
+                rownumbers: true,
+                idField: 'id',
+                treeField: 'text',
+                fitColumns: true,
+                animate: true,
+            })
+        });
+        $("#jd").ready(function ()
+        {
+            $("#jd").treegrid({
+                fit: true,
+                rownumbers: true,
+                fitColumns: true,
+                idField: 'Id',
+                treeField: 'name',
+                showFooter: true,
+                url: "/HR/InspectionProcessTree",
+                columns: [[
+                    { field: 'id', title: '公司编号', width: 15 },
+                    { field: 'name', title: '名称', width: 40 },
+                    { field: 'dep', title: '部门', width: 20 },
+                    { field: 'staffnumber', title: '总人数', width: 30 },
+                    { field: 'startnumber', title: '已完成人数', width: 30 },
+                    { field: 'progress', width: 120, formatter: formatProgress, title: "进度", width: 20 }
+                ]]
+            });
+            function formatProgress(value)
+            {
+                if (value)
+                {
+                    var s = '<div style="width:100%;border:1px solid #ccc">' +
+                            '<div style="width:' + value + '%;background:#cc0000;color:#fff">' + value + '%' + '</div>'
+                    '</div>';
+                    return s;
+                } else
+                {
+                    return '';
+                }
+            }
+        });
+    </script>
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'north',title:'@ViewBag.CompanyName',split:true" style="height:120px;">
+    </div>
+    <div data-options="region:'south',split:true" style="height:0px;"></div>
+    <div data-options="region:'east',split:true" style="width:0px;"></div>
+    <div data-options="region:'west',title:'公司结构',split:true" style="width:200px;">
+        <ul id="tt" class="easyui-tree"></ul>
+
+    </div>
+    <div data-options="region:'center',title:'公司管理'" style="background:#eee;">
+        <div id="window" class="easyui-tabs" data-options="fit:'true'">
+            <div title='公司结构'>
+                <table id="tg" class="easyui-treegrid table">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'companyid'" width="10">编号</th>
+                            <th data-options="field:'text'," width="40" align="left">名称</th>
+                            <th data-options="field:'province'," width="20">所属省份</th>
+                            <th data-options="field:'trade'," width="30">所属行业</th>
+                            <th data-options="field:'departmentnumber'" width="30">部门数</th>
+                            <th data-options="field:'staffnumber'" width="30">员工数</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div title='调查进度'>
+                <table id="jd"></table>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="~/JS/prefixfree.min.js"></script>
+</body>
+</html>

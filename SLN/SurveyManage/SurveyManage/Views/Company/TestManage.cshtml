@@ -1,0 +1,464 @@
+﻿@using Common.Models;
+<table id="@ViewBag.tableId1" class="easyui-datagrid"></table>
+<table id="@ViewBag.tableId2" style="width:300px">
+
+    <tr>
+        <td></td>
+        <td>问卷名称：</td>
+        <td>@ViewBag.title</td>
+
+    </tr>
+    <tr>
+        <td></td>
+        <td>公司编号：</td>
+        <td>@ViewBag.comId</td>
+
+    </tr>
+    <tr>
+        <td></td>
+        <td>问卷题数：</td>
+        <td>@ViewBag.totalNum </td>
+
+    </tr>
+    <tr>
+        <td></td>
+        <td>问题种类数：</td>
+        <td>@ViewBag.qclass</td>
+
+    </tr>
+    <tr>
+        <td></td>
+        <td>创建时间：</td>
+        <td>@ViewBag.creatTime</td>
+
+    </tr>
+    <tr>
+        <td></td>
+        <td>开始时间：</td>
+        <td>@ViewBag.startTime</td>
+
+    </tr>
+    <tr>
+        <td></td>
+        <td>结束时间：</td>
+        <td>@ViewBag.deadline</td>
+
+    </tr>
+</table>
+<div id="@ViewBag.win01">
+    <table class="myInputTable" style=" padding-left:180px;padding-top:50px;">
+        <tr>
+            <td>问卷名称：</td>
+            <td></td>
+            <td>
+                <input id="@ViewBag.input01" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>开始时间：</td>
+            <td></td>
+            <td>
+                <input id="@ViewBag.input02" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>结束时间：</td>
+            <td></td>
+            <td>
+                <input id="@ViewBag.input03" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="center" style="padding-top:15px;"><button id="@ViewBag.sub01" type="button" style="width:100px;height:30px;margin:auto">确定</button></td>
+        </tr>
+    </table>
+</div>
+<div id="@ViewBag.win02">
+    <table class="datagrid" id="@ViewBag.tableId3"></table>
+</div>
+<form action="/Company/ImportTests/@ViewBag.topCompanyId" enctype="multipart/form-data" method="post" target="@ViewBag.iframe">
+    <input type="file" id="@ViewBag.input04" name="exFile" accept="text/xlsx" />
+    <input type="submit" id="@ViewBag.sub02" style="display:none" />
+</form>
+<iframe name="@ViewBag.iframe" id="@ViewBag.iframe"></iframe>
+
+
+
+<script>
+
+    var Id = '@ViewBag.id';
+
+    $(document).ready(function ()
+    {
+
+        var tableId1 = "#" + '@ViewBag.tableId1';
+        var tableId2 = "#" + '@ViewBag.tableId2';
+        var tableId3 = "#" + '@ViewBag.tableId3';
+        var testToolbar01 = Id + testToolbar01;
+        var testToolbar02 = Id + testToolbar02;
+        var testToolbar03 = Id + testToolbar03;
+        var testToolbar04 = Id + testToolbar04;
+        var testToolbar05 = Id + testToolbar05;
+        var testToolbar06 = Id + testToolbar06;
+        var testToolbar07 = Id + testToolbar07;
+        var a = Id + "a";
+        var win01 = Id + "win01";
+        var win02 = Id + "win02";
+        var input01 = "#" + '@ViewBag.input01';
+        var input02 = "#" + '@ViewBag.input02';
+        var input03 = "#" + '@ViewBag.input03';
+        var input04 = "#" + '@ViewBag.input04';
+        var sub01 = "#" + '@ViewBag.sub01';
+        var sub02 = "#" + '@ViewBag.sub02';
+        var select = "#" + "@ViewBag.select";
+        
+        $(tableId1).datagrid({
+            striped: true,
+            toolbar: [{
+                id: testToolbar01,
+                iconCls: 'icon-info',
+                text: '查看问卷信息',
+
+                handler: function () { }
+            }, '-', {
+                id: testToolbar02,
+                iconCls: 'icon-creat',
+                text: '新建问卷',
+
+                handler: function ()
+                {
+                    if ('@ViewBag.hastest' == '1')
+                    {
+                        $.messager.alert('提示', '您已经创建了一个问卷，如需重新创建请删除原有问卷！');
+                    } else
+                    {
+                        $(win01).window({
+                            title: "新建问卷",
+                            width: 600,
+                            height: 250,
+                            modal: true,
+                            center: true
+                        });
+                    }
+                }
+            }, '-', {
+                id: testToolbar06,
+                iconCls: 'icon-test_libriary',
+                text: '选择题库题目',
+                handler: function ()
+                {
+                    $(win02).dialog({
+                        title: '选择题库题目',
+                        width: 600,
+                        height: 400,
+
+                        maximizable: true,
+                        closed: false,
+                        cache: false,
+                        modal: true,
+                        maximized: true,
+                        toolbar: [{
+                            id: testToolbar07,
+                            iconCls: 'icon-creat',
+                            text: '添加',
+                            handler: function () {
+                                var rows = $(tableId3).datagrid("getSelections");
+                                var data = "";
+                                if (rows.length <= 0) {
+                                    $.messager.alert("请选择要添加的题目");
+                                }
+                                else {
+                                    for (var i = 0; i < rows.length; i++) {
+                                       data += rows[i].id+"#"
+                                    }
+                                    data = data.substring(0, data.length - 1);
+                                    $.ajax({
+                                        type: "post",
+                                        url: "/Company/AddQuestionToTest/@ViewBag.testInfoId",
+                                        data:{datas:data},
+                                        success: function (data) {
+                                            data = eval("(" + data + ")");
+                                            if (data.back == "ok") {
+                                               $.messager.alert("提示","添加成功！")
+                                            }
+                                            else {
+                                                $.messager.alert("提示", data.back);
+                                            }
+                                        }
+
+                                    });
+                                }
+                            }
+                        }, ]
+                    });
+                    $(tableId3).datagrid({
+                        nowrap: true,
+                        fit: true,
+                        fitColumns: true,
+                        autoRowHeight: false,
+                        striped: true,
+                        checkOnSelect: true,
+                        rownumbers: true,
+                        pagination: true,
+                        pageNumber: 1,
+                        pageSize: 60,//若后台禁用pageList,此只用于显示
+                        pageList: [40, 60, 80, 1000],
+                        loadMsg: '玩命加载中....',
+                        url: "/Company/QusetionsJson/1",
+                        queryParams: {
+                            qClass: "allClass",
+                        }
+
+                        ,
+                        columns: [[
+                            { field: 'ck', checkbox: true, width: 10 },
+                             { field: 'id', title: "id", hidden: true },
+                            { field: 'q', title: '问题', width: 30 },
+                            { field: 'qclass', title: '类别', width: 4 },
+                            { field: 'o1', title: '选项1', width: 10, align: 'center' },
+                            { field: 'o2', title: '选项2', width: 10, align: 'center' },
+                            { field: 'o3', title: '选项3', width: 10, align: 'center' },
+                            { field: 'o4', title: '选项4', width: 10, align: 'center' },
+                            { field: 'o5', title: '选项5', width: 10, align: 'center' },
+                            { field: 'o6', title: '选项6', width: 10, align: 'center' },
+                            { field: 'o7', title: '选项7', width: 10, align: 'center' }
+                        ]]
+                    });
+                    $(tableId3).ready(function ()
+                    {
+                        var s = ('@ViewBag.options').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"");
+                        $(".pagination-info:last").before(s);
+
+                        $(select).change(function ()
+                        {
+                            var value=$(select).val();
+                            $(tableId3).datagrid({
+                                queryParams: {
+                                    qClass: value,
+                                }
+                            });
+                            $(tableId3).datagrid("reload")
+                            var s = ('@ViewBag.options').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"");
+                            $(".pagination-info:last").before(s);
+                            $(select).val(value);
+                            fun();
+                        });
+
+                    });
+
+                }
+            }
+                ,
+            '-', {
+                id: testToolbar03,
+                iconCls: 'icon-input',
+                text: '导入问卷问题',
+
+                handler: function ()
+                {
+                    if ('@ViewBag.hastest' == '0')
+                    {
+                        $.messager.alert('提示', '您还没有创建问卷。');
+                    } else
+                    {
+                        $(input04).val("");
+                        $(input04).trigger("click");
+                    }
+                }
+            }, '-', {
+                id: testToolbar03,
+                iconCls: 'icon-see',
+                text: '查看问卷问题',
+
+                handler: function ()
+                {
+                    if ('@ViewBag.hastest' == '0')
+                    {
+                        $.messager.alert('提示', '您还没有创建问卷。');
+                    } else
+                    {
+                        openWindow("当前问卷问题", "/Company/Test/" + '@ViewBag.topCompanyId', new Array(0));
+                    }
+                }
+            }, '-', {
+                id: testToolbar04,
+                iconCls: 'icon-delete',
+                text: '删除当前问卷',
+
+                handler: function ()
+                {
+                    if (companyStatus == "1")
+                    {
+                        $.messager.alert("提示", "公司正在调查中，不能删除！", "info");
+                        return null;
+                    }
+                    $.messager.confirm("提示", "您确定要删除当前问卷及问卷问题么？", function (r)
+                    {
+                        if (r)
+                        {
+                            $.ajax({
+                                type: "post",
+                                url: "/Company/DelTestInfo/" + '@ViewBag.topCompanyId',
+                                data: {
+
+                                },
+                                success: function (data)
+                                {
+                                    data = eval("(" + data + ")");
+                                    if (data.back == "ok")
+                                    {
+                                        $.messager.alert("提示", "删除成功");
+                                        getContextHtml("/Company/TestManage/" + '@ViewBag.topCompanyId', '@ViewBag.id', new Array(0));
+                                    }
+                                    else
+                                    {
+                                        $.messager.alert("提示", "未知错误，删除失败！");
+                                    }
+                                }
+
+                            });
+                        }
+                    })
+                }
+            }, '-', {
+                id: testToolbar05,
+                iconCls: 'icon-preview2',
+                text: '预览问卷',
+
+                handler: function ()
+                {
+                    window.open("/Company/ScanTest/1/" + companyId);
+                }
+            }
+            ]
+
+        });
+        $(tableId2).propertygrid({
+            fit: true,
+            columns: [[
+             { field: 'code', title: "问卷信息", width: 10 },
+             { field: 'name', width: 100 },
+
+            ]]
+        });
+
+        $(a).linkbutton({
+            iconCls: 'icon-edit'
+        });
+        $(input01).validatebox({
+            required: true,
+
+        });
+        $(input02).datebox({
+            required: true,
+
+        });
+        $(input03).datebox({
+            required: true
+        });
+        $(sub01).click(function ()
+        {
+
+            var ok = ($(input01).validatebox("isValid")) && ($(input01).validatebox("isValid")) && ($(input01).validatebox("isValid"));
+            if (ok)
+            {
+                var parameters = new Array();
+                parameters[0] = $(input01).val();
+                parameters[1] = $(input02).datebox("getText");
+                parameters[2] = $(input03).datebox("getText");
+                $.ajax({
+                    type: "post",
+                    url: "/Company/AddTestInfo/" + '@ViewBag.topCompanyId',
+                    data: {
+                        parameter0: parameters[0],
+                        parameter1: parameters[1],
+                        parameter2: parameters[2],
+                    },
+                    success: function (data)
+                    {
+                        data = eval("(" + data + ")");
+
+                        if (data.back == "ok")
+                        {
+                            $.messager.alert("创建成功", "创建成功！");
+                            $(win01).window('close');  // close a window
+                            getContextHtml("/Company/TestManage/" + '@ViewBag.topCompanyId', '@ViewBag.id', new Array(0));
+                        }
+                        else
+                        {
+                            $.messager.alert("创建失败", data.back);
+                        }
+                    }
+                });
+            }
+        });
+        $(input04).change(function ()
+        {
+            var input = "#" + "@ViewBag.input04";
+            var filename = $(input).val();
+            var fileSuffix = filename.slice(-4, -1) + filename.charAt(filename.length - 1);
+            if (fileSuffix == "xlsx" || fileSuffix == ".xlt")
+            {
+                var submit = "#" + "@ViewBag.submit";
+                $.messager.progress({
+                    title: '正在执行导入...',
+                    msg: '正在导入，这可能需要一些时间......',
+                    text: '请等待......',
+                    draggable: false
+
+                });
+                time = setInterval("ImportCall()", 500);
+                success = false;
+                $(submit).trigger("click");
+            }
+            else
+            {
+                $.messager.alert("错误", "文件格式不正确！", "error");
+            }
+            $(sub02).trigger("click");
+        });
+        var select = "#" + "@ViewBag.select";
+        function fun()
+        {
+            $(select).change(function ()
+            {
+                var value=$(select).val();
+                $(tableId3).datagrid({
+                    queryParams: {
+                        qClass: $(select).val(),
+                    }
+                });
+                $(tableId3).datagrid("reload")
+                var s = ('@ViewBag.options').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"");
+                $(".pagination-info:last").before(s);
+                $(select).val(value);
+                fun();
+            });
+        }
+        
+
+    });
+
+
+
+    function ImportCall()
+    {
+        var data = $(window.frames["@ViewBag.iframe"].document).find("body").text();
+        if (data != "")
+        {
+            clearInterval(time);
+            $.messager.progress("close");
+            data = eval("(" + data + ")");
+            if (data.back == "ok")
+            {
+                $.messager.alert("提示", "导入成功！");
+            }
+            else
+            {
+                $.messager.alert("提示", data.back);
+            }
+        }
+    }
+
+
+</script>

@@ -1,0 +1,396 @@
+﻿@using Common.Models;
+
+
+<table class="easyui-datagrid" id="@ViewBag.tableId">
+    @foreach (admin a in @ViewBag.admins)
+    {
+        <tr>
+            <td>@a.admin_Id</td>
+            <td>@a.admin_Username</td>
+            <td>@a.admin_Power</td>
+            <td>@a.admin_PhoneNum</td>
+            <td>@a.admin_TrueName</td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    var tableId = "#" + "@ViewBag.tableId";
+
+    $(tableId).ready(function () {
+        var tableId = "#" + "@ViewBag.tableId";
+        var editId = '@ViewBag.tableId' + "edit";
+        var addId = '@ViewBag.tableId' + "add";
+        var removeId = '@ViewBag.tableId' + 'remove';
+        var saveId = '@ViewBag.tableId' + "save";
+        var editId1 = "#" + '@ViewBag.tableId' + "edit";
+        var addId1 = "#" + '@ViewBag.tableId' + "add";
+        var removeId1 = "#" + '@ViewBag.tableId' + 'remove';
+        var saveId1 = "#" + '@ViewBag.tableId' + "save";
+        var reset = "@ViewBag.tableId" + "_reset";
+        var resetid = "#" + reset;
+        var isEdit = false;
+        var editing = null;
+        var adding = false;
+        var Address = [{ "value": "0", "text": "超级管理员" }, { "value": "1", "text": "管理员" }];
+        var addingRow = null;
+
+        $(tableId).datagrid({
+            singleSelect: true,
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            striped: true,
+            rownumbers: true,
+
+            pagination: true,
+            toolbar: [{
+                id: editId,
+                iconCls: 'icon-edit',
+                text: "编辑",
+                disabled: true,
+                handler: function () {
+                    isEdit = true;
+                    editing: false;
+                    $(editId1).linkbutton("disable");
+                    $(removeId1).linkbutton("disable");
+                    $(addId1).linkbutton("disable");
+                    $(saveId1).linkbutton("enable");
+                    $(resetid).linkbutton("disable");
+                    var row = $(tableId).datagrid("getSelected");
+                    editing = row;
+
+                    var index = $(tableId).datagrid('getRowIndex', row);
+
+                    $(tableId).datagrid('beginEdit', index);
+                    //启用编辑
+
+
+
+                }
+            },
+                '-', {
+                    id: addId,
+                    iconCls: 'icon-add',
+                    text: "增加",
+                    handler: function () {
+                        $(tableId).datagrid('insertRow', {
+                            index: 0,
+                            row: {
+                                Username: "",
+                                Password: "",
+                                TrueName: "",
+                                Power: 0,
+                                PhoneNum: ""
+                            }
+
+
+                        });
+                        isEdit = false;
+                        adding = true;
+                        $(tableId).datagrid('selectRow', 0);
+                        addingRow = $(tableId).datagrid("getSelected");
+                        $(tableId).datagrid('beginEdit', 0);
+
+                        $(editId1).linkbutton("disable");
+                        $(removeId1).linkbutton("disable");
+                        $(resetid).linkbutton("disable");
+                        $(addId1).linkbutton("disable");
+                        $(saveId1).linkbutton("enable");
+
+                    }
+                },
+                    '-', {
+                        disabled: true,
+                        id: removeId,
+                        iconCls: 'icon-remove',
+                        text: "删除",
+                        handler: function () {
+                            $.messager.confirm("警告", "您确认要删除此管理员吗？", function (r) {
+                                if (r) {
+                                    var delRow = $(tableId).datagrid("getSelected");
+                                    var id = delRow.Id;
+                                    $.ajax({
+                                        type: "post",
+                                        url: "/Admin/adminPostBack",
+                                        data: { data: id },
+                                        success: function (data) {
+                                            data = eval("(" + data + ")");
+                                            if (data.data == "ok") {
+                                                var index = $(tableId).datagrid("getRowIndex", delRow);
+                                                $(tableId).datagrid('deleteRow', index);
+                                                $.messager.confirm("提示", "删除成功！");
+                                                $(editId1).linkbutton("disable");
+                                                $(removeId1).linkbutton("disable");
+                                                $(addId1).linkbutton("enable");
+                                                $(resetid).linkbutton("disable");
+                                                $(saveId1).linkbutton("disable");
+                                            }
+                                            else if (data.data == "error") {
+                                                $.messager.confirm("提示", "删除失败！");
+                                            }
+                                            else {
+                                                $.messager.confirm("提示", "未知错误！");
+                                            }
+                                        }
+
+                                    });
+
+
+                                }
+                            });
+
+
+                        }
+                    },
+
+                    '-', {
+                        id: saveId,
+                        disabled: true,
+                        iconCls: 'icon-save',
+                        text: "保存",
+                        handler: function () {
+                            if (isEdit == true) {
+                                isEdit = false;
+                                adding = false;
+                                $(editId1).linkbutton("enable");
+                                $(removeId1).linkbutton("enable");
+                                $(resetid).linkbutton("enable");
+                                $(addId1).linkbutton("enable");
+                                $(saveId1).linkbutton("disable");
+                                var editRow = editing;
+                                var index = $(tableId).datagrid('getRowIndex', editRow);
+                                $(tableId).datagrid("endEdit", index);
+                                var str = editRow.Id + "+" + editRow.Username + "+" + 1 + "+" + 1 + "+" + editRow.Power + "+" + editRow.PhoneNum;
+
+
+
+                                $.ajax
+                                ({
+                                    type: "post",
+                                    url: "/Admin/adminModify",
+                                    data: {
+                                        data: str,
+                                        method: "modify"
+                                    },
+                                    success: function (data) {
+                                        data = eval("(" + data + ")");
+                                        if (data.data == "ok") {
+
+
+                                            $.messager.confirm("提示", "保存成功！");
+                                        }
+                                        else {
+                                            $.messager.confirm("提示", data.data);
+                                        }
+                                    }
+                                });
+                            }
+                            else (adding == true);
+                            {
+                                adding = false;
+                                isEdit = false;
+                                $(editId1).linkbutton("enable");
+                                $(removeId1).linkbutton("enable");
+                                $(resetid).linkbutton("enable");
+                                $(addId1).linkbutton("enable");
+                                $(saveId1).linkbutton("disable");
+                                $(tableId).datagrid("endEdit", 0);
+
+                                var str = addingRow.Username + "+" +1 + "+" + 1+ "+" + addingRow.Power + "+" + addingRow.PhoneNum;
+                                $.ajax
+                                ({
+                                    type: "post",
+                                    url: "/Admin/adminModify",
+                                    data: {
+                                        data: str,
+                                        method: "add",
+                                    },
+                                    success: function (data) {
+                                        data = eval("(" + data + ")");
+                                        if (data.data == "ok") {
+
+
+                                            $.messager.confirm("提示", "保存成功！");
+                                        }
+
+                                        else {
+                                            $.messager.confirm("提示", data.data);
+                                            $(tableId).datagrid("deleteRow", 0);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }, '-', {
+                        id: reset,
+                        iconCls: 'icon-reset',
+                        text: "重置密码 ",
+                        disabled: true,
+                        handler: function ()
+                        {
+                            var delRow = $(tableId).datagrid("getSelected");
+                            var id = delRow.Id;
+
+                            $.ajax({
+                                type: "post",
+                                url: "/Admin/ResetPassword/",
+                                data: {
+                                    datas: id,
+                                    mark:"staff"
+                                },
+                                success: function (data)
+                                {
+                                    data = eval("(" + data + ")");
+                                    var datas = new Array(data.count);
+                                    for (var x in data.data)
+                                    {
+                                        datas[x] = data.data[x].datakey;
+                                    }
+                                    if (datas[0] == 1)
+                                    {
+                                        $.messager.alert("提示", datas[1], "info");
+                                    }
+                                    else
+                                    {
+                                        $.messager.alert("错误", datas[1], "error");
+                                    }
+                                }
+                            });
+                        }
+                    }],
+
+            columns: [[
+                 { field: 'Id', title: '用户名', sortable: true, hidden: true },
+               { field: 'Username', title: '用户名', sortable: true, width: 20, editor: "validatebox" },
+              
+               {
+                   field: 'Power', title: "级别", width: 20,
+                   editor: {
+                       type: "combobox",
+                       options: { data: Address, valueField: "value", textField: "text" },
+                       editable: false,
+                       required: true,
+                   },
+               },
+
+               { field: 'PhoneNum', title: "电话号码", width: 20, editor: "validatebox" },
+                { field: 'TrueName', title: '备注', width: 20, editor: "validatebox" },
+
+            ]],
+            onSelect: function () {
+
+                var sRow = $(tableId).datagrid("getSelected");
+                var sIndex = $(tableId).datagrid("getRowIndex", sRow);
+                $(removeId1).linkbutton("enable");
+                $(editId1).linkbutton("enable");
+                $(resetid).linkbutton("enable");
+                if (isEdit == true) {
+
+                    $.messager.confirm("提示", "是否要保存编辑", function (r) {
+                        if (r) {
+                            isEdit = false;
+                            $(editId1).linkbutton("enable");
+                            $(removeId1).linkbutton("enable");
+                            $(addId1).linkbutton("enable");
+                            $(saveId1).linkbutton("disable");
+                            $(resetid).linkbutton("enable");
+                            var editRow = editing;
+                            var index = $(tableId).datagrid('getRowIndex', editRow);
+                            $(tableId).datagrid("endEdit", index);
+                            if (editRow.Username == null) {
+                                return;
+                            }
+                            var str = editRow.Id + "+" + editRow.Username + "+" + editRow.Password + "+" + editRow.TrueName + "+" + editRow.Power + "+" + editRow.PhoneNum;
+
+
+
+                            $.ajax
+                            ({
+                                type: "post",
+                                url: "/admin/adminModify",
+                                data: {
+                                    data: str,
+                                    method: "modify"
+                                },
+                                success: function (data) {
+                                    data = eval("(" + data + ")");
+                                    if (data.data == "ok") {
+
+                                        $.messager.confirm("提示", "保存成功！");
+                                    }
+
+                                    else {
+                                        $.messager.confirm("提示", data.data);
+                                    }
+                                }
+                            });
+
+                        }
+                        else {
+                            //放弃保存编辑
+                            isEdit = false;
+                            $(editId1).linkbutton("enable");
+                            $(removeId1).linkbutton("enable");
+                            $(resetid).linkbutton("enable");
+                            $(addId1).linkbutton("enable");
+                            $(saveId1).linkbutton("disable");
+                            var index = $(tableId).datagrid('getRowIndex', editing);
+                            $(tableId).datagrid("cancelEdit", index);
+
+                        }
+                    })
+                }
+                else if (adding == true && sIndex != 0) {
+
+                    $.messager.confirm("提示", "是否要放弃编辑？", function (r) {
+                        if (r) {
+                            adding = false;
+                            $(editId1).linkbutton("enable");
+                            $(removeId1).linkbutton("enable");
+                            $(addId1).linkbutton("enable");
+                            $(saveId1).linkbutton("disable");
+                            $(tableId).datagrid("endEdit", 0);
+                            $(tableId).datagrid("deleteRow", 0);
+                            $(resetid).linkbutton("enable");
+                        }
+                        else {
+                            // $(tableId).datagrid('selectRow', 0);
+                        }
+                    });
+
+                }
+                else {
+                    //未在编辑或增加状态.
+                }
+            }
+        });
+        var obj = $(tableId).datagrid("getPager");
+        $(obj).pagination({
+            total: '@ViewBag.total',
+            pageSize: '@ViewBag.pageSize',
+            pageIndex: '@ViewBag.pageIndex',
+            pageList: [10, 20, 30, 50],//每页显示几条记录
+            beforePageText: '第',//页数文本框前显示的汉字
+            pageNumber: '@ViewBag.pageIndex',
+            total: '@ViewBag.total',
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录    共 {total} 条记录',
+        });
+        $(obj).pagination({
+            onSelectPage: function (pageNumber, pageSize) {
+
+                $(this).pagination('loading');
+                var parameters = new Array(2);
+                parameters[0] = pageNumber;
+                parameters[1] = pageSize;
+                getContextHtml("/Admin/admin", '@ViewData["id"]', parameters);
+                $(this).pagination('loaded');
+            }
+        });
+    })
+
+
+
+</script>

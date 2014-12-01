@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SurveyManageDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="admin">
+    <Key>
+      <PropertyRef Name="admin_Id" />
+    </Key>
+    <Property Name="admin_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="admin_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="admin_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="admin_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="admin_PhoneNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="admin_TrueName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="admin_CompanyID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="admin_Power" Type="Int32" Nullable="false" />
+    <Property Name="admin_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="admin_IsDel" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="company" Relationship="Self.FK_admins_companys" FromRole="admins" ToRole="companys" />
+  </EntityType>
+  <EntityType Name="class">
+    <Key>
+      <PropertyRef Name="class_Id" />
+    </Key>
+    <Property Name="class_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="class_Class" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="questions" Relationship="Self.FK_questions_classes" FromRole="classes" ToRole="questions" />
+  </EntityType>
+  <EntityType Name="company">
+    <Key>
+      <PropertyRef Name="company_Id" />
+    </Key>
+    <Property Name="company_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="company_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="company_Level" Type="Int32" Nullable="false" />
+    <Property Name="company_Trade" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <Property Name="company_Province" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <Property Name="company_OwnerCompany" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="company_IsSonIn" Type="Boolean" Nullable="false" />
+    <Property Name="company_Status" Type="Int32" Nullable="false" />
+    <Property Name="company_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="company_IsDel" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="admins" Relationship="Self.FK_admins_companys" FromRole="companys" ToRole="admins" />
+    <NavigationProperty Name="staffs" Relationship="Self.FK_staffs_companys" FromRole="companys" ToRole="staffs" />
+    <NavigationProperty Name="testInfos" Relationship="Self.FK_testInfos_companys" FromRole="companys" ToRole="testInfos" />
+  </EntityType>
+  <EntityType Name="key">
+    <Key>
+      <PropertyRef Name="key_Id" />
+    </Key>
+    <Property Name="key_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="key_StaffId" Type="Int64" Nullable="false" />
+    <Property Name="key_TestInfoId" Type="Int64" Nullable="false" />
+    <Property Name="key_key1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key3" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key4" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key5" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key6" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key7" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key8" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key9" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key10" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key11" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key12" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key13" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key14" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key15" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key16" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key17" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key18" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key19" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key20" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key21" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key22" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key23" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key24" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key25" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key26" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key27" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key28" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key29" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key30" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key31" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key32" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key33" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key34" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key35" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key36" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key37" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key38" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key39" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key40" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key41" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key42" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key43" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key44" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key45" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key46" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key47" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key48" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key49" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key50" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key51" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key52" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key53" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key54" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key55" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key56" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key57" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key58" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key59" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key60" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key61" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key62" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key63" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key64" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key65" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key66" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key67" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key68" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key69" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key70" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key71" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key72" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key73" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key74" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key75" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key76" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key77" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key78" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key79" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key80" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key81" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key82" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key83" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key84" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key85" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key86" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key87" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key88" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key89" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key90" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key91" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key92" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key93" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key94" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key95" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key96" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key97" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key98" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key99" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_key100" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="key_IsDel" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="staff" Relationship="Self.FK_keys_staffs" FromRole="keys" ToRole="staffs" />
+    <NavigationProperty Name="testInfo" Relationship="Self.FK_keys_testInfos" FromRole="keys" ToRole="testInfos" />
+  </EntityType>
+  <EntityType Name="question">
+    <Key>
+      <PropertyRef Name="question_Id" />
+    </Key>
+    <Property Name="question_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="qusetion_Stem" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_Option1" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_Option2" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_Option3" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_Option4" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_Option5" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_Option6" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_Option7" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_ClassId" Type="Int32" Nullable="false" />
+    <Property Name="question_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="question_IsDel" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="class" Relationship="Self.FK_questions_classes" FromRole="questions" ToRole="classes" />
+    <NavigationProperty Name="tests" Relationship="Self.FK_tests_questions" FromRole="questions" ToRole="tests" />
+  </EntityType>
+  <EntityType Name="staff">
+    <Key>
+      <PropertyRef Name="staff_Id" />
+    </Key>
+    <Property Name="staff_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="staff_Username" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="staff_Password" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="staff_OwnCompanyId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="staff_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="staff_TrueName" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="staff_Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="staff_IsWrite" Type="Boolean" Nullable="false" />
+    <Property Name="staff_Spare" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="staff_IsDel" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="company" Relationship="Self.FK_staffs_companys" FromRole="staffs" ToRole="companys" />
+    <NavigationProperty Name="keys" Relationship="Self.FK_keys_staffs" FromRole="staffs" ToRole="keys" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="testInfo">
+    <Key>
+      <PropertyRef Name="testInfo_Id" />
+    </Key>
+    <Property Name="testInfo_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="testInfo_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="testInfo_OwnComPanyId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="testInfo_GenerateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="testInfo_StartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="testInfo_Deadline" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="testInfo_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="testInfo_IsDel" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="company" Relationship="Self.FK_testInfos_companys" FromRole="testInfos" ToRole="companys" />
+    <NavigationProperty Name="keys" Relationship="Self.FK_keys_testInfos" FromRole="testInfos" ToRole="keys" />
+    <NavigationProperty Name="tests" Relationship="Self.FK_tests_testInfos" FromRole="testInfos" ToRole="tests" />
+  </EntityType>
+  <EntityType Name="test">
+    <Key>
+      <PropertyRef Name="test_Id" />
+    </Key>
+    <Property Name="test_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="test_QuestionId" Type="Int64" Nullable="false" />
+    <Property Name="test_TestInfoId" Type="Int64" Nullable="false" />
+    <Property Name="test_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="question" Relationship="Self.FK_tests_questions" FromRole="tests" ToRole="questions" />
+    <NavigationProperty Name="testInfo" Relationship="Self.FK_tests_testInfos" FromRole="tests" ToRole="testInfos" />
+  </EntityType>
+  <EntityType Name="province">
+    <Key>
+      <PropertyRef Name="province_Id" />
+      <PropertyRef Name="province_Name" />
+    </Key>
+    <Property Name="province_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="province_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="province_Spare" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_admins_companys">
+    <End Role="companys" Type="Self.company" Multiplicity="1" />
+    <End Role="admins" Type="Self.admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="companys">
+        <PropertyRef Name="company_Id" />
+      </Principal>
+      <Dependent Role="admins">
+        <PropertyRef Name="admin_CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_questions_classes">
+    <End Role="classes" Type="Self.class" Multiplicity="1" />
+    <End Role="questions" Type="Self.question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="classes">
+        <PropertyRef Name="class_Id" />
+      </Principal>
+      <Dependent Role="questions">
+        <PropertyRef Name="question_ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_staffs_companys">
+    <End Role="companys" Type="Self.company" Multiplicity="1" />
+    <End Role="staffs" Type="Self.staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="companys">
+        <PropertyRef Name="company_Id" />
+      </Principal>
+      <Dependent Role="staffs">
+        <PropertyRef Name="staff_OwnCompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_testInfos_companys">
+    <End Role="companys" Type="Self.company" Multiplicity="1" />
+    <End Role="testInfos" Type="Self.testInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="companys">
+        <PropertyRef Name="company_Id" />
+      </Principal>
+      <Dependent Role="testInfos">
+        <PropertyRef Name="testInfo_OwnComPanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_keys_staffs">
+    <End Role="staffs" Type="Self.staff" Multiplicity="1" />
+    <End Role="keys" Type="Self.key" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="staffs">
+        <PropertyRef Name="staff_Id" />
+      </Principal>
+      <Dependent Role="keys">
+        <PropertyRef Name="key_StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_keys_testInfos">
+    <End Role="testInfos" Type="Self.testInfo" Multiplicity="1" />
+    <End Role="keys" Type="Self.key" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="testInfos">
+        <PropertyRef Name="testInfo_Id" />
+      </Principal>
+      <Dependent Role="keys">
+        <PropertyRef Name="key_TestInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tests_questions">
+    <End Role="questions" Type="Self.question" Multiplicity="1" />
+    <End Role="tests" Type="Self.test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="questions">
+        <PropertyRef Name="question_Id" />
+      </Principal>
+      <Dependent Role="tests">
+        <PropertyRef Name="test_QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tests_testInfos">
+    <End Role="testInfos" Type="Self.testInfo" Multiplicity="1" />
+    <End Role="tests" Type="Self.test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="testInfos">
+        <PropertyRef Name="testInfo_Id" />
+      </Principal>
+      <Dependent Role="tests">
+        <PropertyRef Name="test_TestInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SurveyManageDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="admins" EntityType="Self.admin" />
+    <EntitySet Name="classes" EntityType="Self.class" />
+    <EntitySet Name="companys" EntityType="Self.company" />
+    <EntitySet Name="keys" EntityType="Self.key" />
+    <EntitySet Name="questions" EntityType="Self.question" />
+    <EntitySet Name="staffs" EntityType="Self.staff" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="testInfos" EntityType="Self.testInfo" />
+    <EntitySet Name="tests" EntityType="Self.test" />
+    <EntitySet Name="provinces" EntityType="Self.province" />
+    <AssociationSet Name="FK_admins_companys" Association="Self.FK_admins_companys">
+      <End Role="companys" EntitySet="companys" />
+      <End Role="admins" EntitySet="admins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_questions_classes" Association="Self.FK_questions_classes">
+      <End Role="classes" EntitySet="classes" />
+      <End Role="questions" EntitySet="questions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_staffs_companys" Association="Self.FK_staffs_companys">
+      <End Role="companys" EntitySet="companys" />
+      <End Role="staffs" EntitySet="staffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_testInfos_companys" Association="Self.FK_testInfos_companys">
+      <End Role="companys" EntitySet="companys" />
+      <End Role="testInfos" EntitySet="testInfos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_keys_staffs" Association="Self.FK_keys_staffs">
+      <End Role="staffs" EntitySet="staffs" />
+      <End Role="keys" EntitySet="keys" />
+    </AssociationSet>
+    <AssociationSet Name="FK_keys_testInfos" Association="Self.FK_keys_testInfos">
+      <End Role="testInfos" EntitySet="testInfos" />
+      <End Role="keys" EntitySet="keys" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tests_questions" Association="Self.FK_tests_questions">
+      <End Role="questions" EntitySet="questions" />
+      <End Role="tests" EntitySet="tests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tests_testInfos" Association="Self.FK_tests_testInfos">
+      <End Role="testInfos" EntitySet="testInfos" />
+      <End Role="tests" EntitySet="tests" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SurveyManageDBModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SurveyManageDBModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,369 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/img/logo.ico" rel='icon' type=‘image/x-ico’ />
+    <link href="~/EasyUI/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/sunny/easyui.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/icon.css" rel="stylesheet" />
+    <script src="~/EasyUI/jquery.min.js"></script>
+    <link href="~/CSS/companyIndex.css" rel="stylesheet" />
+    <script src="~/EasyUI/jquery.easyui.min.js"></script>
+    <script src="~/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/JS/index.js"></script>
+    <title>@ViewBag.company_Name</title>
+    <style>
+        #north {
+            background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#FEF8E4));
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+            perspective: 100px;
+            transform-type: preserve-3d;
+            animation: loader 6s cubic-bezier(0,0,1,1) infinite;
+        }
+
+
+        @@keyframes loader {
+            0% {
+                transform: rotateX(30deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(30deg) rotateZ(-360deg);
+            }
+        }
+
+        /* The dot */
+        .dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 10;
+            width: 20px;
+            height: 20px;
+            margin-top: -90px;
+            margin-left: -10px;
+            border-radius: 10px;
+            background-color: #1e3f57;
+            transform-type: preserve-3d;
+            transform-origin: 50% 90px;
+            transform: rotateZ(30deg);
+            animation: dot1 1.5s cubic-bezier(.6,0,.4,1) infinite;
+        }
+
+            .dot:nth-child(2) {
+                transform: rotateZ(15deg);
+                animation-name: dot2;
+                animation-delay: 150ms;
+                background-color: #2d556d;
+            }
+
+            .dot:nth-child(3) {
+                transform: rotateZ(0deg);
+                animation-name: dot3;
+                animation-delay: 300ms;
+                background-color: #447891;
+            }
+
+            .dot:nth-child(4) {
+                transform: rotateZ(-15deg);
+                animation-name: dot4;
+                animation-delay: 450ms;
+                background-color: #5998b2;
+            }
+
+            .dot:nth-child(5) {
+                transform: rotateZ(-30deg);
+                animation-name: dot5;
+                animation-delay: 600ms;
+                background-color: #6bb2cd;
+            }
+
+        /* Dot animations */
+        @@keyframes dot1 {
+            0% {
+                transform: rotateZ(30deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(390deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot2 {
+            0% {
+                transform: rotateZ(15deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(375deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot3 {
+            0% {
+                transform: rotateZ(0deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(360deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot4 {
+            0% {
+                transform: rotateZ(-15deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(345deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot5 {
+            0% {
+                transform: rotateZ(-30deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(330deg) rotateX(10deg);
+            }
+        }
+    </style>
+
+    <script type="text/javascript">
+        var companyId = "@ViewBag.id";
+        var companyStatus = "@ViewBag.companyStatus";
+        $("#tt").ready(function () {
+            $('#tt').tree({
+                url: '/Company/GetTreeGridJson/' + companyId,
+                method: 'get',
+                animate: true,
+            });
+        });
+        $(document).ready(function () {
+            openWindow("子公司管理", "/Company/CompanyTree/" + companyId, new Array(0));
+        });
+        $().ready(function () {
+            $("#companyManage").click(function () {
+                openWindow("子公司管理", "/Company/CompanyTree/" + companyId, new Array(0));
+
+            });
+            $("#surveyManage").click(function () {
+                openWindow("部门管理", "/Company/SurveyManage/" + companyId, new Array(0));
+            })
+            $("#staffManage").click(function () {
+                var datas = new Array(4);
+                datas[0] = "" + getCompanyName();
+                datas[1] = 0;//当前页数
+                datas[2] = 30;
+                datas[3] = "all";//此公司下，及下属公司全部员工
+                if (getCompanyName() != null) {
+                    openWindow("员工管理", "/Company/StaffManage/" + companyId, datas);
+                }
+                else {
+                    $.messager.show({
+                        title: '提示',
+                        msg: '请在左侧公司结构中选中对应公司。',
+                        timeout: 5000,
+                        showType: 'slide'
+                    });
+
+                }
+
+            });
+            $("#testInfo").click(function () {
+                openWindow("问卷管理", "/Company/TestManage/" + companyId, new Array(0));
+            });
+            $("#departmentManage").click(function ()
+            {
+                openWindow("问卷管理", "/Company/DivisionalManagement/" + companyId, new Array(0));
+            });
+            
+            $("#output").click(function () {
+                $.messager.progress({
+                    text: "正在导出，这可能需要一些时间....."
+                });
+                $.ajax({
+                    type: "post",
+                    url: "/Company/OutPut/" + companyId,
+                    data: { datas: "output" },
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data.back == "ok") {
+                            $.messager.progress("close");
+                            $.messager.alert("提示", "正在下载！");
+                            window.location.href = "/Company/BackFile/@ViewBag.id";
+                            ////$("#btn").click(function () {
+                            //    var a = $('#xz');
+                            //    var a = $("<a href='http://www.apple.com' target='_blank'>Apple</a>").get(0);
+
+                            //    var e = document.createEvent('MouseEvents');
+                            //    e.initEvent('click', true, true);
+                            //    a.dispatchEvent(e);
+                            ////});
+
+
+                        }
+                        else {
+                            $.messager.progress("close");
+                            $.messager.alert("提示", data.back);
+                        }
+                    }
+
+                });
+            })
+        })
+        function getCompanyName() {
+
+            var id = null;
+            if ($('#tt').tree('getSelected') != null) {
+                var id = $('#tt').tree('getSelected').id;
+            }
+            else {
+                id = null;
+            }
+            return id;
+
+
+
+
+        }
+    </script>
+</head>
+<body class="easyui-layout">
+    <input type="button" hidden="hidden" value="" id="btn">
+    <div data-options="region:'north',title:'@ViewBag.company_Name',split:true" style="height:120px;">
+        <div class="com-welcome">
+            <h1>集团公司调查管理</h1>
+        </div>
+        <div class="icons">
+            <div class="myButton" id="companyManage">
+                <div class="btnImgDiv">
+                    <img class="btnImg" src="~/img/service_manager.png" />
+                </div>
+                <div class="btn-text">
+                    <strong>子公司管理</strong>
+                </div>
+
+            </div>
+            <div class="myButton" id="staffManage">
+                <div class="btnImgDiv">
+                    <img class="btnImg" src="~/img/staff.png" />
+                </div>
+                <div class="btn-text">
+                    <strong>员工管理</strong>
+                </div>
+
+            </div><div class="myButton" id="departmentManage">
+                <div class="btnImgDiv">
+
+                    <img src="~/img/department.ico" />
+                </div>
+                <div class="btn-text">
+                    <strong>部门管理</strong>
+                </div>
+
+            </div>
+            <div class="myButton" id="testInfo">
+                <div class="btnImgDiv">
+                    <img class="btnImg" src="~/img/table.png" />
+                </div>
+                <div class="btn-text">
+                    <strong>问卷管理</strong>
+                </div>
+
+            </div>
+            <div class="myButton" id="surveyManage">
+                <div class="btnImgDiv">
+                    <img class="btnImg" src="~/img/diaocha.png" />
+                </div>
+                <div class="btn-text">
+                    <strong>调查管理</strong>
+                </div>
+
+            </div>
+            <div class="myButton">
+                <div class="btnImgDiv" id="output">
+                    <img class="btnImg" src="~/img/export.png" />
+                </div>
+                <div class="btn-text">
+                    <strong>导出结果</strong>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'south',split:true" style="height:0px;"><a id="xz" href="/Company/BackFile/@ViewBag.id" target="_blank"></a></div>
+    <div data-options="region:'east',split:true" style="width:0px;"></div>
+    <div data-options="region:'west',title:'公司结构',split:true" style="width:200px;">
+        <ul id="tt" class="easyui-tree"></ul>
+
+    </div>
+    <div data-options="region:'center',title:'公司管理'" style="background:#eee;">
+        <div id="window" class="easyui-tabs" data-options="fit:'true'">
+
+        </div>
+
+    </div>
+
+    <div id="search">
+        <input id="ss" class="easyui-searchbox" style="width: 300px"
+               data-options="searcher:qq,prompt:'Please Input Value',menu:'#mm'" />
+
+        <div id="mm" style="width: 120px">
+            <div id="Numbering" data-options="name:'trueName',iconCls:'icon-ok'">按姓名搜</div>
+            <div id="name" data-options="name:'email'">按邮箱搜</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function qq(value, name) {
+            var data = new Array();
+            data[0] = '@ViewBag.id';
+            data[1] = 1;
+            data[2] = 30;
+            data[3] = "search";
+            data[4] = name;
+            data[5] = value;
+            openWindow(value + "的搜索结果", "/Company/StaffManage/" + companyId, data);
+        };
+
+        $("#Numbering").click(function () {
+            $('#mm').menu('setIcon', {
+                target: $('#Numbering'),
+                iconCls: 'icon-ok'
+            });
+            $('#mm').menu('setIcon', {
+                target: $('#name'),
+                iconCls: ''
+            });
+
+        });
+        $("#name").click(function () {
+            $('#mm').menu('setIcon', {
+                target: $('#name'),
+                iconCls: 'icon-ok'
+            });
+            $('#mm').menu('setIcon', {
+                target: $('#Numbering'),
+                iconCls: ''
+            });
+        });
+    </script>
+    <script src="~/JS/prefixfree.min.js"></script>
+</body>
+</html>

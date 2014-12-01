@@ -1,0 +1,183 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML PUBLIC "-/W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/img/logo.ico" rel='icon' type=‘image/x-ico’ />
+    <script src="~/EasyUI/jquery.min.js"></script>
+    <script src="~/JS/jquery.min1.1.js"></script>
+    <script src="~/JS/jquery1.1.js"></script>
+    <script src="~/EasyUI/jquery.easyui.min.js"></script>
+    <script src="~/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <link href="~/EasyUI/themes/icon.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/metro-gray/easyui.css" rel="stylesheet" />
+    <link href="~/CSS/test.css" rel="stylesheet" />
+    <link href="~/CSS/pageStyle.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="head">
+        <h1>@ViewBag.title</h1>
+    </div>
+    <div id="bar">
+        <div id="schedule">
+            <strong class="ribbon-content" id="schedule_head_title">答题进度</strong>
+            <div id="schedule_head">
+
+                <div class="progress">
+                    <span class="progress-val">0%</span>
+                    <span class="progress-bar">
+                        <span class="progress-in" style="width: 0%"></span>
+                    </span>
+                </div>
+
+                <span id="schedule_head_time">2014年12月12日12:12</span>
+            </div>
+        </div>
+    </div>
+    <div id="questionnaire">
+        @{
+            long i = (ViewBag.index - 1) * 20 + 1;
+
+            if (ViewBag.index == 1)
+            {
+                <div class="question_title firstTitle"><strong>基础问题</strong></div>
+                foreach (Common.Models.test t in ViewBag.tests)
+                {
+                    if (t.question.question_ClassId == 1)
+                    {
+                        <div class="question base_question" id="first" name="@ViewBag.staffId,@t.test_Id">
+                            <span>@i</span>.&nbsp;&nbsp;<span><strong>@t.question.qusetion_Stem</strong></span><br />
+                            <ul>
+                                @if (t.question.question_Option1 != "")
+                                {
+                                    <li><span class="question_option"><input type="radio" value="1" name="@i" id="id1+@i" /><label for="id1+@i">@t.question.question_Option1</label></span></li>
+                                }
+                                @if (t.question.question_Option2 != "")
+                                {
+                                    <li><span class="question_option"><input type="radio" value="2" name="@i" id="id2+@i" /><label for="id2+@i">@t.question.question_Option2</label></span></li>
+                                }
+                                @if (t.question.question_Option3 != "")
+                                {
+                                    <li><span class="question_option"><input type="radio" value="3" name="@i" id="id3+@i" /><label for="id3+@i">@t.question.question_Option3</label></span></li>
+                                }
+                                @if (t.question.question_Option4 != "")
+                                {
+                                    <li><span class="question_option"><input type="radio" value="4" name="@i" id="id4+@i" /><label for="id4+@i">@t.question.question_Option4</label></span></li>
+                                }
+                                @if (t.question.question_Option5 != "")
+                                {
+                                    <li><span class="question_option"><input type="radio" value="5" name="@i" id="id5+@i" /><label for="id5+@i">@t.question.question_Option5</label></span></li>
+                                }
+                                @if (t.question.question_Option6 != "")
+                                {
+                                    <li><span class="question_option"><input type="radio" value="6" name="@i" id="id6+@i" /><label for="id6+@i">@t.question.question_Option6</label></span></li>
+                                }
+                                @if (t.question.question_Option7 != "")
+                                {
+                                    <li><span class="question_option"><input type="radio" value="7" name="@i" id="id7+@i" /><label for="id7+@i">@t.question.question_Option7</label></span></li>
+                                }
+                                @{i++;}
+                            </ul><hr />
+                        </div>
+                    }
+                }
+            }
+        }
+        <div class="question_title"><strong>专业问题</strong></div>
+        @foreach (Common.Models.test t in ViewBag.tests)
+        {
+            if (t.question.question_ClassId != 1)
+            {
+
+                <div class="question" name="@ViewBag.staffId,@t.test_Id">
+                    <span>@i</span>.&nbsp;&nbsp;<span><strong>@t.question.qusetion_Stem</strong></span><br />
+                    <ul>
+                        <li><span class="question_option"><input type="radio" value="1" id="id1+@i" name="@i" /><label for="id1+@i">非常同意</label></span></li>
+                        <li><span class="question_option"><input type="radio" value="2" id="id2+@i" name="@i" /><label for="id2+@i">一般同意</label></span></li>
+                        <li><span class="question_option"><input type="radio" value="3" id="id3+@i" name="@i" /><label for="id3+@i">有点同意</label></span></li>
+                        <li><span class="question_option"><input type="radio" value="4" id="id4+@i" name="@i" /><label for="id4+@i">不反对也不同意</label></span></li>
+                        <li><span class="question_option"><input type="radio" value="5" id="id5+@i" name="@i" /><label for="id5+@i">有点反对</label></span></li>
+                        <li><span class="question_option"><input type="radio" value="6" id="id6+@i" name="@i" /><label for="id6+@i">一般反对</label></span></li>
+                        <li><span class="question_option"><input type="radio" value="7" id="id7+@i" name="@i" /><label for="id7+@i" @{i++;}>非常反对</label></span></li>
+                    </ul><hr />
+                </div>
+
+
+            }
+        }
+        @if (ViewBag.maxDataSize == ViewBag.index)
+        {
+            <button class="button" type="button" id="submit">提交</button>
+        }
+        <div class="digg">
+            @{
+
+                long top = ViewBag.index - 1;
+                long next = ViewBag.index + 1;
+                if (ViewBag.index == 1)
+                {
+                    <span class="disabled"><</span>
+                }
+                else
+                {
+                    if (ViewBag.staffId != 0)
+                    {
+                        <a href="/Staff/Index/@top"><</a>
+                    }
+                    else
+                    {
+                        <a href="/Company/ScanTest/@top/@ViewBag.CID"><</a>
+                    }
+                }
+                for (int k = 1; k <= ViewBag.maxDataSize; k++)
+                {
+                    if (k == ViewBag.index)
+                    {
+                        <span class="thisclass">@k</span>
+                    }
+                    else
+                    {
+                        if (ViewBag.staffId != 0)
+                        {
+                            <a href="/Staff/Index/@k">@k</a>
+                        }
+                        else
+                        {
+                            <a href="/Company/ScanTest/@k/@ViewBag.CID">@k</a>
+                        }
+                    }
+                }
+                if (ViewBag.maxDataSize == ViewBag.index)
+                {
+                    <span class="disabled"> > </span>
+                }
+                else
+                {
+                    if (ViewBag.staffId != 0)
+                    {
+                        <a href="/Staff/ScanTest/@next"> > </a>
+                    }
+                    else
+                    {
+                        <a href="/Company/ScanTest/@next/@ViewBag.CID"> > </a>
+                    }
+                }
+            }
+
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        var dataSize = "@ViewBag.dataSize"
+        var staffId = "@ViewBag.staffId"
+        var cookies = "@ViewBag.cookies".substring(0, "@ViewBag.cookies".length - 1).split(',');
+    </script>
+    <script src="~/JS/test.js"></script>
+</body>
+
+</html>

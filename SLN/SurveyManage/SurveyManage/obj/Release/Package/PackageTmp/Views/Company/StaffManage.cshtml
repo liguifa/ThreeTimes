@@ -1,0 +1,548 @@
+﻿@using Common.Models;
+<table id="@ViewBag.tableId" class="datagrid">
+    @foreach (staff s in ViewBag.staffs)
+    {
+        <tr>
+            <td>@s.staff_Id</td>
+            <td>@s.staff_TrueName</td>
+            <td>@s.staff_Username</td>
+            <td>null</td>
+            <td>@s.staff_Email</td>
+            <td>@s.staff_Department</td>
+           @if(s.staff_IsWrite==true)
+           {
+               <td>已答</td>
+           }
+           else
+           {
+               <td>未答</td>
+           }
+        </tr>
+    }
+
+</table>
+
+
+<script>
+    var id = "#" + "@ViewBag.tableId";
+   
+
+    $(id).ready(function () {
+        var selectId = "@ViewBag.tableId" + "select";
+        var Id = "#" + "@ViewBag.tableId";
+        var removeId = "@ViewBag.tableId" + "remove";
+        var editId = "@ViewBag.tableId" + "edit";
+        var saveId = "@ViewBag.tableId" + "save";
+        var addId = "@ViewBag.tableId" + "add";
+        var reset = "@ViewBag.tableId" + "reset"
+        var reSendId = "@ViewBag.tableId" + "reSendId";
+        var allSelect = "@ViewBag.tableId" + "allSelect";
+        var canelSelect = "@ViewBag.tableId" + "canelSelect";
+        var search ="@ViewBag.tableId" +"search";
+        var searchId = "#" + "@ViewBag.tableId" + "search";
+        var resetId = "#" + "@ViewBag.tableId" + "reset"
+        var reSendid = "#" + reSendId;
+        var rows = null;
+        var editIndex = new Array();
+        var isedit = false;
+        var isadd = false;
+        var isvail = true;
+        var changeData = "";
+        var changeDataId = "";
+        $(Id).datagrid({
+            fit: true,
+            striped: true,
+
+            resizeHandle: true,
+            pagination: true,
+            rownumbers: true,
+            fitColumns: true,
+            loadMsg: '玩命加载中....',
+            toolbar: [{
+                id: editId,
+                iconCls: 'icon-edit',
+                text: '编辑',
+                disabled: true,
+                handler: function () {
+                    rows = $(Id).datagrid("getSelections");
+                    editIndex = new Array();
+                    for (var i in rows) {
+                        var index = $(Id).datagrid('getRowIndex', rows[i]);
+                        $(Id).datagrid('beginEdit', index);
+                        editIndex[i] = index;
+                    }
+                    var saveid = "#" + saveId;
+                    $(saveid).linkbutton('enable');
+                    var addid = "#" + addId;
+                    $(addid).linkbutton('disable');
+                    var removeid = "#" + removeId;
+                    $(removeid).linkbutton('disable');
+                    isadd = false;
+                    isedit = true;
+
+                }
+            }, '-', {
+                id: addId,
+                iconCls: 'icon-add',
+                text: '添加',
+                handler: function () {
+                    $(Id).datagrid("clearSelections");
+                    $(Id).datagrid('insertRow', {
+                        index: 0,
+                        row: {
+                            id: "none",
+                            TrueName: "",
+                            Username: "系统生成",
+                            Password: "null",
+                            Email: "",
+                            Department: ""
+                        }
+                    });
+                    $(Id).datagrid('beginEdit', 0);
+                    var addid = "#" + addId;
+                    $(addid).linkbutton('disable');
+                    var saveid = "#" + saveId;
+                    $(saveid).linkbutton('enable');
+                    isadd = true;
+                    isedit = false;
+
+                }
+            }, '-', {
+                id: removeId,
+                iconCls: 'icon-remove',
+                text: '删除',
+                disabled: true,
+                handler: function ()
+                {
+                    if (companyStatus == "1")
+                    {
+                        $.messager.alert("提示", "公司正在调查中，不能删除！", "info");
+                        return null;
+                    }
+                    var rows = $(Id).datagrid("getSelections");
+                    $.messager.confirm("提示", "是否确定删除！删除后不能恢复....", function (r) {
+                        if (r) {
+                            var data = "";
+                            for (i in rows) {
+                                data = data + rows[i].id + ",";
+                            }
+                            data = data.substring(0, data.length - 1);
+                            $.ajax({
+                                type: "post",
+                                url: "/Company/StaffMangeBack/" + companyId,
+                                data: {
+                                    mark: "remove",
+                                    datas: data
+                                },
+                                success: function (data) {
+                                    data = eval("(" + data + ")");
+                                    if (data.state == "ok") {
+                                        var datas = data.datas;
+
+                                        for (var i in rows) {
+
+                                            var index = $(id).datagrid('getRowIndex', rows[i]);
+                                            $(id).datagrid('deleteRow', index);
+
+                                        }
+                                        $.messager.alert("提示", "删除完成！");
+                                        var removeid = "#" + removeId;
+                                        var editid = "#" + editId;
+                                        $(removeid).linkbutton('disable');
+                                        $(editid).linkbutton('disable');
+                                        $(reSendid).linkbutton('disable')
+                                    }
+                                    else {
+                                        $.messager.alert("提示", "未知错误!删除失败!" + datas);
+                                    }
+
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }, '-', {
+                id: saveId,
+                iconCls: 'icon-save',
+                text: '保存',
+                disabled: true,
+                handler: saveData,
+            }, '-', {
+                id: reSendId,
+                iconCls: 'icon-reSend',
+                text: '重发邮件',
+                disabled: true,
+                handler: function ()
+                {
+                    $.messager.progress( {
+                        title:"正在发送",
+                        text:"这可能需要一些时间"
+                    });
+
+                    var rows = $(Id).datagrid("getSelections");
+                    var data = "";
+                    for (i in rows) {
+                        data = data + rows[i].id + ",";
+                    }
+                    data = data.substring(0, data.length - 1);
+                    $.ajax({
+                        type: "post",
+                        url: "/Company/ResendEmail/" + companyId,
+                        data: {
+                          
+                            datas: data
+                        }, success: function (data) {
+                            $.messager.progress('close');
+                            data = eval("(" + data + ")");
+                            if (data.state == "ok") {
+                                $.messager.alert("提示", "发送完成！");
+                            }
+                            else {
+                                $.messager.alert("警告", data.state + "发送失败！");
+                            }
+                        }
+                    });
+
+                }
+            }, '-', {
+                id: reset,
+                iconCls: 'icon-reset',
+                text: "重置密码 ",
+                disabled: true,
+                handler: function ()
+                {
+                    var rows = $(Id).datagrid("getSelections");
+                    var data = "";
+                    for (i in rows) {
+                        data = data + rows[i].id + ",";
+                    }
+                    data = data.substring(0, data.length - 1);
+                    $.ajax({
+                        type: "post",
+                        url: "/Company/ResetPassword",
+                        data: {
+                            datas:data,
+                        },
+                        success: function (data)
+                        {
+                            data = eval("(" + data + ")");
+                            var datas = new Array(data.count);
+                            for (var x in data.data)
+                            {
+                                datas[x] = data.data[x].datakey;
+                            }
+                            if (datas[0] == 0)
+                            {
+                                $.messager.alert("错误", datas[1], "error");
+                            }
+                            else
+                            {
+                                $.messager.alert("提示", datas[1], "info");
+                            }
+                        }
+                    });
+                }
+            }, '-', {
+                id: allSelect,
+                iconCls: 'icon-selectAll',
+                text: '全选',
+                disabled: false,
+                handler: function ()
+                {
+                    var removeid = "#" + removeId;
+                    var editid = "#" + editId;
+                    $(Id).datagrid("selectAll");
+                    $(removeid).linkbutton('enable');
+                    $(editid).linkbutton('enable');
+                    $(resetId).linkbutton('enable');
+                    $(reSendid).linkbutton('enable');
+
+                  
+                }
+            }, '-', {
+                id: allSelect,
+                iconCls: 'icon-cancelAll',
+                text: '取消选择',
+                disabled: false,
+                handler: function ()
+                {
+                    
+                    $(Id).datagrid("unselectAll");
+                    var removeid = "#" + removeId;
+                    var editid = "#" + editId;
+                    $(removeid).linkbutton('disable');
+                    $(resetId).linkbutton('disable');
+                    $(editid).linkbutton('disable');
+                    $(reSendid).linkbutton('disable')
+                }
+            }
+            ],
+            columns: [[
+       { field: 'id', title: 'id', hidden: true },
+       { field: 'TrueName', title: '姓名', width: 15, editor: "validatebox" },
+       { field: 'Username', title: '用户名', width: 15, editor: "validatebox" },
+        { field: 'Password', title: '密码', hidden: true },
+       { field: 'Email', title: '邮箱', width: 25, editor: "validatebox"},
+       { field: 'Department', title: '部门', width: 15, editor: "validatebox" },
+       { field: 'IsWrite', title: '答题状态', width: 15 }
+            ]]
+
+        });
+       
+
+        $(id).datagrid({
+            onSelect: function (rowIndex, rowData) {
+                if (!(isadd || isedit)) {
+                    var removeid = "#" + removeId;
+                    var editid = "#" + editId;
+                    $(removeid).linkbutton('enable');
+                    $(resetId).linkbutton('enable');
+                    $(editid).linkbutton('enable');
+                    $(reSendid).linkbutton('enable');
+                }
+                else if (isadd) {
+                    $.messager.confirm("提示", "你新增的行未保存！要保存吗？", function (r) {
+                        if (r) {
+                            saveData();
+                        }
+                        else {
+                            $(Id).datagrid("cancelEdit", 0);
+                            $(Id).datagrid("deleteRow", 0);
+                            isadd = false;
+                            var addid = "#" + addId;
+                            $(addid).linkbutton('enable');
+                        }
+                    });
+                }
+                else if (isedit) {
+                    $.messager.confirm("提示", "你还有正在编辑的行！要保存吗？", function (r) {
+                        if (r) {
+                            saveData();
+                        }
+                        else {
+                            // BUG!
+                            for (var x in editIndex) {
+                                $(Id).datagrid("cancelEdit", x);
+                                isedit = false;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        $(Id).datagrid({
+            onUnselect: function (rowIndex, rowData) {
+                var rows = $(Id).datagrid("getSelections");
+                if (rows.length == 0) {
+                    var removeid = "#" + removeId;
+                    var editid = "#" + editId;
+                    $(removeid).linkbutton('disable');
+                    $(resetId).linkbutton('disable');
+                    $(editid).linkbutton('disable');
+                    $(reSendId).linkbutton('disable')
+                }
+            }
+        });
+        $(Id).datagrid({
+            onAfterEdit: function (rowIndex, rowData, changes) {
+                if (isadd) {
+                    if (changes["TrueName"] + "" != "undefined" && changes["Email"] + "" != "undefined" && changes["Department"] + "" != "undefined") {
+                        changeData = changeData + changes["TrueName"] + "#" + changes["Username"] + "#" + changes["Password"] + "#" + changes["Email"] + "#" + changes["Department"] + ",";
+                        changeDataId = changeDataId + rowData["id"] + ",";
+                        isvail = true;
+                    }
+                    else {
+                        if (isadd) {
+                            isvail = false;
+                            $.messager.confirm("提示", "数据为空，是要放弃保存吗？", function (r) {
+                                if (r) {
+                                    $(Id).datagrid("deleteRow", 0);
+                                }
+
+                            })
+                        }
+                    }
+                }
+                else if (isedit) {
+                    changeData = "";
+                    changeDataId = "";
+                    for (var i in rows) {
+
+                        changeData += rows[i].TrueName + "#" + rows[i].Username + "#" + rows[i].Password + "#" + rows[i].Email + "#" + rows[i].Department + ",";
+                        changeDataId += rows[i].id + ",";
+                    }
+                    isvail = true;
+
+                }
+            }
+        });
+        var p = $(Id).datagrid('getPager');
+        $(p).pagination({
+            pageSize: '@ViewBag.pageSize',//每页显示的记录条数，默认为30
+            pageList: [10, 20, 30, 50,1000],//每页显示几条记录
+            beforePageText: '第',//页数文本框前显示的汉字
+            pageNumber: '@ViewBag.pageIndex',
+            total: '@ViewBag.totNum',
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录    共 {total} 条记录',
+        });
+        $(p).pagination({
+            onSelectPage: function (pageNumber, pageSize) {
+                
+                $(Id).datagrid('loading');
+                $(this).pagination('loading');
+                var parameters = new Array(4);
+                parameters[0] = '@ViewBag.ComId';
+                parameters[2] = pageSize;
+                parameters[1] = pageNumber;
+                parameters[3] = $(select).val();
+                getContextHtml("/Company/StaffManage/" + companyId, "#" + '@ViewBag.id', parameters);
+                $(this).pagination('loaded');
+                
+            }
+        });
+
+        function saveData() {
+            if (isedit) {
+                for (var x in editIndex) {
+                    $(Id).datagrid('endEdit', editIndex[x]);
+                }
+                var saveid = "#" + saveId;
+                $(saveid).linkbutton('disable');
+                var addid = "#" + addId;
+                $(addid).linkbutton('enable');
+                var removeid = "#" + removeId;
+                $(removeid).linkbutton('enable');
+                $(resetId).linkbutton('enable');
+
+                changeData = changeData.substring(0, changeData.length - 1);
+                changeDataId = changeDataId.substring(0, changeDataId.length - 1);
+                $.ajax({
+                    type: "post",
+                    url: "/Company/StaffMangeBack/" + companyId,
+                    data: {
+                        comId: "@ViewBag.ComId",
+                        mark: "modify",
+                        datas: changeData,
+                        dataIds: changeDataId
+                    },
+                    success: function (data) {
+                        changeData = "";
+                        isadd = false;
+                        isedit = false;
+                        data = eval("(" + data + ")");
+
+                        var datas = new Array(data.count);
+                        for (var x in data.data) {
+                            datas[x] = data.data[x].datakey;
+                        }
+                        if (data.state == "ok") {
+                            $.messager.confirm("提示", "保存成功！");
+
+                            for (var i = 0; i < editIndex.length; i++) {
+                                $(Id).datagrid('endEdit', i);
+                            }
+                        }
+                        else {
+                            $.messager.confirm("提示", "保存失败！请检查数据，重新修改.")
+
+                            for (var i = 0; i < editIndex.length; i++) {
+                                $(Id).datagrid('rejectChanges', i);
+                            }
+
+                        }
+
+                    }
+
+                });
+                isedit = false;
+            }
+            else if (isadd) {
+                $(Id).datagrid('endEdit', 0);
+                var saveid = "#" + saveId;
+                $(saveid).linkbutton('disable');
+                var addid = "#" + addId;
+                $(addid).linkbutton('enable');
+                var removeid = "#" + removeId;
+                $(removeid).linkbutton('enable');
+                $(resetId).linkbutton('enable');
+                if (isvail) {
+                    changeData = changeData.substring(0, changeData.length - 1);
+                    $.ajax({
+                        type: "post",
+                        url: "/Company/StaffMangeBack/" + companyId,
+                        data: {
+                            comId: "@ViewBag.ComId",
+                            mark: "add",
+                            datas: changeData,
+                            dataIds: changeDataId
+                        },
+                        success: function (datas) {
+                            changeData = "";
+                            isadd = false;
+                            isedit = false;
+                            data = eval("(" + datas + ")");
+                            var state = data.state;
+
+                            if (state == "ok") {
+                                $.messager.confirm("提示", "保存成功");
+                                $(Id).datagrid("updateRow", {
+                                    index: 0,
+                                    row: {
+                                        id: data.datas[0],
+                                        TrueName: data.datas[1],
+                                        Username: data.datas[2],
+                                        Password: data.datas[3],
+                                        Email: data.datas[4],
+                                        Department: data.datas[5],
+                                        IsWrite: data.datas[6]
+                                    }
+                                });
+                            }
+                            else {
+
+                            }
+                        }
+
+                    });
+                }
+                else {
+                    isadd = false;
+                }
+
+
+            }
+
+        }
+        $(".pagination-info:last").before('<select style="float:left;margin-left:10px;margin-top:6px;" id="'+selectId+'" class="companyclass" name="cars"> <option value="all" class="all"  selected="selected">公司下属全部员工</option><option class="notstart" value="notAll">本公司员工</option></select>');
+       
+        var select = "#" + selectId;
+        $(select).ready(function () {
+            $(select).val("@ViewBag.searchVal");
+            $(select).change(function () {
+                
+                $(Id).datagrid('loading');
+               
+                getHtml('1', '@ViewBag.pageSize');
+              
+            })
+        });
+        function getHtml(pageNumber, pageSize) {
+
+            var parameters = new Array(4);
+            parameters[0] ='@ViewBag.ComId';
+            parameters[1] = 1;
+            parameters[2] = 30;
+            parameters[3] = $(select).val();
+
+            getContextHtml("/Company/StaffManage/" + companyId, "#" + '@ViewBag.id', parameters);
+            $(this).pagination('loaded');
+        }
+       
+       
+        
+    });
+  
+
+</script>

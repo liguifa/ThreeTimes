@@ -1,0 +1,391 @@
+﻿@using Common.Models;
+<script type="text/javascript">
+    var id = "#" + "@ViewBag.tableId";
+    
+    $(id).ready(function ()
+    {
+        var Id = "#" + "@ViewBag.tableId";
+        var removeId = "@ViewBag.tableId" + "remove";
+        var editId = "@ViewBag.tableId" + "edit";
+        var saveId = "@ViewBag.tableId" + "save";
+        var addId = "@ViewBag.tableId" + "add";
+        var editIndex = new Array();
+        var isedit = false;
+        var isadd = false;
+        var isvail = true;;
+        var changeData = "";
+        var changeDataId = "";
+        $(Id).datagrid({
+            fit: true,
+            striped: true,
+            resizeHandle: true,
+            pagination: true,
+            rownumbers: true,
+            fitColumns: true,
+            toolbar: [{
+                id: editId,
+                iconCls: 'icon-edit',
+                text: '编辑',
+                disabled: true,
+                handler: function () {
+                    var rows = $(Id).datagrid("getSelections");
+                    if (rows.length == 0) {
+                        $.messager.alert("提示", "你未选择任何一行！");
+                        return;
+                    }
+                    editIndex = new Array();
+                    for (var i in rows) {
+                        var index = $(Id).datagrid('getRowIndex', rows[i]);
+                        $(Id).datagrid('beginEdit', index);
+                        editIndex[i] = index;
+                    }
+                    var saveid = "#" + saveId;
+                    $(saveid).linkbutton('enable');
+                    var addid = "#" + addId;
+                    $(addid).linkbutton('disable');
+                    var removeid = "#" + removeId;
+                    $(removeid).linkbutton('disable');
+                    isadd = false;
+                    isedit = true;
+
+                }
+            }, '-', {
+                id: addId,
+                iconCls: 'icon-add',
+                text: '添加',
+                handler: function () {
+                    $(Id).datagrid("clearSelections");
+                    $(Id).datagrid('insertRow', {
+                        index: 0,
+                        row: {
+                            class_ID: '未分配'
+                        }
+                    });
+                    $(Id).datagrid('beginEdit', 0);
+                    var addid = "#" + addId;
+                    $(addid).linkbutton('disable');
+                    var saveid = "#" + saveId;
+                    $(saveid).linkbutton('enable');
+                    isadd = true;
+                    isedit = false;
+
+                }
+            }, '-', {
+                id: removeId,
+                iconCls: 'icon-remove',
+                text: '删除',
+                disabled: true,
+                handler: function () {
+                    var rows = $(Id).datagrid("getSelections");
+                    if (rows.length == 0) {
+                        $.messager.alert("提示", "你未选择任何一行！");
+                        return;
+                    }
+                    else {
+                        $.messager.confirm("提示", "是否确定删除！删除后不能恢复....", function (r) {
+                            if (r) {
+                                var data = "";
+                                for (i in rows) {
+                                    data = data + rows[i].class_ID + ",";
+                                }
+                                data = data.substring(0, data.length - 1);
+                                $.ajax({
+                                    type: "post",
+                                    url: "/Admin/RemoveQuestionClass",
+                                    data: {
+                                        datas: data
+                                    },
+                                    success: function (data) {
+                                        data = eval("(" + data + ")");
+                                        var datas = new Array(data.count);
+                                        for (var x in data.data) {
+                                            datas[x] = data.data[x].datakey;
+                                        }
+                                        for (var i in rows) {
+                                            var plag = true;
+                                            for (var x in datas) {
+                                                if (datas[x] == rows[i].class_ID) {
+                                                    plag = false;
+                                                }
+                                            }
+                                            if (plag) {
+                                                var index = $(id).datagrid('getRowIndex', rows[i]);
+                                                $(id).datagrid('deleteRow', index);
+                                            }
+                                        }
+                                        if (data.count == 0) {
+                                            $.messager.alert("提示", "删除完成！");
+                                        }
+                                        else {
+                                            $.messager.alert("提示", "下列项未被删除！因为他们正在使用...." + datas);
+                                        }
+
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+
+
+                }
+            }, '-', {
+                id: saveId,
+                iconCls: 'icon-save',
+                text: '保存',
+                disabled: true,
+                handler: saveData,
+            }],
+            columns: [[
+                { field: 'class_ID', title: '编号', width: 10 },
+                { field: 'class_name', title: '类别名称', editor: "validatebox", width: 100 }
+            ]]
+        });
+
+
+        $(id).datagrid({
+            onSelect: function (rowIndex, rowData) {
+                if (!(isadd || isedit)) {
+                    var removeid = "#" + removeId;
+                    var editid = "#" + editId;
+                    $(removeid).linkbutton('enable');
+                    $(editid).linkbutton('enable');
+                }
+                else if (isadd) {
+                    $.messager.confirm("提示", "你新增的行未保存！要保存吗？", function (r) {
+                        if (r) {
+                            saveData();
+                        }
+                        else {
+                            $(Id).datagrid("cancelEdit", 0);
+                            $(Id).datagrid("deleteRow", 0);
+                            isadd = false;
+                            var addid = "#" + addId;
+                            $(addid).linkbutton('enable');
+                        }
+                    });
+                }
+                else if (isedit) {
+                    $.messager.confirm("提示", "你还有正在编辑的行！要保存吗？", function (r) {
+                        if (r) {
+                            saveData();
+                        }
+                        else {
+                            for (var x in editIndex) {
+                                $(Id).datagrid("cancelEdit", x);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        $(Id).datagrid({
+            onUnselect: function (rowIndex, rowData) {
+                var rows = $(Id).datagrid("getSelections");
+                if (rows.length == 0) {
+                    var removeid = "#" + removeId;
+                    var editid = "#" + editId;
+                    $(removeid).linkbutton('disable');
+                    $(editid).linkbutton('disable');
+
+                }
+            }
+        });
+        $(Id).datagrid({
+            onAfterEdit: function (rowIndex, rowData, changes) {
+                if (changes["class_name"] + "" != "undefined") {
+                    changeData = changeData + changes["class_name"] + ",";
+                    changeDataId = changeDataId + rowData["class_ID"] + ",";
+                    isvail = true;
+                }
+                else {
+                    if (isadd) {
+                        isvail = false;
+                        $.messager.confirm("提示", "数据为空，是要放弃保存吗？", function (r) {
+                            if (r) {
+                                $(Id).datagrid("deleteRow", 0);
+                            }
+
+                        })
+                    }
+                }
+            }
+        });
+        var p = $(Id).datagrid('getPager');
+        $(p).pagination({
+            pageSize: '@ViewBag.pageSize',//每页显示的记录条数，默认为10
+            pageList: [10, 20, 30, 50],//每页显示几条记录
+            beforePageText: '第',//页数文本框前显示的汉字
+            pageNumber: '@ViewBag.pageIndex',
+            total: '@ViewBag.totNum',
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from} - {to} 条记录    共 {total} 条记录',
+        });
+        $(p).pagination({
+            onSelectPage: function (pageNumber, pageSize) {
+
+                $(this).pagination('loading');
+                var parameters = new Array(2);
+                parameters[0] = pageNumber;
+                parameters[1] = pageSize;
+                getContextHtml("/Admin/QuestionClass", '@ViewBag.divId', parameters);
+                $(this).pagination('loaded');
+            }
+        });
+
+        function saveData() {
+            if (isedit) {
+                for (var x in editIndex) {
+                    $(Id).datagrid('endEdit', editIndex[x]);
+                }
+                var saveid = "#" + saveId;
+                $(saveid).linkbutton('disable');
+                var addid = "#" + addId;
+                $(addid).linkbutton('enable');
+                var removeid = "#" + removeId;
+                $(removeid).linkbutton('enable');
+                if (isvail && changeData.length > 0) {
+                    changeData = changeData.substring(0, changeData.length - 1);
+                    changeDataId = changeDataId.substring(0, changeDataId.length - 1);
+                    $.ajax({
+                        type: "post",
+                        url: "/Admin/ModifyQuestionClass",
+                        data: {
+                            mark: "edit",
+                            datas: changeData,
+                            dataIds: changeDataId
+                        },
+                        success: function (data) {
+                            changeData = "";
+                            isadd = false;
+                            isedit = false;
+                            data = eval("(" + data + ")");
+                            var datas = new Array(data.count);
+                            for (var x in data.data) {
+                                datas[x] = data.data[x].datakey;
+                            }
+                            if (data.count != 0) {
+                                $.messager.confirm("错误", "修改失败是否重新修改?", function (r) {
+                                    if (r) {
+                                        for (var i = 0; i < data.length; i = i + 2) {
+                                            if (i != "0") {
+                                                alert(i);
+                                                $(id).datagrid('beginEdit', i);
+                                            }
+                                        }
+
+                                        var addid = "#" + addId;
+                                        $(addid).linkbutton('disable');
+                                        var saveid = "#" + saveId;
+                                        $(saveid).linkbutton('enable');
+                                        isadd = true;
+                                        isedit = false;
+                                    }
+                                    else {
+                                        for (var i = 0; i < data.length; i = i + 2) {
+                                            if (i != "0") {
+                                                $(Id).datagrid('endEdit', i);
+                                            }
+                                        }
+
+                                    }
+                                });
+                            }
+                            else {
+                                $.messager.alert("提示", "保存成功!");
+                                $(Id).datagrid("updateRow", {
+                                    index: 0,
+                                    row: {
+                                        class_ID: datas[0]
+                                    }
+                                });
+                                changeData = "";
+                                changeDataId = "";
+                                isadd = false;
+                                isedit = false;
+                            }
+                        }
+
+                    });
+                }
+                else {
+                    isedit = false;
+                }
+            }
+            else if (isadd) {
+                $(Id).datagrid('endEdit', 0);
+                var saveid = "#" + saveId;
+                $(saveid).linkbutton('disable');
+                var addid = "#" + addId;
+                $(addid).linkbutton('enable');
+                var removeid = "#" + removeId;
+                $(removeid).linkbutton('enable');
+                if (isvail) {
+                    changeData = changeData.substring(0, changeData.length - 1);
+                    $.ajax({
+                        type: "post",
+                        url: "/Admin/AddQuestionClass",
+                        data: {
+                            mark: "add",
+                            datas: changeData
+                        },
+                        success: function (data) {
+                            changeData = "";
+                            isadd = false;
+                            isedit = false;
+                            data = eval("(" + data + ")");
+                            var datas = new Array(data.count);
+                            for (var x in data.data) {
+                                datas[x] = data.data[x].datakey;
+                            }
+                            if (datas[0] == 0) {
+                                $.messager.confirm("错误", datas[1] + "是否重新修改?", function (r) {
+                                    if (r) {
+                                        $(Id).datagrid('beginEdit', 0);
+                                        var addid = "#" + addId;
+                                        $(addid).linkbutton('disable');
+                                        var saveid = "#" + saveId;
+                                        $(saveid).linkbutton('enable');
+                                        isadd = true;
+                                        isedit = false;
+                                    }
+                                    else {
+                                        $(Id).datagrid('deleteRow', 0);
+                                        isadd = false;
+                                        isedit = false;
+                                    }
+                                });
+                            }
+                            else {
+                                $.messager.alert("提示", "保存成功!");
+                                $(Id).datagrid("updateRow", {
+                                    index: 0,
+                                    row: {
+                                        class_ID: datas[0]
+                                    }
+                                });
+                                changeData = "";
+                                isadd = false;
+                                isedit = false;
+                            }
+                        }
+
+                    });
+                }
+                else {
+                    isadd = false;
+                }
+
+
+            }
+
+        }
+    });
+
+</script>
+<table id="@ViewBag.tableId" class="easyui-datagrid">
+    @foreach (@class qc in ViewBag.questionClass)
+    {
+        <tr><td>@qc.class_Id</td><td>@qc.class_Class</td></tr>
+    }
+</table>  

@@ -1,0 +1,101 @@
+﻿html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background: #0390E0;
+    background-image: url(../img/login.jpg);
+    background-size: 100% 120%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.theme {
+    width: 100%;
+    height: 120px;
+}
+
+    .theme > h2 {
+        text-align: center;
+        padding-top: 60px;
+        color: #fff;
+       
+    }
+
+.loginForm {
+    width: 400px;
+    height: 500px;
+    background-color: #0390E0;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    margin: auto;
+    margin-top: 50px;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+.text {
+    width: 250px;
+    height: 40px;
+    border-radius: 20px;
+    margin: auto;
+    font-size: larger;
+    background-color: #0C9CE8;
+    border: none;
+    -moz-box-shadow: 0 1px 5px #058FD6 inset, 0 1px 0 #0C9CE8;
+    -webkit-box-shadow: 0 1px 5px #058FD6 inset, 0 1px 0 #0C9CE8;
+    box-shadow: 0 1px 5px #058FD6 inset, 0 1px 0 #0C9CE8;
+}
+
+#LoginList {
+    list-style: none;
+    clear:both;
+}
+
+li {
+    font-family: "华文彩云";
+    font-size: 20px;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.sub {
+    height: 50px;
+    width: 250px;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    background-color: #7DCC0B;
+    border: none;
+    margin: auto;
+    margin-left:76px;
+    margin-top:30px; 
+    font-size:larger;
+   color:#fff;  
+   
+}
+.yzm{
+    width:80px;
+    height:40px;
+    margin: auto;
+    margin-left:5px;
+    font-size: larger;
+    background-color: #0C9CE8;
+    border: none;
+    -moz-box-shadow: 0 1px 5px #058FD6 inset, 0 1px 0 #0C9CE8;
+    -webkit-box-shadow: 0 1px 5px #058FD6 inset, 0 1px 0 #0C9CE8;
+    box-shadow: 0 1px 5px #058FD6 inset, 0 1px 0 #0C9CE8;
+   
+}
+#yzm{
+    width:100px;
+    float:right;
+    margin-right:100px;   
+}
+#error {
+    height:10px;
+    color:red;
+    margin-left:120px;
+}

@@ -1,0 +1,287 @@
+﻿<script>
+    var id = "#" + "@ViewBag.table";
+    @*var data = ("@ViewBag.province").replace(/&quot;/g, "\"");
+    var province = eval("(" + data + ")");
+    var time;
+    var success = false;*@
+    $(id).ready(function ()
+    {
+        var id = "#" + "@ViewBag.table";
+        var editId = "@ViewBag.table" + "_edit";
+        var searchId = "@ViewBag.table" + "_search";
+        var removeId = "@ViewBag.table" + "_remove";
+        var saveId = "@ViewBag.table" + "_save";
+        var editid = "#" + editId;
+        var searchid = "#" + searchId;
+        var removeid = "#" + removeId;
+        var saveid = "#" + saveId;
+        var index = -1;
+        var indexid = 0;
+        var markData = "";
+        var isedit = false;
+        $(id).treegrid({
+            url: '/Company/DepartmentTreeGridJson/' + companyId,
+            fit: true,
+            method: 'get',
+            rownumbers: true,
+            idField: 'Id',
+            treeField: 'name',
+            fitColumns: true,
+            animate: true,
+            toolbar: [{
+                id: editId,
+                iconCls: 'icon-edit',
+                text: '编辑',
+                disabled: true,
+                handler: function ()
+                {
+                    var rows = $(id).treegrid("getSelected");
+                    if (rows.length == 0)
+                    {
+                        $.messager.alert("提示", "你未选择任何一行！");
+                        return;
+                    }
+
+                    for (var i in rows)
+                    {
+                        $(id).treegrid('beginEdit', rows.id);
+                        index = rows.Id;
+                        markData = rows.dep;
+                    }
+                    $(id).treegrid("beginEdit", index);
+                    $(editid).linkbutton('disable');
+                    $(removeid).linkbutton('disable');
+                    $(saveid).linkbutton('enable')
+                    $(searchid).linkbutton('disable');
+                    isedit = true;
+                }
+            }, '-', {
+                id: removeId,
+                iconCls: 'icon-remove',
+                text: '删除',
+                disabled: true,
+                handler: function ()
+                {
+                    if ("@ViewBag.companyStatus" != "1")
+                    {
+                        $.messager.confirm('提示', '删除部门将会删除该部门下所有员工,是否确认删除?', function (r)
+                        {
+                            if (r)
+                            {
+                                var rows = $(id).treegrid("getSelected");
+                                if (rows.length == 0)
+                                {
+                                    $.messager.alert("提示", "你未选择任何一行！");
+                                    return;
+                                }
+                                for (var i in rows)
+                                {
+                                   
+                                    index = rows.Id;
+                                    markData = rows.dep;
+                                }
+                                $.ajax({
+                                    type: "post",
+                                    url: "/Company/RemoveDivisional/" + companyId,
+                                    data: {
+                                        remove: rows.dep,
+                                        OwnId: rows.isOwnId
+                                    },
+                                    success: function (data)
+                                    {
+                                        data = eval("(" + data + ")");
+                                        var datas = new Array(data.count);
+                                        for (var x in data.data)
+                                        {
+                                            datas[x] = data.data[x].datakey;
+                                        }
+                                        if (datas[0] == "0")
+                                        {
+                                            $.messager.alert("提示", datas[1], "error");
+                                        }
+                                        else
+                                        {
+                                            $.messager.alert("提示", datas[1], "info");
+                                            $(id).treegrid("remove", index);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $.messager.alert("错误", "公司正在进行调查无法删除!", "error");
+                    }
+                }
+            }, '-', {
+                id: saveId,
+                iconCls: 'icon-save',
+                text: '保存',
+                disabled: true,
+                handler: function ()
+                {
+                    $(id).treegrid('endEdit', index);
+                    $(editid).linkbutton('enable');
+                    $(search).linkbutton('enable');
+                    $(removeid).linkbutton('enable');
+                    $(saveid).linkbutton('disable');
+                    isedit = false;
+                }
+            }, '-', {
+                id: searchId,
+                iconCls: 'icon-staffList',
+                text: '查看员工',
+                disabled: true,
+                handler: function ()
+                {
+                    var rows = $(id).treegrid("getSelected");
+                    if (rows.length == 0)
+                    {
+                        $.messager.alert("提示", "你未选择任何一行！");
+                        return;
+                    }
+                    for (var i in rows)
+                    {
+
+                        index = rows.Id;
+                        markData = rows.dep;
+                    }
+                    var datas = new Array();
+                    datas[0] = rows.isOwnId;
+                    datas[1] = 1;
+                    datas[2] = 30;
+                    datas[3] = "dep";
+                    datas[4] = markData;
+                    openWindow("查看员工", "/Company/StaffManage/" + companyId, datas);
+                }
+            }],
+            columns: [[
+                { field: 'isDep', width: 0, hidden: true },
+                 { field: 'isOwnId', width: 0, hidden: true },
+               { field: 'id', title: '公司编号', width: 15 },
+               { field: 'name', title: '名称', width: 40 },
+               { field: 'dep', title: '部门', editor: "validatebox", width: 20 },
+               { field: 'staffnumber', title: '人数', width: 30 }
+            ]],
+            onSelect: function (rowIndex, rowData)
+            {
+                if (!isedit)
+                {
+                    if (rowIndex.isDep == "1")
+                    {
+                        $(editid).linkbutton('enable');
+                        $(removeid).linkbutton('enable');
+                        $(searchid).linkbutton('enable');
+                    }
+                    else
+                    {
+                        $(editid).linkbutton('disable');
+                        $(removeid).linkbutton('disable');
+                        $(searchid).linkbutton('disable');
+                    }
+                }
+                else
+                {
+                    $.messager.confirm("提示", "还有编辑的行未保存，要放弃吗?", function (r)
+                    {
+                        if (r)
+                        {
+                            $(id).treegrid("cancelEdit", index);
+                            isedit = false;
+                            $(editid).linkbutton('enable');
+                            $(searchid).linkbutton('enable');
+                            $(removeid).linkbutton('enable');
+                            $(saveid).linkbutton('disable');
+                        }
+                    });
+                }
+            },
+            onAfterEdit: function (row, changes)
+            {
+                if (isedit)
+                {
+                    if (changes.dep+"" == markData)
+                    {
+                        return null;
+                        isedit = false;
+                        $(editid).linkbutton('enable');
+                        $(searchid).linkbutton('enable');
+                        $(removeid).linkbutton('enable');
+                        $(saveid).linkbutton('disable');
+                    }
+                    if (changes.dep.length != 0 && changes.dep.length <= 25)
+                    {
+
+                        $.ajax({
+                            type: "post",
+                            url: "/Company/ModifyDivisional/" + companyId,
+                            data: {
+                                changeName: markData,
+                                name: changes.dep,
+                                OwnId: row.isOwnId
+                            },
+                            success: function (data)
+                            {
+                                data = eval("(" + data + ")");
+                                var datas = new Array(data.count);
+                                for (var x in data.data)
+                                {
+                                    datas[x] = data.data[x].datakey;
+                                }
+                                if (datas[0] == "0")
+                                {
+                                    $.messager.alert("提示", datas[1], "error");
+                                    $(id).treegrid('update', {
+                                        id: index,
+                                        row: {
+                                            dep: markData,
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    $.messager.alert("提示", datas[1], "info");
+                                }
+                                isedit = false;
+                                $(editid).linkbutton('enable');
+                                $(searchid).linkbutton('enable');
+                                $(removeid).linkbutton('enable');
+                                $(saveid).linkbutton('disable');
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $.messager.confirm("提示", "数据不合法!是否放弃?", function (r)
+                        {
+                            if (r)
+                            {
+                                $(id).treegrid('update', {
+                                    id: index,
+                                    row: {
+                                        dep: markData,
+                                    }
+                                });
+                                isedit = false;
+                                $(editid).linkbutton('enable');
+                                $(searchid).linkbutton('enable');
+                                $(removeid).linkbutton('enable');
+                                $(saveid).linkbutton('disable');
+                            }
+                            else
+                            {
+                                $(id).treegrid('beginEdit', index);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    })
+</script>
+
+
+
+<table id="@ViewBag.table" class="easyui-treegrid table"></table>
+

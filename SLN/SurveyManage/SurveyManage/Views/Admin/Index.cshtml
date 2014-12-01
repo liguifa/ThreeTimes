@@ -1,0 +1,333 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/img/logo.ico" rel='icon' type=‘image/x-ico’ />
+    <script src="~/EasyUI/jquery.min.js"></script>
+    <script src="~/EasyUI/jquery.easyui.min.js"></script>
+    <script src="~/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <link href="~/EasyUI/themes/icon.css" rel="stylesheet" />
+    <link href="~/CSS/index.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/EasyUI/themes/sunny/easyui.css" rel="stylesheet" />
+    <script src="~/JS/validatebox.js"></script>
+    <script src="~/JS/index.js"></script>
+    <style>
+        #north {
+            background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#FEF8E4));
+        }
+        
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+            perspective: 100px;
+            transform-type: preserve-3d;
+            animation: loader 6s cubic-bezier(0,0,1,1) infinite;
+        }
+
+
+        @@keyframes loader {
+            0% {
+                transform: rotateX(30deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(30deg) rotateZ(-360deg);
+            }
+        }
+
+        /* The dot */
+        .dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 10;
+            width: 20px;
+            height: 20px;
+            margin-top: -90px;
+            margin-left: -10px;
+            border-radius: 10px;
+            background-color: #1e3f57;
+            transform-type: preserve-3d;
+            transform-origin: 50% 90px;
+            transform: rotateZ(30deg);
+            animation: dot1 1.5s cubic-bezier(.6,0,.4,1) infinite;
+        }
+
+            .dot:nth-child(2) {
+                transform: rotateZ(15deg);
+                animation-name: dot2;
+                animation-delay: 150ms;
+                background-color: #2d556d;
+            }
+
+            .dot:nth-child(3) {
+                transform: rotateZ(0deg);
+                animation-name: dot3;
+                animation-delay: 300ms;
+                background-color: #447891;
+            }
+
+            .dot:nth-child(4) {
+                transform: rotateZ(-15deg);
+                animation-name: dot4;
+                animation-delay: 450ms;
+                background-color: #5998b2;
+            }
+
+            .dot:nth-child(5) {
+                transform: rotateZ(-30deg);
+                animation-name: dot5;
+                animation-delay: 600ms;
+                background-color: #6bb2cd;
+            }
+
+        /* Dot animations */
+        @@keyframes dot1 {
+            0% {
+                transform: rotateZ(30deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(390deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot2 {
+            0% {
+                transform: rotateZ(15deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(375deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot3 {
+            0% {
+                transform: rotateZ(0deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(360deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot4 {
+            0% {
+                transform: rotateZ(-15deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(345deg) rotateX(10deg);
+            }
+        }
+
+        @@keyframes dot5 {
+            0% {
+                transform: rotateZ(-30deg) rotateX(10deg);
+            }
+
+            95%, 100% {
+                transform: rotateZ(330deg) rotateX(10deg);
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="panel" class="easyui-layout">
+        <div id="north" data-options="region:'north',title:'管理员',split:true,tools:'#time'" style="height: 100px;">
+            <div class="logo">
+                <h1>三度调查管理系统</h1>
+            </div>
+            <span class="welcome">
+                管理员，您好！  <a href="/Admin/LogOut">注销</a>
+
+            </span>
+        </div>
+        <div id="time"></div>
+        <div id="south" data-options="region:'south',split:true" style="height: 0px;"></div>
+        <div id="east" data-options="region:'east',split:true" style="width: 0px;"></div>
+        <div id="west" data-options="region:'west',title:'系统功能',split:true" style="width: 220px;" onselectstart="return false">
+            <div id="class" class="easyui-accordion">
+                <div title="客户公司管理" data-options="iconCls:'icon-comp_add'" style="overflow: auto; padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="company_list" class="list_li">
+                            <img src="~/img/list_information.png" /> 公司列表
+                        </li>
+                        <li id="add_company" class="list_li">
+                            <img src="~/img/list_add.png" />添加公司
+                        </li>
+                    </ul>
+                </div>
+                <div title="题库管理" data-options="iconCls:'icon-libm'" style="padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="questionM" class="list_li">
+
+                            <img src="~/img/lib.png" /> 试题管理
+                        </li>
+                        <li id="item_class" class="list_li"><img src="~/img/lists.png" />题库类别管理</li>
+
+
+                    </ul>
+                </div>
+                <div title="系统管理" data-options="iconCls:'icon-sys_setUp'" style="padding: 10px;">
+                    <ul class="list_ul">
+                       
+                        
+                        <li id="clear_data" class="list_li">
+                            <img src="~/img/edit_clear.png" />清除数据
+                        </li>
+                    </ul>
+                </div>
+                <div title="用户管理" data-options="iconCls:'icon-user_manage'" style="padding: 10px;">
+                    <ul class="list_ul">
+                        <li id="modify_pwd" class="list_li"><img src="~/img/gnome_mime_application_pgp_keys.png" />修改密码</li>
+                       @if (ViewBag.isSuperAdmmin)
+                       { 
+                         <li id="admin_administration" class="list_li">
+                            <img src="~/img/personal.png" />管理员管理
+                        </li>
+                       }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-options="region:'center',title:' '" style="background: #eee;">
+            <div id="window" class="easyui-tabs" style="width:500px;height:250px;">
+                <div title="说明" style="padding:20px;display:block;">
+                    <h1 align="center" style="text-align:center;">
+	<span style="font-family:宋体;">三度调查系统功能说明书</span>
+</h1>
+<h1 align="center" style="text-align:left;">
+	<span style="font-size:12px;font-weight:normal;line-height:1.5;"></span><span style="font-size:12px;font-weight:normal;line-height:1.5;font-family:宋体;">此系统完成一个调查，需要进过如下步骤：</span>
+</h1>
+<p class="MsoNormal" style="text-align:left;">
+	<span>1.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">点击管理员入口，进入管理员登陆界面</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span> 2.<span style="font-size:7pt;font-family:'Times New Roman';"> </span></span><span style="font-family:宋体;">输入用户名、密码进入系统</span><span></span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span> 3.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">管理员登陆后显示如下界面</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span> 4.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">单击客户公司管理，展开下拉菜单，单击添加公司</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span> 5.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">填写如下信息，其中公司编号格式为</span> <span style="font-family:宋体;">公司名称拼音首字母</span><span>+</span><span style="font-family:宋体;">年月日</span><span>+</span><span style="font-family:宋体;">自定编号（建议不少于</span><span>3</span><span style="font-family:宋体;">位），例如</span> <span style="font-family:宋体;">“</span><span>dlpu201409090001</span><span style="font-family:宋体;">”，如果在“同时发送邮件”处选择“是”，就会在创建同时对联系人发送邮件。</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span style="background:yellow;"> 6.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">添加完成后便会在“公司列表”里出现需要调查的公司</span> <span style="font-family:宋体;background:yellow;">注意：此处是要进行调查的集团公司，如“大连工业大学”</span><span style="background:yellow;"></span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span> 7.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">单击某一公司，菜单栏的“编辑”“删除”等功能键启用，可以对集团公司的信息进行修改，包括对联系人重置密码，发送邮件等</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span style="color:red;">  8.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">在总公司条目上双击，就会在浏览器打开一个新的窗口，<span style="color:red;">此窗口用来对总公司的子公司、员工，以及对此公司的一切调查事务的管理</span></span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span>  9.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">打开后，左侧以树形图显示公司结构</span> <span style="font-family:宋体;">在右侧默认打开子公司管理界面，此时选择总公司下的子公司便可进行操作，也可以直接导入所有子公司，前提是对每个子公司进行编号，文件必须为</span><span>Excel</span><span style="font-family:宋体;">表格格式如下</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span>  10.<span style="font-size:7pt;font-family:'Times New Roman';">   </span></span><span style="font-family:宋体;">也可以选中公司，直接对选中公司导入员工，文件必须为</span><span>Excel</span><span style="font-family:宋体;">，格式如下：</span>
+</p>
+<p class="MsoListParagraph" align="left" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span style="font-size:12.0pt;font-family:宋体;">11.</span><span style="font-size:12.0pt;font-family:宋体;">在左侧公司结构中选中需要操作的公司，然后点击员工管理，打开对应公司的员工管理界面，同时可以再右侧，按姓名或者邮箱搜某个员工，如下</span>
+</p>
+<p class="MsoListParagraph" align="left" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span style="font-size:12.0pt;font-family:宋体;">12.</span><span style="font-size:12.0pt;font-family:宋体;">数据表中显示的员工有两类<span> 1.</span>此公司的员工（不包含下属子公司员工）<span></span></span>
+</p>
+<p class="MsoListParagraph" align="left" style="text-align:left;margin-left:18pt;text-indent:0cm;">
+	<span style="font-size:12.0pt;font-family:宋体;">2</span><span style="font-size:12.0pt;font-family:宋体;">．包含下属公司员工。可以在此处调换</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span>  13.<span style="font-size:7pt;font-family:'Times New Roman';"></span></span><span style="font-family:宋体;">部门管理同理，软件使用逻辑相同</span><span></span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span>  14.<span style="font-size:7pt;font-family:'Times New Roman';"> </span></span><span style="font-family:宋体;">以上是对对需要进行调查的对象设置，完成后便可点击“问卷管理”，对整个集团公司的调查问卷进行设置，进入后首先点击新建问卷，对整个集团公司新建一份问卷，<span style="background:yellow;">问卷名称</span>将会在调查时显示如</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:0cm;">
+	<span style="font-family:宋体;">新建完成后，需要对问卷导入问题，可以通过两种途径，</span><span>1.</span><span style="font-family:宋体;">直接导入，</span><span>2.</span><span style="font-family:宋体;">选择题库中的试题</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:0cm;">
+	<span style="font-family:宋体;">完成后可以点击预览问卷对问卷进行预览</span><span></span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;margin-left:18pt;text-indent:-18pt;">
+	<span>  15.<span style="font-size:7pt;font-family:'Times New Roman';">   </span></span><span style="font-family:宋体;">设置完问卷后点击调查管理对本次调查进行设置，完成后可以对员工发送邮件，让其答题，也可进行调查进度监控。</span>
+</p>
+<p class="MsoListParagraph" style="text-align:left;text-indent:-24px;margin-left:18pt;">
+	<span><span>  </span>16 </span><span style="font-family:宋体;">调查自动结束后，或者手动结束后可以点击</span><span> </span><span style="font-family:宋体;">导出结果。</span>
+</p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="search">
+        <input id="ss" class="easyui-searchbox" style="width: 300px"
+               data-options="searcher:qq,prompt:'Please Input Value',menu:'#mm'" />
+
+        <div id="mm" style="width: 120px">
+            <div id="Numbering" data-options="name:'id',iconCls:'icon-ok'">按编号搜索</div>
+            <div id="name" data-options="name:'name'">按名称搜索</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function qq(value, name) {
+            var data = new Array();
+            data[0] = 1;
+            data[1] = 30;
+            data[2] = value;
+            data[4] = name;
+            data[3] = "all";
+            openWindow(value + "的搜索结果", "/Admin/SearchCompany", data);
+        };
+
+        $("#Numbering").click(function () {
+            $('#mm').menu('setIcon', {
+                target: $('#Numbering'),
+                iconCls: 'icon-ok'
+            });
+            $('#mm').menu('setIcon', {
+                target: $('#name'),
+                iconCls: ''
+            });
+
+        });
+        $("#name").click(function () {
+            $('#mm').menu('setIcon', {
+                target: $('#name'),
+                iconCls: 'icon-ok'
+            });
+            $('#mm').menu('setIcon', {
+                target: $('#Numbering'),
+                iconCls: ''
+            });
+        });
+    </script>
+    
+
+    <script src="~/JS/prefixfree.min.js"></script>
+
+</body>
+
+</html>
